@@ -54,28 +54,20 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <!-- SheetJS (Excel Export) -->
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
-    
     <!-- jsPDF (PDF Export) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-    
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            background-color: theme('colors.mi.bg');
-            color: theme('colors.mi.text1');
-        }
+        body { background-color: theme('colors.mi.bg'); color: theme('colors.mi.text1'); }
         
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -86,91 +78,50 @@
         /* Modern Pill Tabs */
         .tab-btn {
             transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-            border-radius: 9999px;
-            color: #6B7C78;
-            border: 1px solid transparent;
-            background-color: transparent;
+            border-radius: 9999px; color: #6B7C78; border: 1px solid transparent; background-color: transparent;
         }
         .tab-btn:hover { background-color: #F0F7F5 !important; color: #124F47 !important; border-color: #D7EAE5; }
         .tab-btn.active {
-            background-color: #E8F3F0 !important;
-            color: #124F47 !important;
-            border: 1px solid #B8D9D2 !important;
-            box-shadow: 0 2px 6px rgba(18, 79, 71, 0.08), inset 0 0 0 1px rgba(18, 79, 71, 0.04);
-            font-weight: 600;
+            background-color: #E8F3F0 !important; color: #124F47 !important; border: 1px solid #B8D9D2 !important;
+            box-shadow: 0 2px 6px rgba(18, 79, 71, 0.08), inset 0 0 0 1px rgba(18, 79, 71, 0.04); font-weight: 600;
         }
         .tab-btn.active:hover { background-color: #DCEFEA !important; color: #0D3F39 !important; border-color: #A9D0C8 !important; }
         
-        /* Smooth hover for table rows */
         .table-row-hover { transition: background-color 0.2s ease; }
         .table-row-hover:hover { background-color: theme('colors.mi.soft'); cursor: pointer; }
 
-        /* Loader */
         .loader {
-            border: 3px solid #E5ECE9; border-radius: 50%;
-            border-top: 3px solid #124F47; width: 24px; height: 24px;
-            animation: spin 1s linear infinite; display: inline-block;
+            border: 3px solid #E5ECE9; border-radius: 50%; border-top: 3px solid #124F47; 
+            width: 24px; height: 24px; animation: spin 1s linear infinite; display: inline-block;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Card Shadow Styling */
         .card-shadow { box-shadow: theme('boxShadow.soft'); }
-
-        /* Abstract blobs for summary cards */
         .blob-bg { position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden; border-radius: inherit; pointer-events: none; z-index: 0; }
         .blob-shape { position: absolute; opacity: 0.4; }
-
-        /* Hide scrollbar for tabs */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Mobile Submenu Animation */
         .mobile-submenu { display: none; opacity: 0; transform: translateY(10px); transition: all 0.2s ease; }
         .mobile-submenu.active { display: flex; opacity: 1; transform: translateY(0); }
 
         .wa-preview-bg {
             background-color: #efeae2;
-            background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); /* subtle texture */
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
         }
-
-        /* Modal Transitions & Overlay untuk Modal Umum */
+        .modal-body-scrollable { max-height: calc(92vh - 130px); }
         .modal-overlay { background-color: rgba(25, 49, 46, 0.6); backdrop-filter: blur(4px); z-index: 0; }
-
-        /* CSS KHUSUS MODAL WHATSAPP - MENCEGAH BUG BLANK/Z-INDEX */
-        #modalWhatsApp {
-            position: fixed !important;
-            inset: 0 !important;
-            width: 100vw !important;
-            height: 100vh !important;
-            z-index: 999999 !important;
-        }
-
-        #modalWhatsApp.hidden {
-            display: none !important;
-        }
-
-        #modalWhatsApp:not(.hidden) {
-            display: block !important;
-        }
-
-        #modalWhatsApp .modal-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-        }
-
-        #modalWhatsApp .modal-wrapper {
-            position: relative;
-            z-index: 10;
-        }
-
-        #modalWhatsApp .modal-container {
-            position: relative;
-            z-index: 10;
-        }
         
-        /* Transition icon WA settings */
+        .modal-container-fixed { position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 999999 !important; }
+        .modal-container-fixed.hidden { display: none !important; }
+        .modal-container-fixed:not(.hidden) { display: block !important; }
+        .modal-container-fixed .modal-overlay { position: absolute; inset: 0; z-index: 1; }
+        .modal-container-fixed .modal-wrapper { position: relative; z-index: 10; }
+        .modal-container-fixed .modal-content-box { position: relative; z-index: 10; }
         .rotate-180 { transform: rotate(180deg); }
+
+        /* Skeleton Loading Utilities */
+        .skeleton { background: #e2e8f0; border-radius: 4px; animation: pulse 1.5s infinite ease-in-out; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
 <body class="antialiased min-h-screen pb-24 md:pb-12 lg:pb-0 relative">
@@ -195,10 +146,9 @@
 
                 <!-- Action Buttons -->
                 <div class="flex flex-wrap items-center gap-2 mt-1 md:mt-0">
-                    <button onclick="handleRefresh()" class="flex-1 sm:flex-none justify-center px-3 md:px-4 py-1.5 md:py-2 bg-mi-soft hover:bg-[#DDEFEA] text-mi-primary rounded-xl text-xs md:text-sm font-medium transition-colors border border-[#C8E3DD] shadow-sm flex items-center gap-1.5 md:gap-2">
-                        <i class="fa-solid fa-rotate-right"></i> <span class="hidden sm:inline">Refresh</span><span class="sm:hidden">Muat Ulang</span>
+                    <button onclick="handleRefresh()" id="btnGlobalRefresh" class="flex-1 sm:flex-none justify-center px-3 md:px-4 py-1.5 md:py-2 bg-mi-soft hover:bg-[#DDEFEA] text-mi-primary rounded-xl text-xs md:text-sm font-medium transition-colors border border-[#C8E3DD] shadow-sm flex items-center gap-1.5 md:gap-2">
+                        <i class="fa-solid fa-rotate-right" id="iconRefresh"></i> <span class="hidden sm:inline">Refresh</span><span class="sm:hidden">Muat Ulang</span>
                     </button>
-                    <!-- Tombol ini disembunyikan di Mobile/Tablet, HANYA muncul di Desktop (lg:flex) -->
                     <button onclick="exportExcel()" class="hidden lg:flex justify-center px-3 md:px-4 py-1.5 md:py-2 bg-[#E8F3F0] hover:bg-[#D9EEE8] text-[#18794E] rounded-xl text-xs md:text-sm font-medium transition-colors border border-[#C8E3DD] shadow-sm items-center gap-1.5 md:gap-2" title="Export Excel sesuai Tab yang aktif">
                         <i class="fa-solid fa-file-excel"></i> <span>Excel</span>
                     </button>
@@ -216,14 +166,18 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 md:mt-8">
         
         <!-- FILTER DATA -->
-        <div class="bg-mi-surface rounded-2xl border border-mi-border card-shadow p-4 md:p-6 mb-6 md:mb-8">
+        <div class="bg-mi-surface rounded-2xl border border-mi-border card-shadow p-4 md:p-6 mb-6 md:mb-8 relative overflow-hidden">
+            <div id="filterOverlayLoader" class="absolute inset-0 bg-white/60 backdrop-blur-sm z-20 flex items-center justify-center hidden">
+                 <div class="loader"></div>
+            </div>
+            
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 md:mb-5 gap-3">
                 <h2 class="text-xs md:text-sm font-bold text-mi-text1 tracking-wide uppercase flex items-center"><i class="fa-solid fa-sliders text-mi-text2 mr-2"></i>Filter Data</h2>
                 <div class="flex gap-2 w-full sm:w-auto">
                     <button onclick="resetFilter()" class="flex-1 sm:flex-none justify-center text-xs md:text-sm text-[#6B7C78] hover:text-mi-primary hover:bg-[#E9EEEC] bg-[#F5F7F6] border border-[#E5ECE9] font-medium px-3 md:px-4 py-1.5 md:py-2 rounded-xl transition-colors flex items-center gap-2 shadow-sm">
                         <i class="fa-solid fa-rotate-left"></i> Reset
                     </button>
-                    <button onclick="applyFilters()" class="flex-1 sm:flex-none justify-center bg-mi-primary hover:bg-mi-dark text-white text-xs md:text-sm font-medium px-4 md:px-5 py-1.5 md:py-2 rounded-xl transition-colors shadow-sm">
+                    <button onclick="applyFilters(true)" id="btnTerapkanFilter" class="flex-1 sm:flex-none justify-center bg-mi-primary hover:bg-mi-dark text-white text-xs md:text-sm font-medium px-4 md:px-5 py-1.5 md:py-2 rounded-xl transition-colors shadow-sm flex items-center gap-2">
                         Terapkan Filter
                     </button>
                 </div>
@@ -261,12 +215,13 @@
 
                 <div class="sm:col-span-1 lg:col-span-1" id="filterStatusContainer" style="display: none;">
                     <label class="block text-[10px] md:text-xs font-semibold text-mi-text2 mb-1 md:mb-1.5 uppercase tracking-wider">Status</label>
-                    <select id="filterStatus" class="w-full border border-mi-border rounded-xl bg-mi-bg focus:bg-white py-2 md:py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-xs md:text-sm transition-all text-mi-text1">
+                    <select id="filterStatus" onchange="applyLocalFilters()" class="w-full border border-mi-border rounded-xl bg-mi-bg focus:bg-white py-2 md:py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-xs md:text-sm transition-all text-mi-text1">
                         <option value="all">Semua Status</option>
                         <option value="Hadir">Hadir</option>
                         <option value="Sakit">Sakit</option>
                         <option value="Izin">Izin</option>
                         <option value="Alpa">Alpa</option>
+                        <option value="Belum Diisi">Belum Diisi</option>
                     </select>
                 </div>
 
@@ -276,103 +231,88 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fa-solid fa-search text-mi-text2 text-xs md:text-sm"></i>
                         </div>
-                        <input type="text" id="filterSearch" placeholder="Ketik nama..." class="block w-full pl-8 md:pl-9 border-mi-border border rounded-xl bg-mi-bg focus:bg-white py-2 md:py-2.5 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-xs md:text-sm transition-all text-mi-text1">
+                        <input type="text" id="filterSearch" oninput="applyLocalFilters()" placeholder="Ketik nama..." class="block w-full pl-8 md:pl-9 border-mi-border border rounded-xl bg-mi-bg focus:bg-white py-2 md:py-2.5 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-xs md:text-sm transition-all text-mi-text1">
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SUMMARY CARDS (LOCKED) -->
+        <!-- SUMMARY CARDS -->
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8 gap-3 md:gap-4 lg:gap-3 mb-6 md:mb-8">
-            
             <!-- Card 1: Total Siswa -->
             <div class="group bg-card-blue rounded-[20px] p-3 lg:p-4 relative overflow-hidden flex flex-col justify-between h-[100px] md:h-[120px] border border-blue-100 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div class="relative z-10 flex justify-between items-start w-full">
-                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
+                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm"><i class="fa-solid fa-users"></i></div>
                 </div>
                 <div class="relative z-10 mt-auto">
                     <div class="text-[9px] md:text-[10px] lg:text-[11px] font-bold text-blue-700 uppercase tracking-wider mb-0.5">Total Siswa</div>
-                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardTotalSiswa">-</div>
+                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardTotalSiswa"><div class="skeleton h-6 w-12 rounded"></div></div>
                 </div>
             </div>
             
             <!-- Card 2: Hari Efektif -->
             <div class="group bg-card-slate rounded-[20px] p-3 lg:p-4 relative overflow-hidden flex flex-col justify-between h-[100px] md:h-[120px] border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div class="relative z-10 flex justify-between items-start w-full">
-                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-slate-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm">
-                        <i class="fa-regular fa-calendar-check"></i>
-                    </div>
+                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-slate-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm"><i class="fa-regular fa-calendar-check"></i></div>
                 </div>
                 <div class="relative z-10 mt-auto">
                     <div class="text-[9px] md:text-[10px] lg:text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-0.5">Hari Efektif</div>
-                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardHariEfektif">-</div>
+                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardHariEfektif"><div class="skeleton h-6 w-8 rounded"></div></div>
                 </div>
             </div>
 
             <!-- Card 3: Hari Libur -->
             <div class="group bg-card-purple rounded-[20px] p-3 lg:p-4 relative overflow-hidden flex flex-col justify-between h-[100px] md:h-[120px] border border-purple-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div class="relative z-10 flex justify-between items-start w-full">
-                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-purple-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm">
-                        <i class="fa-solid fa-umbrella-beach"></i>
-                    </div>
+                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-purple-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm"><i class="fa-solid fa-umbrella-beach"></i></div>
                 </div>
                 <div class="relative z-10 mt-auto">
                     <div class="text-[9px] md:text-[10px] lg:text-[11px] font-bold text-purple-700 uppercase tracking-wider mb-0.5">Hari Libur</div>
-                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardHariLibur">-</div>
+                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardHariLibur"><div class="skeleton h-6 w-8 rounded"></div></div>
                 </div>
             </div>
 
             <!-- Card 4: Hadir -->
             <div class="group bg-card-green rounded-[20px] p-3 lg:p-4 relative overflow-hidden flex flex-col justify-between h-[100px] md:h-[120px] border border-green-100 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div class="relative z-10 flex justify-between items-start w-full">
-                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm">
-                        <i class="fa-solid fa-check"></i>
-                    </div>
+                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm"><i class="fa-solid fa-check"></i></div>
                 </div>
                 <div class="relative z-10 mt-auto">
                     <div class="text-[9px] md:text-[10px] lg:text-[11px] font-bold text-emerald-700 uppercase tracking-wider mb-0.5">Hadir</div>
-                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardHadir">-</div>
+                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardHadir"><div class="skeleton h-6 w-12 rounded"></div></div>
                 </div>
             </div>
 
             <!-- Card 5: Sakit -->
             <div class="group bg-card-orange rounded-[20px] p-3 lg:p-4 relative overflow-hidden flex flex-col justify-between h-[100px] md:h-[120px] border border-orange-100 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div class="relative z-10 flex justify-between items-start w-full">
-                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-orange-500 text-white flex items-center justify-center text-xs md:text-base shadow-sm">
-                        <i class="fa-solid fa-thermometer-half"></i>
-                    </div>
+                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-orange-500 text-white flex items-center justify-center text-xs md:text-base shadow-sm"><i class="fa-solid fa-thermometer-half"></i></div>
                 </div>
                 <div class="relative z-10 mt-auto">
                     <div class="text-[9px] md:text-[10px] lg:text-[11px] font-bold text-orange-700 uppercase tracking-wider mb-0.5">Sakit</div>
-                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardSakit">-</div>
+                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardSakit"><div class="skeleton h-6 w-10 rounded"></div></div>
                 </div>
             </div>
 
             <!-- Card 6: Izin -->
             <div class="group bg-card-cyan rounded-[20px] p-3 lg:p-4 relative overflow-hidden flex flex-col justify-between h-[100px] md:h-[120px] border border-cyan-100 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div class="relative z-10 flex justify-between items-start w-full">
-                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-cyan-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm">
-                        <i class="fa-solid fa-envelope-open-text"></i>
-                    </div>
+                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-cyan-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm"><i class="fa-solid fa-envelope-open-text"></i></div>
                 </div>
                 <div class="relative z-10 mt-auto">
                     <div class="text-[9px] md:text-[10px] lg:text-[11px] font-bold text-cyan-700 uppercase tracking-wider mb-0.5">Izin</div>
-                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardIzin">-</div>
+                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardIzin"><div class="skeleton h-6 w-10 rounded"></div></div>
                 </div>
             </div>
 
             <!-- Card 7: Alpa -->
             <div class="group bg-card-rose rounded-[20px] p-3 lg:p-4 relative overflow-hidden flex flex-col justify-between h-[100px] md:h-[120px] border border-rose-100 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div class="relative z-10 flex justify-between items-start w-full">
-                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-rose-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm">
-                        <i class="fa-solid fa-xmark"></i>
-                    </div>
+                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-rose-600 text-white flex items-center justify-center text-xs md:text-base shadow-sm"><i class="fa-solid fa-xmark"></i></div>
                 </div>
                 <div class="relative z-10 mt-auto">
                     <div class="text-[9px] md:text-[10px] lg:text-[11px] font-bold text-rose-700 uppercase tracking-wider mb-0.5">Alpa</div>
-                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardAlpa">-</div>
+                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-mi-text1 leading-none" id="cardAlpa"><div class="skeleton h-6 w-10 rounded"></div></div>
                 </div>
             </div>
 
@@ -380,13 +320,11 @@
             <div class="group bg-mi-primary rounded-[20px] p-3 lg:p-4 relative overflow-hidden flex flex-col justify-between h-[100px] md:h-[120px] border border-mi-dark shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div class="absolute -right-8 -top-8 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
                 <div class="relative z-10 flex justify-between items-start w-full">
-                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-white/20 text-white flex items-center justify-center text-xs md:text-base backdrop-blur-sm shadow-sm">
-                        <i class="fa-solid fa-chart-pie"></i>
-                    </div>
+                    <div class="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-white/20 text-white flex items-center justify-center text-xs md:text-base backdrop-blur-sm shadow-sm"><i class="fa-solid fa-chart-pie"></i></div>
                 </div>
                 <div class="relative z-10 mt-auto">
                     <div class="text-[9px] md:text-[10px] lg:text-[11px] font-bold text-mi-soft uppercase tracking-wider mb-0.5">% Kehadiran</div>
-                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-white leading-none" id="cardPersentase">-</div>
+                    <div class="text-xl md:text-2xl lg:text-3xl font-extrabold text-white leading-none" id="cardPersentase"><div class="skeleton h-6 w-16 bg-white/30 rounded"></div></div>
                 </div>
             </div>
         </div>
@@ -413,7 +351,7 @@
 
             <!-- TAB 1: RIWAYAT DETAIL -->
             <div id="content-riwayat" class="p-0 flex flex-col min-h-[400px]">
-                <div class="overflow-x-auto flex-grow">
+                <div class="overflow-x-auto flex-grow relative">
                     <table class="min-w-full divide-y divide-mi-border">
                         <thead class="bg-mi-bg/50">
                             <tr>
@@ -466,8 +404,7 @@
                     <button onclick="setRekapMode('harian')" id="btn-rekap-harian" class="px-4 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-all bg-mi-soft text-mi-text2 hover:text-mi-primary">Rekap Harian</button>
                 </div>
 
-                <div class="overflow-x-auto flex-grow">
-                    <!-- Tabel disuntik via JS tergantung mode -->
+                <div class="overflow-x-auto flex-grow relative">
                     <table class="min-w-full divide-y divide-mi-border" id="table-rekap-container">
                         <thead class="bg-mi-bg/50" id="thead-rekap">
                             <!-- Headers injected via JS -->
@@ -506,16 +443,13 @@
 
             <!-- TAB 3: ANALISA DATA -->
             <div id="content-analisa" class="p-4 md:p-6 hidden min-h-[400px]">
-                <!-- Charts Section -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
-                    <!-- Distribusi -->
                     <div class="bg-mi-surface border border-mi-border rounded-2xl p-4 md:p-6 shadow-sm">
                         <h3 class="text-xs md:text-sm font-bold text-mi-text1 uppercase tracking-wide mb-4 md:mb-6 text-center">Distribusi Status Presensi</h3>
-                        <div class="relative h-48 md:h-64 w-full flex justify-center">
+                        <div class="relative h-48 md:h-64 w-full flex justify-center" id="containerChartDistribusi">
                             <canvas id="chartDistribusi"></canvas>
                         </div>
                     </div>
-                    <!-- Bar Chart / Tabel Kelas -->
                     <div class="lg:col-span-2 bg-mi-surface border border-mi-border rounded-2xl p-4 md:p-6 shadow-sm flex flex-col overflow-hidden">
                         <h3 class="text-xs md:text-sm font-bold text-mi-text1 uppercase tracking-wide mb-4 md:mb-6" id="titleAnalisaKelas">Perbandingan Kehadiran Antar Kelas</h3>
                         <div class="relative h-48 md:h-64 w-full mb-4 md:mb-6" id="containerChartKelas">
@@ -562,18 +496,17 @@
 
             <!-- TAB 4: KALENDER -->
             <div id="content-kalender" class="p-0 hidden flex-col min-h-[400px]">
-                
                 <div class="px-4 md:px-6 py-4 border-b border-mi-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-mi-soft/30">
                     <div>
                         <h3 class="text-sm font-bold text-mi-text1">Manajemen Hari Libur Sekolah</h3>
                         <p class="text-xs text-mi-text2">Data kalender digunakan untuk menghitung Hari Efektif pada periode presensi.</p>
                     </div>
-                    <button onclick="addHolidayPrompt()" class="w-full sm:w-auto px-4 py-2 bg-mi-primary hover:bg-mi-dark text-white rounded-xl text-xs md:text-sm font-medium transition-colors shadow-sm flex items-center justify-center gap-2">
+                    <button onclick="openHolidayModal()" class="w-full sm:w-auto px-4 py-2 bg-mi-primary hover:bg-mi-dark text-white rounded-xl text-xs md:text-sm font-medium transition-colors shadow-sm flex items-center justify-center gap-2">
                         <i class="fa-solid fa-plus"></i> Tambah Hari Libur
                     </button>
                 </div>
 
-                <div class="overflow-x-auto flex-grow">
+                <div class="overflow-x-auto flex-grow relative">
                     <table class="min-w-full divide-y divide-mi-border">
                         <thead class="bg-mi-bg/50">
                             <tr>
@@ -623,7 +556,6 @@
                         </button>
                     </div>
 
-                    <!-- Ringkasan Detail -->
                     <div class="grid grid-cols-5 gap-2 md:gap-4 mb-6 md:mb-8 bg-mi-bg p-3 md:p-5 rounded-xl md:rounded-2xl border border-mi-border">
                         <div class="text-center">
                             <div class="text-[9px] md:text-xs font-semibold uppercase tracking-wider text-mi-text2 mb-1">Hadir</div>
@@ -647,12 +579,10 @@
                         </div>
                     </div>
 
-                    <!-- Info Hari Efektif / Kalender on Detail -->
                     <div class="text-center mb-4 text-xs md:text-sm text-mi-text2">
                         Perhitungan persentase menggunakan <span class="font-bold text-mi-text1" id="detHariEfektif">0</span> Hari Efektif.
                     </div>
 
-                    <!-- Chart Kecil & Tabel History -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                         <div class="md:col-span-1">
                             <h4 class="text-xs font-bold text-mi-text1 uppercase tracking-wide mb-3 md:mb-4 text-center">Statistik</h4>
@@ -692,18 +622,11 @@
     </div>
 
     <!-- Modal Laporan WhatsApp -->
-    <div id="modalWhatsApp" class="hidden fixed inset-0" aria-hidden="true">
-        <!-- OVERLAY -->
-        <div class="modal-overlay absolute inset-0 bg-[#19312E]/60 backdrop-blur-sm" onclick="closeModal('modalWhatsApp')"></div>
-
-        <!-- MODAL WRAPPER -->
-        <div class="modal-wrapper relative z-10 min-h-screen w-full flex items-center justify-center p-3 sm:p-4 pointer-events-none">
-            
-            <!-- MODAL CONTAINER -->
-            <div class="modal-container pointer-events-auto relative w-full lg:w-[90vw] max-w-6xl max-h-[92vh] bg-white rounded-2xl shadow-2xl border border-mi-border overflow-hidden flex flex-col">
-                
-                <!-- Modal Header -->
-                <div class="px-4 md:px-6 py-4 border-b border-mi-border flex justify-between items-center bg-white rounded-t-2xl shrink-0">
+    <div id="modalWhatsApp" class="modal-container-fixed hidden" aria-hidden="true">
+        <div class="modal-overlay bg-[#19312E]/60 backdrop-blur-sm" onclick="closeModal('modalWhatsApp')"></div>
+        <div class="modal-wrapper w-full h-full flex items-center justify-center p-3 sm:p-4 pointer-events-none">
+            <div class="modal-content-box pointer-events-auto w-full lg:w-[90vw] max-w-6xl max-h-[92vh] bg-white rounded-2xl shadow-2xl border border-mi-border overflow-hidden flex flex-col">
+                <div class="px-4 md:px-6 py-4 border-b border-mi-border flex justify-between items-center bg-white shrink-0">
                     <div>
                         <h3 class="text-base md:text-lg font-bold text-mi-text1 flex items-center gap-2">
                             <i class="fa-brands fa-whatsapp text-[#25D366] text-xl md:text-2xl"></i> Bagikan Laporan Presensi
@@ -714,105 +637,126 @@
                         <i class="fa-solid fa-xmark text-lg"></i>
                     </button>
                 </div>
-
-                <!-- Modal Body: 2 Columns on LG, Full height scroll -->
-                <div class="flex-grow overflow-y-auto p-4 md:p-6 flex flex-col lg:flex-row gap-6 bg-white">
-                    
-                    <!-- Left Column: Settings -->
-                    <div class="w-full lg:w-5/12 flex flex-col gap-5">
-                        
-                        <!-- Format Laporan -->
-                        <div>
-                            <label class="block text-xs md:text-sm font-bold text-mi-text1 uppercase tracking-wide mb-2.5">Pilihan Format Laporan</label>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                <button type="button" onclick="setWaFormat('ringkas')" id="btnWaRingkas" class="wa-format-btn w-full text-center px-2 py-2.5 rounded-xl border-2 transition-all font-bold text-xs md:text-sm border-mi-primary bg-mi-soft text-mi-primary">
-                                    Ringkas
-                                </button>
-                                <button type="button" onclick="setWaFormat('format_1')" id="btnWaFormat1" class="wa-format-btn w-full text-center px-2 py-2.5 rounded-xl border-2 transition-all font-bold text-xs md:text-sm border-gray-200 bg-white text-gray-500 hover:bg-gray-50">
-                                    Format 1
-                                </button>
-                                <button type="button" onclick="setWaFormat('format_2')" id="btnWaFormat2" class="wa-format-btn w-full text-center px-2 py-2.5 rounded-xl border-2 transition-all font-bold text-xs md:text-sm border-gray-200 bg-white text-gray-500 hover:bg-gray-50">
-                                    Format 2
-                                </button>
+                <div class="flex-1 flex flex-col lg:flex-row bg-gray-50 overflow-hidden min-h-0">
+                    <div class="w-full lg:w-5/12 flex flex-col bg-white border-r border-mi-border shadow-sm shrink-0 lg:shrink min-h-0 overflow-y-auto">
+                        <div class="p-4 md:p-5 flex flex-col gap-5">
+                            <div>
+                                <label class="block text-xs md:text-sm font-bold text-mi-text1 uppercase tracking-wide mb-2.5">Pilihan Format Laporan</label>
+                                <div class="flex flex-row gap-2 w-full">
+                                    <button type="button" onclick="setWaFormat('format_1')" id="btnWaFormat1" class="flex-1 wa-format-btn text-center px-2 py-2.5 rounded-xl border-2 transition-all font-bold text-xs md:text-sm border-mi-primary bg-mi-soft text-mi-primary">Format 1</button>
+                                    <button type="button" onclick="setWaFormat('format_2')" id="btnWaFormat2" class="flex-1 wa-format-btn text-center px-2 py-2.5 rounded-xl border-2 transition-all font-bold text-xs md:text-sm border-gray-200 bg-white text-gray-500 hover:bg-gray-50">Format 2</button>
+                                </div>
                             </div>
-                        </div>
-
-                        <!-- Accordion Pengaturan Isi -->
-                        <div class="border border-mi-border rounded-xl bg-white shadow-sm flex flex-col">
-                            <button type="button" onclick="toggleWaSettings()" class="w-full px-4 py-3 flex justify-between items-center bg-mi-soft/30 hover:bg-mi-soft/60 transition-colors rounded-t-xl">
-                                <span class="font-bold text-xs md:text-sm text-mi-text1"><i class="fa-solid fa-gear mr-2 text-mi-primary"></i>Pengaturan Isi Laporan</span>
-                                <i id="waAccordionIcon" class="fa-solid fa-chevron-down text-mi-text2 transition-transform duration-300"></i>
-                            </button>
-                            
-                            <!-- Wrapper for safe toggle without max-height issues -->
-                            <div id="waSettingsContent" class="hidden bg-white border-t border-mi-border rounded-b-xl flex-col">
-                                <div class="px-4 py-4 flex flex-col gap-5">
-                                    
-                                    <!-- Opsi Info Laporan -->
-                                    <div>
-                                        <div class="text-[10px] md:text-xs font-bold text-mi-text2 uppercase tracking-wide mb-2">Informasi Laporan</div>
-                                        <div class="grid grid-cols-2 gap-2 text-xs md:text-sm text-mi-text1">
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaTotal" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Total Siswa</label>
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaEfektif" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Hari Efektif</label>
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaLibur" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Hari Libur</label>
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaHadir" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Hadir</label>
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaSakit" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Sakit</label>
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaIzin" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Izin</label>
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaAlpa" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Alpa</label>
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaPersentase" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> % Kehadiran</label>
+                            <div class="border border-mi-border rounded-xl bg-white shadow-sm flex flex-col overflow-hidden">
+                                <button type="button" onclick="toggleWaSettings()" class="w-full px-4 py-3 flex justify-between items-center bg-mi-soft/30 hover:bg-mi-soft/60 transition-colors shrink-0">
+                                    <span class="font-bold text-xs md:text-sm text-mi-text1"><i class="fa-solid fa-gear mr-2 text-mi-primary"></i>Pengaturan Isi Laporan</span>
+                                    <i id="waAccordionIcon" class="fa-solid fa-chevron-down text-mi-text2 transition-transform duration-300"></i>
+                                </button>
+                                <div id="waSettingsContent" class="wa-accordion-content border-t border-mi-border">
+                                    <div class="px-4 py-4 flex flex-col gap-5">
+                                        <div class="pb-4 border-b border-gray-100">
+                                            <label class="flex items-center gap-2 cursor-pointer text-sm font-bold text-mi-text1">
+                                                <input type="checkbox" id="cbWaModeRingkas" onchange="toggleWaModeRingkas()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Ringkas
+                                            </label>
+                                            <p class="text-[10px] text-mi-text2 mt-1 ml-6">Sembunyikan rekapitulasi per kelas dan daftar nama siswa.</p>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] md:text-xs font-bold text-mi-text2 uppercase tracking-wide mb-2">Informasi Laporan</div>
+                                            <div class="grid grid-cols-2 gap-2 text-xs md:text-sm text-mi-text1">
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaTotal" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Total Siswa</label>
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaEfektif" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Hari Efektif</label>
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaLibur" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Hari Libur</label>
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaHadir" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Hadir</label>
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaSakit" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Sakit</label>
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaIzin" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Izin</label>
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaAlpa" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Alpa</label>
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaPersentase" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> % Kehadiran</label>
+                                            </div>
+                                        </div>
+                                        <div id="waRekapGroup" class="pt-4 border-t border-mi-border transition-opacity">
+                                            <div class="text-[10px] md:text-xs font-bold text-mi-text2 uppercase tracking-wide mb-2">Rekapitulasi</div>
+                                            <label class="flex items-center gap-2 cursor-pointer text-xs md:text-sm text-mi-text1">
+                                                <input type="checkbox" id="cbWaRekapKelas" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Rekap Per Kelas
+                                            </label>
+                                        </div>
+                                        <div id="waNameGroup" class="pt-4 border-t border-mi-border transition-opacity">
+                                            <div class="text-[10px] md:text-xs font-bold text-mi-text2 uppercase tracking-wide mb-2">Daftar Nama Siswa</div>
+                                            <div class="flex flex-col gap-2 text-xs md:text-sm text-mi-text1">
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaNameSakit" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Daftar Siswa Sakit</label>
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaNameIzin" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Daftar Siswa Izin</label>
+                                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaNameAlpa" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Daftar Siswa Alpa</label>
+                                            </div>
+                                        </div>
+                                        <div class="pt-4 border-t border-mi-border">
+                                            <div class="text-[10px] md:text-xs font-bold text-mi-text2 uppercase tracking-wide mb-2">Pesan Penutup</div>
+                                            <label class="flex items-center gap-2 cursor-pointer text-xs md:text-sm text-mi-text1">
+                                                <input type="checkbox" id="cbWaPesanPenutup" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Sertakan Pesan Doa / Harapan
+                                            </label>
                                         </div>
                                     </div>
-
-                                    <!-- Opsi Rekap Kelas -->
-                                    <div>
-                                        <div class="text-[10px] md:text-xs font-bold text-mi-text2 uppercase tracking-wide mb-2">Rekapitulasi</div>
-                                        <label class="flex items-center gap-2 cursor-pointer text-xs md:text-sm text-mi-text1">
-                                            <input type="checkbox" id="cbWaRekapKelas" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Rekap Per Kelas
-                                        </label>
-                                    </div>
-
-                                    <!-- Opsi Daftar Nama -->
-                                    <div id="waNameOptions">
-                                        <div class="text-[10px] md:text-xs font-bold text-mi-text2 uppercase tracking-wide mb-2">Daftar Nama Siswa</div>
-                                        <div class="flex flex-col gap-2 text-xs md:text-sm text-mi-text1">
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaNameSakit" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Daftar Siswa Sakit</label>
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaNameIzin" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Daftar Siswa Izin</label>
-                                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="cbWaNameAlpa" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Daftar Siswa Alpa</label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Opsi Penutup -->
-                                    <div>
-                                        <div class="text-[10px] md:text-xs font-bold text-mi-text2 uppercase tracking-wide mb-2">Pesan Penutup</div>
-                                        <label class="flex items-center gap-2 cursor-pointer text-xs md:text-sm text-mi-text1">
-                                            <input type="checkbox" id="cbWaPesanPenutup" checked onchange="generateWhatsAppReport()" class="w-4 h-4 text-mi-primary rounded border-gray-300 focus:ring-mi-primary"> Sertakan Pesan Doa / Harapan
-                                        </label>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-                    <!-- Right Column: Preview -->
-                    <div class="w-full lg:w-7/12 flex flex-col mt-4 lg:mt-0">
-                        <label class="block text-xs md:text-sm font-bold text-mi-text1 uppercase tracking-wide mb-2.5">Preview WhatsApp</label>
-                        <div class="wa-preview-bg rounded-xl border border-mi-border shadow-inner flex-grow min-h-[300px] md:min-h-[400px] p-3 md:p-5 overflow-y-auto relative">
-                            <!-- Bubble WA -->
-                            <div class="bg-white p-3.5 md:p-5 rounded-xl rounded-tl-sm shadow-[0_1px_2px_rgba(0,0,0,0.1)] text-xs md:text-[13px] text-gray-800 whitespace-pre-wrap font-sans max-w-[98%] mx-auto lg:ml-0 break-words" id="waPreviewText" style="line-height: 1.5;"></div>
+                    <div class="w-full lg:w-7/12 flex flex-col min-h-0 bg-gray-50">
+                        <div class="p-4 md:p-5 flex flex-col h-full min-h-0">
+                            <label class="block text-xs md:text-sm font-bold text-mi-text1 uppercase tracking-wide mb-2.5 shrink-0">Preview WhatsApp</label>
+                            <div class="wa-preview-bg rounded-xl border border-mi-border shadow-inner flex-1 overflow-y-auto relative p-3 md:p-5 min-h-[300px] lg:min-h-0">
+                                <div class="bg-white p-3.5 md:p-5 rounded-xl rounded-tl-sm shadow-[0_1px_2px_rgba(0,0,0,0.1)] text-xs md:text-[13px] text-gray-800 whitespace-pre-wrap font-sans max-w-full break-words" id="waPreviewText" style="line-height: 1.5;"></div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-                
-                <!-- Modal Footer -->
-                <div class="bg-gray-50 px-4 md:px-6 py-3 md:py-4 flex flex-row w-full gap-2 sm:gap-3 border-t border-mi-border shrink-0 rounded-b-2xl">
-                    <button type="button" onclick="shareToWhatsApp()" class="flex-1 inline-flex justify-center items-center rounded-xl px-2 sm:px-4 py-2.5 sm:py-3 bg-[#25D366] hover:bg-[#1DA851] text-xs sm:text-sm md:text-base font-bold text-white transition-colors shadow-sm">
-                        <i class="fa-brands fa-whatsapp mr-1.5 sm:mr-2 text-base sm:text-lg"></i> Bagikan WhatsApp
-                    </button>
-                    <button type="button" onclick="copyWhatsAppReport()" class="flex-1 inline-flex justify-center items-center rounded-xl border border-[#B8D9D2] shadow-sm px-2 sm:px-4 py-2.5 sm:py-3 bg-[#E8F3F0] text-xs sm:text-sm md:text-base font-bold text-[#124F47] hover:bg-[#D9EEE8] transition-colors">
+                <div class="bg-white px-4 md:px-6 py-3 md:py-4 flex flex-row w-full gap-2 sm:gap-3 border-t border-mi-border shrink-0">
+                    <button type="button" onclick="copyWhatsAppReport()" class="flex-1 inline-flex justify-center items-center rounded-xl border border-[#B8D9D2] shadow-sm px-2 sm:px-4 py-2.5 sm:py-3 bg-[#E8F3F0] text-xs sm:text-sm font-bold text-[#124F47] hover:bg-[#D9EEE8] transition-colors">
                         <i class="fa-regular fa-copy mr-1.5 sm:mr-2 text-base sm:text-lg"></i> Salin Pesan
+                    </button>
+                    <button type="button" onclick="shareToWhatsApp()" class="flex-1 inline-flex justify-center items-center rounded-xl px-2 sm:px-4 py-2.5 sm:py-3 bg-[#25D366] hover:bg-[#1DA851] text-xs sm:text-sm font-bold text-white transition-colors shadow-sm">
+                        <i class="fa-brands fa-whatsapp mr-1.5 sm:mr-2 text-base sm:text-lg"></i> Share WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tambah Hari Libur -->
+    <div id="modalAddHoliday" class="modal-container-fixed hidden" aria-hidden="true">
+        <div class="modal-overlay bg-[#19312E]/60 backdrop-blur-sm" onclick="closeModal('modalAddHoliday')"></div>
+        <div class="modal-wrapper min-h-screen w-full flex items-center justify-center p-3 sm:p-4 pointer-events-none">
+            <div class="modal-content-box pointer-events-auto relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-mi-border flex flex-col">
+                <div class="px-4 md:px-6 py-4 border-b border-mi-border flex justify-between items-center bg-white rounded-t-2xl shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-mi-soft text-mi-primary flex items-center justify-center text-lg"><i class="fa-solid fa-umbrella-beach"></i></div>
+                        <div>
+                            <h3 class="text-base md:text-lg font-bold text-mi-text1 leading-tight">Tambah Hari Libur</h3>
+                            <p class="text-[10px] md:text-xs text-mi-text2 mt-0.5">Tambahkan tanggal libur sekolah ke kalender presensi.</p>
+                        </div>
+                    </div>
+                    <button onclick="closeModal('modalAddHoliday')" class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-mi-bg hover:bg-rose-100 hover:text-rose-600 text-mi-text2 flex items-center justify-center transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+                <div class="p-4 md:p-6 flex flex-col gap-4">
+                    <input type="hidden" id="holOldDateInput" value="">
+                    <div>
+                        <label class="block text-xs font-bold text-mi-text2 uppercase tracking-wide mb-1.5">Tanggal</label>
+                        <input type="date" id="holDateInput" class="w-full border border-mi-border rounded-xl bg-white py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-sm text-mi-text1 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-mi-text2 uppercase tracking-wide mb-1.5">Jenis Libur</label>
+                        <select id="holTypeInput" class="w-full border border-mi-border rounded-xl bg-white py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-sm text-mi-text1 transition-all">
+                            <option value="Libur Nasional">Libur Nasional</option>
+                            <option value="Libur Sekolah">Libur Sekolah</option>
+                            <option value="Cuti Bersama">Cuti Bersama</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-mi-text2 uppercase tracking-wide mb-1.5">Keterangan</label>
+                        <input type="text" id="holDescInput" placeholder="Contoh: Hari Kemerdekaan RI" class="w-full border border-mi-border rounded-xl bg-white py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-sm text-mi-text1 transition-all">
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 md:px-6 py-4 flex w-full gap-2 sm:gap-3 border-t border-mi-border rounded-b-2xl">
+                    <button onclick="closeModal('modalAddHoliday')" class="flex-1 inline-flex justify-center items-center rounded-xl border border-mi-border shadow-sm px-2 sm:px-4 py-2.5 bg-white text-xs sm:text-sm font-bold text-gray-500 hover:bg-gray-50 transition-colors">Batal</button>
+                    <button onclick="saveHoliday()" id="btnSaveHoliday" class="flex-1 inline-flex justify-center items-center rounded-xl px-2 sm:px-4 py-2.5 bg-mi-primary hover:bg-mi-dark text-xs sm:text-sm font-bold text-white transition-colors shadow-sm gap-2">
+                        <i class="fa-solid fa-save"></i> Simpan Hari Libur
                     </button>
                 </div>
             </div>
@@ -821,42 +765,27 @@
 
     <!-- MOBILE FOOTER NAV -->
     <nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-mi-border shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-40 px-1 py-1.5 flex justify-between items-center pb-[calc(env(safe-area-inset-bottom)+6px)] gap-1">
-        
-        <!-- 1. Riwayat -->
         <button onclick="switchTab('riwayat')" id="nav-riwayat" class="flex flex-col items-center justify-center w-[20%] py-1 rounded-xl text-mi-primary bg-mi-soft font-semibold transition-all">
-            <i class="fa-regular fa-clock text-lg md:text-xl mb-1"></i>
-            <span class="text-[9px] md:text-[10px]">Riwayat</span>
+            <i class="fa-regular fa-clock text-lg md:text-xl mb-1"></i><span class="text-[9px] md:text-[10px]">Riwayat</span>
         </button>
-        
-        <!-- 2. Rekap -->
         <button onclick="switchTab('rekap')" id="nav-rekap" class="flex flex-col items-center justify-center w-[20%] py-1 rounded-xl text-gray-400 font-medium hover:text-mi-primary hover:bg-[#F0F7F5] transition-all">
-            <i class="fa-solid fa-table-list text-lg md:text-xl mb-1"></i>
-            <span class="text-[9px] md:text-[10px]">Rekap</span>
+            <i class="fa-solid fa-table-list text-lg md:text-xl mb-1"></i><span class="text-[9px] md:text-[10px]">Rekap</span>
         </button>
-        
-        <!-- 3. Lainnya -->
         <div class="relative w-[20%] flex justify-center">
             <button onclick="toggleMobileMenu('menu-lainnya', 'nav-lainnya')" id="nav-lainnya" class="w-full flex flex-col items-center py-1 rounded-xl text-gray-400 font-medium hover:text-mi-primary hover:bg-[#F0F7F5] transition-all">
-                <i class="fa-solid fa-ellipsis-h text-lg md:text-xl mb-1"></i>
-                <span class="text-[9px] md:text-[10px]">Lainnya</span>
+                <i class="fa-solid fa-ellipsis-h text-lg md:text-xl mb-1"></i><span class="text-[9px] md:text-[10px]">Lainnya</span>
             </button>
             <div id="menu-lainnya" class="mobile-submenu absolute bottom-full mb-3 bg-white border border-mi-border rounded-xl shadow-lg flex-col w-36 overflow-hidden">
                 <button onclick="switchTab('analisa'); toggleMobileMenu('menu-lainnya', 'nav-lainnya')" class="px-4 py-2.5 text-left text-xs md:text-sm text-mi-text1 font-medium hover:bg-mi-soft border-b border-mi-border"><i class="fa-solid fa-chart-simple mr-2 w-4 text-center"></i>Analisa Data</button>
                 <button onclick="switchTab('kalender'); toggleMobileMenu('menu-lainnya', 'nav-lainnya')" class="px-4 py-2.5 text-left text-xs md:text-sm text-mi-text1 font-medium hover:bg-mi-soft"><i class="fa-regular fa-calendar-alt mr-2 w-4 text-center"></i>Kalender</button>
             </div>
         </div>
-
-        <!-- 4. Bagikan -->
         <button onclick="openWhatsAppModal(); closeAllMobileMenus();" class="flex flex-col items-center justify-center w-[20%] py-1 rounded-xl text-gray-400 font-medium hover:text-green-600 hover:bg-green-50 transition-all">
-            <i class="fa-brands fa-whatsapp text-lg md:text-xl mb-1"></i>
-            <span class="text-[9px] md:text-[10px]">Bagikan</span>
+            <i class="fa-brands fa-whatsapp text-lg md:text-xl mb-1"></i><span class="text-[9px] md:text-[10px]">Bagikan</span>
         </button>
-
-        <!-- 5. Export -->
         <div class="relative w-[20%] flex justify-center">
             <button onclick="toggleMobileMenu('menu-export', 'nav-export')" id="nav-export" class="w-full flex flex-col items-center py-1 rounded-xl text-gray-400 font-medium hover:text-mi-primary hover:bg-[#F0F7F5] transition-all">
-                <i class="fa-solid fa-file-export text-lg md:text-xl mb-1"></i>
-                <span class="text-[9px] md:text-[10px]">Export</span>
+                <i class="fa-solid fa-file-export text-lg md:text-xl mb-1"></i><span class="text-[9px] md:text-[10px]">Export</span>
             </button>
             <div id="menu-export" class="mobile-submenu absolute bottom-full mb-3 right-0 bg-white border border-mi-border rounded-xl shadow-lg flex-col w-32 overflow-hidden">
                 <button onclick="exportExcel(); toggleMobileMenu('menu-export', 'nav-export')" class="px-4 py-2.5 text-left text-xs md:text-sm text-[#18794E] font-semibold hover:bg-[#E8F3F0] border-b border-mi-border"><i class="fa-solid fa-file-excel mr-2"></i>Excel</button>
@@ -864,220 +793,168 @@
             </div>
         </div>
     </nav>
-
-    <!-- Overlay transparent -->
     <div id="mobile-menu-overlay" onclick="closeAllMobileMenus()" class="fixed inset-0 z-30 hidden"></div>
 
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        const CLASS_LIST = [
-            "7 Ar Rumaysha", "7 Atikah Binti Zaid", "7 Jafar Bin Abi Thalib", "7 Zaid Bin Tsabit",
-            "8 Al Biruni", "8 Jabir", "8 Asma", "8 Maryam",
-            "9 Al Batani", "9 Ibnu Khaldun", "9 Ummu Aiman", "9 Ummu Salamah"
-        ];
+        // PASTI GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVhlTRXzujPhhI-FtzYMbKFzeauHknhPO-yiN_LNqaqxI60zOX0t1llrfKHwyftOxZ2g/exec'; 
 
-        const FIRST_NAMES = ["Ahmad", "Budi", "Siti", "Dhiya", "Rivan", "Akbar", "Aisyah", "Fatimah", "Umar", "Ali", "Hasan", "Husain", "Nisa", "Zahra", "Muhammad", "Rizky", "Putri", "Aditya", "Dimas", "Ayu", "Dewi", "Fajar", "Gilang", "Indra", "Joko"];
-        const LAST_NAMES = ["Pratama", "Saputra", "Wijaya", "Kurniawan", "Sari", "Lestari", "Nugroho", "Santoso", "Hidayat", "Wahyudi", "Ramadhan", "Fitriani", "Agustin", "Baskoro", "Syahputra"];
-        const REASONS = {
-            'Sakit': ["Demam", "Flu dan Batuk", "Tipes", "Sakit Perut", "Tidak enak badan"],
-            'Izin': ["Keperluan keluarga", "Menjenguk nenek", "Acara pernikahan", "Bikin KK/KTP", "Lomba di luar sekolah"]
+        // STATE MANAGER
+        const APP_STATE = {
+            classes: [],
+            holidays: [],
+            students: [],
+            records: [], // Data presensi raw dari DB
+            masterRecords: [], // Data tergabung (Hadir/Sakit/Izin/Alpa + Belum Diisi + Libur)
+            filteredData: [], // Hasil filter (search, status) untuk ditampilkan
+            summary: {},
+            currentTab: 'riwayat',
+            rekapMode: 'ringkas',
+            waFormat: 'format_1',
+            currentStudentId: null,
+            pagination: {
+                riwayat: { page: 1, limit: 25 },
+                rekap: { page: 1, limit: 25 }
+            },
+            charts: { distribusi: null, kelas: null, studentDetail: null }
         };
 
-        let studentsMaster = []; 
-        let attendanceMaster = []; 
-        
-        // --- DATABASE HARI LIBUR (KALENDER) ---
-        let holidaysMaster = [
-            { date: '2026-09-02', type: 'Libur Sekolah', desc: 'Rapat Dinas Guru' },
-            { date: '2026-09-17', type: 'Libur Nasional', desc: 'Maulid Nabi Muhammad SAW' }
-        ];
-        
-        let currentFilteredAttendance = [];
-        let currentSummary = {};
-        
-        let currentTab = 'riwayat';
-        let rekapMode = 'ringkas'; // ringkas | harian
-        let charts = { distribusi: null, kelas: null, studentDetail: null };
-        let currentStudentId = null; 
-
-        // State Pagination
-        let pgState = {
-            riwayat: { page: 1, limit: 25 },
-            rekap: { page: 1, limit: 25 }
-        };
-
-        // State untuk modal WA
-        let waFormat = 'ringkas'; // ringkas, format_1, format_2
-
-        function formatDateYYYYMMDD(date) {
-            const y = date.getFullYear();
-            const m = String(date.getMonth() + 1).padStart(2, '0');
-            const d = String(date.getDate()).padStart(2, '0');
-            return `${y}-${m}-${d}`;
-        }
-        function formatShortDate(dateStr) {
-            const d = new Date(dateStr);
-            const days = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
-            return `${d.getDate()} ${days[d.getDay()]}`;
-        }
-        function formatDateIndo(dateString) {
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-            return new Date(dateString).toLocaleDateString('id-ID', options);
-        }
-        function formatNumber(num) {
-            return (num || 0).toLocaleString('id-ID');
-        }
-        function calculatePercentage(part, total) {
-            if (total === 0) return 0;
-            return ((part / total) * 100);
-        }
-        function formatPercentage(value) {
-            return Number(value || 0).toFixed(2).replace('.', ',') + '%';
-        }
-
-        function getStatusBadgeHtml(percentage) {
-            if (percentage >= 95) return `<span class="px-2 py-1 inline-flex text-[10px] md:text-[11px] leading-4 font-bold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Sangat Baik</span>`;
-            if (percentage >= 90) return `<span class="px-2 py-1 inline-flex text-[10px] md:text-[11px] leading-4 font-bold rounded-full bg-blue-50 text-blue-700 border border-blue-200">Baik</span>`;
-            if (percentage >= 80) return `<span class="px-2 py-1 inline-flex text-[10px] md:text-[11px] leading-4 font-bold rounded-full bg-orange-50 text-orange-700 border border-orange-200">Perlu Perhatian</span>`;
-            return `<span class="px-2 py-1 inline-flex text-[10px] md:text-[11px] leading-4 font-bold rounded-full bg-rose-50 text-rose-700 border border-rose-200">Perlu Pembinaan</span>`;
-        }
-
-        function getStatusColor(status) {
-            switch(status) {
-                case 'Hadir': return `<span class="px-2 md:px-2.5 py-1 inline-flex text-[10px] md:text-[11px] font-bold rounded-md bg-[#d1fae5] text-[#065f46]"><i class="fa-solid fa-check mr-1 md:mr-1.5 mt-0.5"></i> Hadir</span>`;
-                case 'Sakit': return `<span class="px-2 md:px-2.5 py-1 inline-flex text-[10px] md:text-[11px] font-bold rounded-md bg-[#ffedd5] text-[#9a3412]"><i class="fa-solid fa-thermometer-half mr-1 md:mr-1.5 mt-0.5"></i> Sakit</span>`;
-                case 'Izin':  return `<span class="px-2 md:px-2.5 py-1 inline-flex text-[10px] md:text-[11px] font-bold rounded-md bg-[#cffafe] text-[#155e75]"><i class="fa-solid fa-envelope-open-text mr-1 md:mr-1.5 mt-0.5"></i> Izin</span>`;
-                case 'Alpa':  return `<span class="px-2 md:px-2.5 py-1 inline-flex text-[10px] md:text-[11px] font-bold rounded-md bg-[#ffe4e6] text-[#9f1239]"><i class="fa-solid fa-xmark mr-1 md:mr-1.5 mt-0.5"></i> Alpa</span>`;
-                default: return status;
+        // ==========================================
+        // API UTILITY
+        // ==========================================
+        async function apiRequest(action, data = {}) {
+            if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'MASUKKAN_URL_WEB_APP_DI_SINI') {
+                throw new Error('APPS_SCRIPT_URL belum dikonfigurasi.');
             }
-        }
-
-        // --- HELPER EXPORT FILE NAME ---
-        function getFormattedDateForFile(dateString) {
-            if (!dateString) return '';
-            const parts = dateString.split('-');
-            if (parts.length === 3) {
-                return `${parts[2]}-${parts[1]}-${parts[0]}`;
-            }
-            return dateString;
-        }
-
-        function generateExportFileName(reportName, extension) {
-            const startDate = document.getElementById('filterStartDate').value;
-            const endDate = document.getElementById('filterEndDate').value;
-            const selectedClass = document.getElementById('filterKelas').value;
-
-            let periodStr = '';
-            if (startDate === endDate) {
-                periodStr = getFormattedDateForFile(startDate);
-            } else {
-                periodStr = `${getFormattedDateForFile(startDate)}_s.d._${getFormattedDateForFile(endDate)}`;
-            }
-
-            let classStr = '';
-            if (selectedClass !== 'all') {
-                let sanitizedClass = selectedClass.replace(/[\\/:*?"<>|]/g, '_').replace(/\s+/g, '_');
-                sanitizedClass = sanitizedClass.replace(/_+/g, '_');
-                classStr = sanitizedClass + '_';
-            }
-
-            return `${reportName}_${classStr}${periodStr}.${extension}`;
-        }
-
-        function initializeDummyData() {
-            let studentIdCounter = 1;
-            CLASS_LIST.forEach(className => {
-                const numStudents = Math.floor(Math.random() * 5) + 22; 
-                for(let i=0; i<numStudents; i++) {
-                    const fName = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
-                    const lName = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
-                    studentsMaster.push({
-                        id: `S${studentIdCounter.toString().padStart(4, '0')}`,
-                        name: `${fName} ${lName}`,
-                        className: className,
-                        trait: Math.random() < 0.05 ? 'often_absent' : (Math.random() < 0.1 ? 'often_sick' : 'normal')
-                    });
-                    studentIdCounter++;
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action, ...data })
+                });
+                const text = await response.text();
+                if (!text) throw new Error('Server tidak mengembalikan respons.');
+                
+                let result;
+                try { result = JSON.parse(text); } 
+                catch (e) { throw new Error('Respons server tidak valid.'); }
+                
+                if (!result || result.status !== 'success') {
+                    throw new Error(result?.message || 'Terjadi kesalahan pada server.');
                 }
-            });
+                return result;
+            } catch (err) {
+                console.error('API Error:', err);
+                throw err;
+            }
+        }
 
-            const today = new Date(); 
-            const thirtyDaysAgo = new Date(today);
-            thirtyDaysAgo.setDate(today.getDate() - 29);
+        // ==========================================
+        // INIT & LOAD FLOW
+        // ==========================================
+        window.onload = function() {
+            setDefaultTodayPeriod();
+            initApp();
+            
+            // Listeners
+            document.getElementById('filterSearch').addEventListener('keyup', (e) => { if(e.key === 'Enter') applyLocalFilters(); });
+        };
 
-            for (let d = new Date(thirtyDaysAgo); d <= today; d.setDate(d.getDate() + 1)) {
-                if (d.getDay() === 0 || d.getDay() === 6) continue;
+        function setDefaultTodayPeriod() {
+            const todayStr = formatDateYYYYMMDD(new Date());
+            document.getElementById('filterStartDate').value = todayStr;
+            document.getElementById('filterEndDate').value = todayStr;
+            document.getElementById('filterPeriode').value = 'today';
+        }
+
+        async function initApp() {
+            showGlobalLoading(true);
+            try {
+                const res = await apiRequest('getInitData');
+                APP_STATE.classes = res.data.classes || [];
+                APP_STATE.holidays = res.data.holidays || [];
                 
-                const dateStr = formatDateYYYYMMDD(d);
-                if (holidaysMaster.some(h => h.date === dateStr)) continue;
+                // Populate Class Dropdown
+                const classSelect = document.getElementById('filterKelas');
+                classSelect.innerHTML = '<option value="all">Semua Kelas</option>';
+                APP_STATE.classes.forEach(c => {
+                    classSelect.innerHTML += `<option value="${c}">${c}</option>`;
+                });
+
+                renderKalenderTable();
                 
-                studentsMaster.forEach(student => {
-                    let status = 'Hadir';
-                    let notes = '-';
+                // Langsung fetch data presensi berdasarkan filter default (Hari Ini, Semua Kelas)
+                await fetchPresensiData();
+
+            } catch (error) {
+                Swal.fire('Gagal Inisialisasi', error.message, 'error');
+            } finally {
+                showGlobalLoading(false);
+            }
+        }
+
+        async function fetchPresensiData() {
+            const startD = document.getElementById('filterStartDate').value;
+            const endD = document.getElementById('filterEndDate').value;
+            const classFilter = document.getElementById('filterKelas').value;
+
+            showOverlayLoading(true);
+            try {
+                const res = await apiRequest('getPresensiData', { startDate: startD, endDate: endD, classId: classFilter });
+                APP_STATE.students = res.data.students || [];
+                APP_STATE.records = res.data.records || [];
+                
+                buildMasterRecords();
+                applyLocalFilters(); // Otomatis mengupdate UI
+
+            } catch (error) {
+                Swal.fire('Gagal Mengambil Data', error.message, 'error');
+                showEmptyStates();
+            } finally {
+                showOverlayLoading(false);
+            }
+        }
+
+        // ==========================================
+        // DATA PROCESSING
+        // ==========================================
+        
+        // Memadukan Siswa, Record, Kalender untuk membentuk record harian lengkap
+        function buildMasterRecords() {
+            const start = new Date(document.getElementById('filterStartDate').value);
+            const end = new Date(document.getElementById('filterEndDate').value);
+            let completeRecords = [];
+
+            for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+                if (d.getDay() === 0 || d.getDay() === 6) continue; // Skip weekend
+
+                const dStr = formatDateYYYYMMDD(d);
+                const holiday = APP_STATE.holidays.find(h => h.date === dStr);
+
+                APP_STATE.students.forEach(student => {
+                    let actualRecord = APP_STATE.records.find(r => r.studentId === student.id && r.date === dStr);
                     
-                    let rand = Math.random();
-                    if (student.trait === 'often_absent') {
-                        if(rand < 0.15) status = 'Alpa';
-                        else if(rand < 0.25) status = 'Izin';
-                        else if(rand < 0.30) status = 'Sakit';
-                    } else if (student.trait === 'often_sick') {
-                        if(rand < 0.20) status = 'Sakit';
-                        else if(rand < 0.25) status = 'Izin';
+                    if (holiday) {
+                        completeRecords.push({
+                            id: actualRecord ? actualRecord.id : `V_${student.id}_${dStr}`,
+                            studentId: student.id, studentName: student.name, className: student.className,
+                            date: dStr, status: 'Libur', notes: holiday.desc
+                        });
+                    } else if (actualRecord) {
+                        completeRecords.push({
+                            ...actualRecord, studentName: student.name, className: student.className
+                        });
                     } else {
-                        if(rand < 0.02) status = 'Alpa';
-                        else if(rand < 0.05) status = 'Izin';
-                        else if(rand < 0.08) status = 'Sakit';
+                        completeRecords.push({
+                            id: `V_${student.id}_${dStr}`,
+                            studentId: student.id, studentName: student.name, className: student.className,
+                            date: dStr, status: 'Belum Diisi', notes: '-'
+                        });
                     }
-
-                    if (status === 'Sakit') notes = REASONS['Sakit'][Math.floor(Math.random() * REASONS['Sakit'].length)];
-                    else if (status === 'Izin') notes = REASONS['Izin'][Math.floor(Math.random() * REASONS['Izin'].length)];
-                    else if (status === 'Alpa') notes = 'Tanpa Keterangan';
-
-                    attendanceMaster.push({
-                        id: `A${Math.random().toString(36).substr(2, 9)}`,
-                        studentId: student.id,
-                        date: dateStr,
-                        status: status,
-                        notes: notes
-                    });
                 });
             }
-        }
-
-        // --- DEFAULT HARI INI SAAT LOAD ---
-        function setDefaultTodayPeriod() {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            const todayString = `${year}-${month}-${day}`;
-
-            const periodSelect = document.getElementById('filterPeriode');
-            const startDate = document.getElementById('filterStartDate');
-            const endDate = document.getElementById('filterEndDate');
-
-            if (startDate && !startDate.value) {
-                startDate.value = todayString;
-            }
-
-            if (endDate && !endDate.value) {
-                endDate.value = todayString;
-            }
-
-            if (periodSelect && !periodSelect.value) {
-                periodSelect.value = 'today';
-            }
-        }
-
-        function initFilterUI() {
-            const classSelect = document.getElementById('filterKelas');
-            CLASS_LIST.forEach(c => {
-                let opt = document.createElement('option');
-                opt.value = c;
-                opt.innerHTML = c;
-                classSelect.appendChild(opt);
-            });
-
-            setDefaultTodayPeriod();
+            APP_STATE.masterRecords = completeRecords;
         }
 
         function handlePeriodChange() {
@@ -1085,28 +962,23 @@
             const startInput = document.getElementById('filterStartDate');
             const endInput = document.getElementById('filterEndDate');
             
-            startInput.disabled = true;
-            endInput.disabled = true;
+            startInput.disabled = true; endInput.disabled = true;
             const now = new Date();
 
             if (period === 'today') {
                 const todayStr = formatDateYYYYMMDD(now);
-                startInput.value = todayStr;
-                endInput.value = todayStr;
+                startInput.value = todayStr; endInput.value = todayStr;
             } else if (period === 'this_week') {
                 const currentDay = now.getDay() || 7; 
-                const monday = new Date(now);
-                monday.setDate(now.getDate() - currentDay + 1);
-                startInput.value = formatDateYYYYMMDD(monday);
-                endInput.value = formatDateYYYYMMDD(now);
+                const monday = new Date(now); monday.setDate(now.getDate() - currentDay + 1);
+                startInput.value = formatDateYYYYMMDD(monday); endInput.value = formatDateYYYYMMDD(now);
             } else if (period === 'this_month') {
                 const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
-                startInput.value = formatDateYYYYMMDD(firstDay);
                 const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+                startInput.value = formatDateYYYYMMDD(firstDay);
                 endInput.value = formatDateYYYYMMDD(now < lastDay ? now : lastDay);
             } else {
-                startInput.disabled = false;
-                endInput.disabled = false;
+                startInput.disabled = false; endInput.disabled = false;
             }
         }
 
@@ -1116,106 +988,94 @@
             document.getElementById('filterKelas').value = 'all';
             document.getElementById('filterStatus').value = 'all';
             document.getElementById('filterSearch').value = '';
-            applyFilters();
+            applyFilters(true);
         }
 
-        function applyFilters() {
-            pgState.riwayat.page = 1;
-            pgState.rekap.page = 1;
+        // isServerRequest = true (hit API), = false (filter lokal dari masterRecords yg sdh ditarik)
+        function applyFilters(isServerRequest = false) {
+            APP_STATE.pagination.riwayat.page = 1;
+            APP_STATE.pagination.rekap.page = 1;
 
-            const startDate = document.getElementById('filterStartDate').value;
-            const endDate = document.getElementById('filterEndDate').value;
-            const selectedClass = document.getElementById('filterKelas').value;
+            if (isServerRequest) {
+                fetchPresensiData();
+            } else {
+                applyLocalFilters();
+            }
+        }
+
+        function applyLocalFilters() {
             const selectedStatus = document.getElementById('filterStatus').value;
             const searchQuery = document.getElementById('filterSearch').value.toLowerCase();
 
-            let filteredStudents = studentsMaster;
-            if (selectedClass !== 'all') {
-                filteredStudents = filteredStudents.filter(s => s.className === selectedClass);
+            let filtered = APP_STATE.masterRecords;
+
+            // Apply status filter (Hanya relevan untuk tab Riwayat)
+            if (APP_STATE.currentTab === 'riwayat' && selectedStatus !== 'all') {
+                filtered = filtered.filter(r => r.status === selectedStatus);
             }
+
+            // Apply search
             if (searchQuery) {
-                filteredStudents = filteredStudents.filter(s => s.name.toLowerCase().includes(searchQuery));
+                filtered = filtered.filter(r => r.studentName.toLowerCase().includes(searchQuery));
             }
-            const studentIds = new Set(filteredStudents.map(s => s.id));
 
-            currentFilteredAttendance = attendanceMaster.filter(record => {
-                if (record.date < startDate || record.date > endDate) return false;
-                if (!studentIds.has(record.studentId)) return false;
-                
-                let d = new Date(record.date);
-                if (d.getDay() === 0 || d.getDay() === 6) return false;
-                if (holidaysMaster.some(h => h.date === record.date)) return false;
-
-                if (currentTab === 'riwayat' && selectedStatus !== 'all' && record.status !== selectedStatus) return false;
-                return true;
-            });
-
-            currentFilteredAttendance = currentFilteredAttendance.map(record => {
-                const s = studentsMaster.find(x => x.id === record.studentId);
-                return { ...record, studentName: s.name, className: s.className };
-            });
-
-            calculateSummary(filteredStudents, startDate, endDate);
+            APP_STATE.filteredData = filtered;
+            
+            calculateSummary();
             updateUI();
             
-            const modalWa = document.getElementById('modalWhatsApp');
-            if (modalWa && !modalWa.classList.contains('hidden')) {
+            if (!document.getElementById('modalWhatsApp').classList.contains('hidden')) {
                 generateWhatsAppReport();
             }
         }
 
-        function getEffectiveDaysInfo(startDateStr, endDateStr) {
-            let eff = 0;
-            let hols = 0;
-            let datesObj = [];
+        function calculateSummary() {
+            const startDate = document.getElementById('filterStartDate').value;
+            const endDate = document.getElementById('filterEndDate').value;
             
-            let start = new Date(startDateStr);
-            let end = new Date(endDateStr);
+            let eff = 0, hols = 0, datesObj = [];
+            let start = new Date(startDate);
+            let end = new Date(endDate);
 
             for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
                 if (d.getDay() !== 0 && d.getDay() !== 6) { 
                     const dStr = formatDateYYYYMMDD(d);
-                    const holiday = holidaysMaster.find(h => h.date === dStr);
-                    if (holiday) {
-                        hols++;
-                        datesObj.push({ date: dStr, isHoliday: true, desc: holiday.desc, type: holiday.type });
-                    } else {
-                        eff++;
-                        datesObj.push({ date: dStr, isHoliday: false });
-                    }
+                    const holiday = APP_STATE.holidays.find(h => h.date === dStr);
+                    if (holiday) { hols++; datesObj.push({ date: dStr, isHoliday: true, desc: holiday.desc, type: holiday.type }); } 
+                    else { eff++; datesObj.push({ date: dStr, isHoliday: false }); }
                 }
             }
-            return { effective: eff, holidays: hols, dates: datesObj };
-        }
 
-        function calculateSummary(filteredStudents, startDate, endDate) {
-            let effInfo = getEffectiveDaysInfo(startDate, endDate);
-            
-            currentSummary.hariEfektif = effInfo.effective;
-            currentSummary.hariLibur = effInfo.holidays;
-            currentSummary.datesObj = effInfo.dates;
+            APP_STATE.summary.hariEfektif = eff;
+            APP_STATE.summary.hariLibur = hols;
+            APP_STATE.summary.datesObj = datesObj;
 
             let h = 0, s = 0, i = 0, a = 0;
-            currentFilteredAttendance.forEach(rec => {
+            // Gunakan masterRecords utk perhitungan summary agar tidak bias filter pencarian lokal
+            APP_STATE.masterRecords.forEach(rec => {
                 if (rec.status === 'Hadir') h++;
                 else if (rec.status === 'Sakit') s++;
                 else if (rec.status === 'Izin') i++;
                 else if (rec.status === 'Alpa') a++;
             });
 
-            currentSummary.totalStudents = filteredStudents.length;
-            currentSummary.totalRecords = currentFilteredAttendance.length;
-            currentSummary.h = h;
-            currentSummary.s = s;
-            currentSummary.i = i;
-            currentSummary.a = a;
+            // Filter pencarian untuk Rekap
+            const searchQuery = document.getElementById('filterSearch').value.toLowerCase();
+            let relevantStudents = APP_STATE.students;
+            if(searchQuery) {
+                relevantStudents = relevantStudents.filter(st => st.name.toLowerCase().includes(searchQuery));
+            }
+
+            APP_STATE.summary.totalStudents = APP_STATE.students.length;
+            APP_STATE.summary.totalRecords = APP_STATE.masterRecords.length;
+            APP_STATE.summary.h = h; APP_STATE.summary.s = s; APP_STATE.summary.i = i; APP_STATE.summary.a = a;
             
-            let maxExpectedRecords = currentSummary.totalStudents * effInfo.effective;
-            currentSummary.pct = calculatePercentage(h, maxExpectedRecords);
+            let maxExpectedRecords = APP_STATE.summary.totalStudents * eff;
+            APP_STATE.summary.pct = calculatePercentage(h, maxExpectedRecords);
             
-            currentSummary.recapData = [];
-            filteredStudents.forEach(student => {
-                const records = currentFilteredAttendance.filter(r => r.studentId === student.id);
+            APP_STATE.summary.recapData = [];
+            relevantStudents.forEach(student => {
+                const records = APP_STATE.masterRecords.filter(r => r.studentId === student.id);
                 let sh=0, ss=0, si=0, sa=0;
                 records.forEach(r => {
                     if (r.status === 'Hadir') sh++;
@@ -1223,21 +1083,17 @@
                     else if (r.status === 'Izin') si++;
                     else if (r.status === 'Alpa') sa++;
                 });
-
-                currentSummary.recapData.push({
-                    id: student.id,
-                    name: student.name,
-                    className: student.className,
-                    h: sh, s: ss, i: si, a: sa,
-                    pct: calculatePercentage(sh, effInfo.effective) 
+                APP_STATE.summary.recapData.push({
+                    id: student.id, name: student.name, className: student.className,
+                    h: sh, s: ss, i: si, a: sa, pct: calculatePercentage(sh, eff) 
                 });
             });
             
-            currentSummary.classRecap = {};
-            CLASS_LIST.forEach(c => {
-                const classStudents = filteredStudents.filter(s => s.className === c);
+            APP_STATE.summary.classRecap = {};
+            APP_STATE.classes.forEach(c => {
+                const classStudents = APP_STATE.students.filter(st => st.className === c);
                 if(classStudents.length > 0) {
-                    const classRecs = currentFilteredAttendance.filter(r => r.className === c);
+                    const classRecs = APP_STATE.masterRecords.filter(r => r.className === c);
                     let ch=0, cs=0, ci=0, ca=0;
                     classRecs.forEach(r => {
                         if (r.status === 'Hadir') ch++;
@@ -1245,53 +1101,74 @@
                         else if (r.status === 'Izin') ci++;
                         else if (r.status === 'Alpa') ca++;
                     });
-                    
-                    let expectedClassRecs = classStudents.length * effInfo.effective;
-                    currentSummary.classRecap[c] = {
+                    APP_STATE.summary.classRecap[c] = {
                         studentCount: classStudents.length,
                         h: ch, s: cs, i: ci, a: ca,
-                        pct: calculatePercentage(ch, expectedClassRecs)
+                        pct: calculatePercentage(ch, classStudents.length * eff)
                     };
                 }
             });
         }
 
-        function changePageLimit(tab, val) {
-            pgState[tab].limit = parseInt(val);
-            pgState[tab].page = 1;
-            updateUI();
-        }
-        function changePage(tab, direction) {
-            let limit = pgState[tab].limit;
-            let total = 0;
-            if(tab === 'riwayat') total = currentFilteredAttendance.length;
-            if(tab === 'rekap') total = currentSummary.recapData.length;
+        // ==========================================
+        // UI RENDERING
+        // ==========================================
+        
+        function switchTab(tabId) {
+            APP_STATE.currentTab = tabId;
+            closeAllMobileMenus();
             
-            let maxPage = Math.ceil(total / limit);
-            pgState[tab].page += direction;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const activeDesktopBtn = document.getElementById(`tab-${tabId}`);
+            if (activeDesktopBtn) activeDesktopBtn.classList.add('active');
             
-            if(pgState[tab].page < 1) pgState[tab].page = 1;
-            if(pgState[tab].page > maxPage) pgState[tab].page = maxPage || 1;
-            updateUI();
+            const navIds = ['nav-riwayat', 'nav-rekap', 'nav-lainnya', 'nav-export'];
+            navIds.forEach(nav => {
+                const el = document.getElementById(nav);
+                if (el) { el.classList.remove('text-mi-primary', 'bg-mi-soft', 'font-semibold'); el.classList.add('text-gray-400', 'font-medium'); }
+            });
+            
+            if(tabId === 'riwayat' || tabId === 'rekap') {
+                const activeMobileNav = document.getElementById(`nav-${tabId}`);
+                if (activeMobileNav) { activeMobileNav.classList.remove('text-gray-400', 'font-medium'); activeMobileNav.classList.add('text-mi-primary', 'bg-mi-soft', 'font-semibold'); }
+            } else if (tabId === 'analisa' || tabId === 'kalender') {
+                const navLainnya = document.getElementById('nav-lainnya');
+                navLainnya.classList.remove('text-gray-400', 'font-medium'); navLainnya.classList.add('text-mi-primary', 'bg-mi-soft', 'font-semibold');
+            }
+
+            ['rekap', 'riwayat', 'analisa', 'kalender'].forEach(id => {
+                document.getElementById(`content-${id}`).classList.add('hidden');
+                document.getElementById(`content-${id}`).classList.remove('flex');
+            });
+            
+            const selectedContent = document.getElementById(`content-${tabId}`);
+            selectedContent.classList.remove('hidden');
+            if(tabId === 'riwayat' || tabId === 'rekap' || tabId === 'kalender') selectedContent.classList.add('flex');
+            else selectedContent.classList.add('block');
+
+            document.getElementById('filterStatusContainer').style.display = tabId === 'riwayat' ? 'block' : 'none';
+            document.getElementById('filterSearchContainer').style.display = (tabId === 'rekap' || tabId === 'riwayat') ? 'block' : 'none';
+
+            applyLocalFilters(); // Ensure correct data slice is rendered for tab
         }
 
         function updateUI() {
             renderSummaryCards();
-            if (currentTab === 'rekap') renderRecapTable();
-            else if (currentTab === 'riwayat') renderHistoryTable();
-            else if (currentTab === 'analisa') renderAnalysis();
-            else if (currentTab === 'kalender') renderKalenderTable();
+            if (APP_STATE.currentTab === 'rekap') renderRecapTable();
+            else if (APP_STATE.currentTab === 'riwayat') renderHistoryTable();
+            else if (APP_STATE.currentTab === 'analisa') renderAnalysis();
+            else if (APP_STATE.currentTab === 'kalender') renderKalenderTable();
         }
 
         function renderSummaryCards() {
-            document.getElementById('cardTotalSiswa').innerText = formatNumber(currentSummary.totalStudents);
-            document.getElementById('cardHariEfektif').innerText = formatNumber(currentSummary.hariEfektif);
-            document.getElementById('cardHariLibur').innerText = formatNumber(currentSummary.hariLibur);
-            document.getElementById('cardHadir').innerText = formatNumber(currentSummary.h);
-            document.getElementById('cardSakit').innerText = formatNumber(currentSummary.s);
-            document.getElementById('cardIzin').innerText = formatNumber(currentSummary.i);
-            document.getElementById('cardAlpa').innerText = formatNumber(currentSummary.a);
-            document.getElementById('cardPersentase').innerText = formatPercentage(currentSummary.pct);
+            document.getElementById('cardTotalSiswa').innerText = formatNumber(APP_STATE.summary.totalStudents);
+            document.getElementById('cardHariEfektif').innerText = formatNumber(APP_STATE.summary.hariEfektif);
+            document.getElementById('cardHariLibur').innerText = formatNumber(APP_STATE.summary.hariLibur);
+            document.getElementById('cardHadir').innerText = formatNumber(APP_STATE.summary.h);
+            document.getElementById('cardSakit').innerText = formatNumber(APP_STATE.summary.s);
+            document.getElementById('cardIzin').innerText = formatNumber(APP_STATE.summary.i);
+            document.getElementById('cardAlpa').innerText = formatNumber(APP_STATE.summary.a);
+            document.getElementById('cardPersentase').innerText = formatPercentage(APP_STATE.summary.pct);
         }
 
         function renderHistoryTable() {
@@ -1299,7 +1176,7 @@
             const emptyState = document.getElementById('empty-riwayat');
             tbody.innerHTML = '';
 
-            let dataLength = currentFilteredAttendance.length;
+            let dataLength = APP_STATE.filteredData.length;
             if (dataLength === 0) {
                 emptyState.classList.remove('hidden');
                 document.getElementById('pg-info-riwayat').innerText = `Menampilkan 0-0 dari 0 data`;
@@ -1308,10 +1185,10 @@
             }
             emptyState.classList.add('hidden');
 
-            let displayData = [...currentFilteredAttendance].sort((a,b) => new Date(b.date) - new Date(a.date));
+            let displayData = [...APP_STATE.filteredData].sort((a,b) => new Date(b.date) - new Date(a.date));
             
-            let limit = pgState.riwayat.limit;
-            let page = pgState.riwayat.page;
+            let limit = APP_STATE.pagination.riwayat.limit;
+            let page = APP_STATE.pagination.riwayat.page;
             let start = (page - 1) * limit;
             let end = start + limit;
             const shownData = displayData.slice(start, end);
@@ -1335,16 +1212,15 @@
         }
 
         function setRekapMode(mode) {
-            rekapMode = mode;
+            APP_STATE.rekapMode = mode;
             document.getElementById('btn-rekap-ringkas').className = mode === 'ringkas' 
                 ? 'px-4 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all bg-mi-primary text-white shadow-sm' 
                 : 'px-4 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-all bg-mi-soft text-mi-text2 hover:text-mi-primary';
-            
             document.getElementById('btn-rekap-harian').className = mode === 'harian' 
                 ? 'px-4 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all bg-mi-primary text-white shadow-sm' 
                 : 'px-4 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-all bg-mi-soft text-mi-text2 hover:text-mi-primary';
             
-            pgState.rekap.page = 1;
+            APP_STATE.pagination.rekap.page = 1;
             renderRecapTable();
         }
 
@@ -1352,10 +1228,9 @@
             const thead = document.getElementById('thead-rekap');
             const tbody = document.getElementById('tbody-rekap');
             const emptyState = document.getElementById('empty-rekap');
-            thead.innerHTML = '';
-            tbody.innerHTML = '';
+            thead.innerHTML = ''; tbody.innerHTML = '';
 
-            let dataLength = currentSummary.recapData.length;
+            let dataLength = APP_STATE.summary.recapData.length;
             if (dataLength === 0) {
                 emptyState.classList.remove('hidden');
                 document.getElementById('pg-info-rekap').innerText = `Menampilkan 0-0 dari 0 data`;
@@ -1364,22 +1239,18 @@
             }
             emptyState.classList.add('hidden');
 
-            let limit = pgState.rekap.limit;
-            let page = pgState.rekap.page;
+            let limit = APP_STATE.pagination.rekap.limit;
+            let page = APP_STATE.pagination.rekap.page;
             let start = (page - 1) * limit;
             let end = start + limit;
 
-            let displayData = [...currentSummary.recapData].sort((a,b) => {
-                if(a.className < b.className) return -1;
-                if(a.className > b.className) return 1;
-                return a.name.localeCompare(b.name);
-            });
+            let displayData = [...APP_STATE.summary.recapData].sort((a,b) => a.className.localeCompare(b.className) || a.name.localeCompare(b.name));
             const shownData = displayData.slice(start, end);
 
             document.getElementById('pg-info-rekap').innerText = `Menampilkan ${start + 1}-${Math.min(end, dataLength)} dari ${formatNumber(dataLength)} data`;
             document.getElementById('pg-page-rekap').innerText = page;
 
-            if (rekapMode === 'ringkas') {
+            if (APP_STATE.rekapMode === 'ringkas') {
                 thead.innerHTML = `
                     <tr>
                         <th scope="col" class="px-4 py-3 text-left text-[10px] md:text-xs font-bold text-mi-text2 uppercase tracking-wider w-12 sticky left-0 bg-mi-bg/95 z-10">No</th>
@@ -1413,7 +1284,7 @@
                             </div>
                         </td>
                         <td class="px-4 py-3 whitespace-nowrap text-xs md:text-sm text-mi-text2 font-medium">${row.className}</td>
-                        <td class="px-4 py-3 whitespace-nowrap text-xs md:text-sm text-center font-bold text-slate-600 border-x border-mi-border/50 bg-slate-50/20">${currentSummary.hariEfektif}</td>
+                        <td class="px-4 py-3 whitespace-nowrap text-xs md:text-sm text-center font-bold text-slate-600 border-x border-mi-border/50 bg-slate-50/20">${APP_STATE.summary.hariEfektif}</td>
                         <td class="px-2 py-3 whitespace-nowrap text-xs md:text-sm text-center font-semibold text-mi-text1">${row.h}</td>
                         <td class="px-2 py-3 whitespace-nowrap text-xs md:text-sm text-center font-semibold text-mi-text1">${row.s}</td>
                         <td class="px-2 py-3 whitespace-nowrap text-xs md:text-sm text-center font-semibold text-mi-text1">${row.i}</td>
@@ -1431,7 +1302,7 @@
                     tbody.appendChild(tr);
                 });
 
-            } else if (rekapMode === 'harian') {
+            } else if (APP_STATE.rekapMode === 'harian') {
                 let thHtml = `
                     <tr>
                         <th scope="col" class="px-3 py-3 text-left text-[10px] md:text-xs font-bold text-mi-text2 uppercase tracking-wider w-10 sticky left-0 bg-mi-bg/95 z-20">No</th>
@@ -1440,7 +1311,7 @@
                         <th scope="col" class="px-3 py-3 text-center text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider border-r border-mi-border bg-slate-50/50">Hr Efektif</th>
                 `;
 
-                currentSummary.datesObj.forEach(dObj => {
+                APP_STATE.summary.datesObj.forEach(dObj => {
                     if (dObj.isHoliday) {
                         thHtml += `<th scope="col" class="px-2 py-3 text-center text-[9px] md:text-[10px] font-bold text-rose-700 bg-rose-50 uppercase border-r border-rose-200 whitespace-nowrap" title="${dObj.type} - ${dObj.desc}">${formatShortDate(dObj.date)}</th>`;
                     } else {
@@ -1468,23 +1339,21 @@
                             <span class="text-xs md:text-sm font-bold text-mi-text1 truncate max-w-[100px] md:max-w-[150px] inline-block">${row.name}</span>
                         </td>
                         <td class="px-3 py-2 whitespace-nowrap text-[10px] md:text-xs text-mi-text2 font-medium text-center border-t border-r border-mi-border">${row.className}</td>
-                        <td class="px-3 py-2 whitespace-nowrap text-xs md:text-sm font-bold text-slate-600 text-center border-t border-r border-mi-border bg-slate-50/20">${currentSummary.hariEfektif}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-xs md:text-sm font-bold text-slate-600 text-center border-t border-r border-mi-border bg-slate-50/20">${APP_STATE.summary.hariEfektif}</td>
                     `;
 
-                    currentSummary.datesObj.forEach(dObj => {
+                    APP_STATE.summary.datesObj.forEach(dObj => {
                         if (dObj.isHoliday) {
                             tdHtml += `<td class="px-1 py-2 text-center border-t border-r border-rose-200 bg-rose-50"><span class="text-[9px] font-bold text-rose-700 px-1.5 py-0.5 rounded-md bg-rose-100" title="${dObj.desc}">LIBUR</span></td>`;
                         } else {
-                            const rec = currentFilteredAttendance.find(a => a.studentId === row.id && a.date === dObj.date);
-                            let content = '-';
-                            let css = 'text-gray-400';
+                            const rec = APP_STATE.filteredData.find(a => a.studentId === row.id && a.date === dObj.date);
+                            let content = '-'; let css = 'text-gray-400';
                             if(rec) {
                                 if(rec.status==='Hadir') { content = 'H'; css = 'font-bold text-emerald-600'; }
                                 else if(rec.status==='Sakit') { content = 'S'; css = 'font-bold text-orange-500'; }
                                 else if(rec.status==='Izin') { content = 'I'; css = 'font-bold text-cyan-600'; }
                                 else if(rec.status==='Alpa') { content = 'A'; css = 'font-bold text-rose-600'; }
-                            } else {
-                                content = 'A'; css = 'font-bold text-rose-600';
+                                else if(rec.status==='Belum Diisi' || rec.status==='BDI') { content = 'BDI'; css = 'font-bold text-gray-500 bg-gray-100 rounded px-1'; }
                             }
                             tdHtml += `<td class="px-1 py-2 text-center text-xs ${css} border-t border-r border-mi-border">${content}</td>`;
                         }
@@ -1503,12 +1372,129 @@
             }
         }
 
+        function renderAnalysis() {
+            const ctxPie = document.getElementById('chartDistribusi').getContext('2d');
+            if (APP_STATE.charts.distribusi) APP_STATE.charts.distribusi.destroy();
+            APP_STATE.charts.distribusi = new Chart(ctxPie, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Hadir', 'Sakit', 'Izin', 'Alpa'],
+                    datasets: [{
+                        data: [APP_STATE.summary.h, APP_STATE.summary.s, APP_STATE.summary.i, APP_STATE.summary.a],
+                        backgroundColor: ['#34D399', '#FB923C', '#38BDF8', '#F87171'], borderWidth: 2, borderColor: '#ffffff'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Inter', size: window.innerWidth < 768 ? 10 : 12 } } } }, cutout: '70%' }
+            });
+
+            const selectedClass = document.getElementById('filterKelas').value;
+            const containerTable = document.getElementById('containerTableKelas');
+            const titleKelas = document.getElementById('titleAnalisaKelas');
+            let labels = []; let dataPct = [];
+
+            if (selectedClass === 'all') {
+                titleKelas.innerText = 'Perbandingan Kehadiran Antar Kelas';
+                containerTable.style.display = 'block';
+                const tbody = document.getElementById('tbody-analisa-kelas');
+                tbody.innerHTML = '';
+                
+                APP_STATE.classes.forEach(c => {
+                    if(APP_STATE.summary.classRecap && APP_STATE.summary.classRecap[c]) {
+                        const dat = APP_STATE.summary.classRecap[c];
+                        labels.push(c);
+                        dataPct.push(dat.pct);
+                        
+                        const tr = document.createElement('tr');
+                        tr.className = 'hover:bg-mi-soft/30 transition-colors';
+                        tr.innerHTML = `
+                            <td class="px-3 py-2 whitespace-nowrap text-xs font-bold text-mi-text1">${c}</td>
+                            <td class="px-2 py-2 whitespace-nowrap text-xs text-center text-mi-text2">${dat.studentCount}</td>
+                            <td class="px-2 py-2 whitespace-nowrap text-xs text-center font-semibold text-emerald-600">${dat.h}</td>
+                            <td class="px-2 py-2 whitespace-nowrap text-xs text-center font-semibold text-orange-500">${dat.s}</td>
+                            <td class="px-2 py-2 whitespace-nowrap text-xs text-center font-semibold text-cyan-600">${dat.i}</td>
+                            <td class="px-2 py-2 whitespace-nowrap text-xs text-center font-semibold text-rose-600">${dat.a}</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-xs text-center font-bold text-mi-primary">${formatPercentage(dat.pct)}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+            } else {
+                titleKelas.innerText = `Tren Kehadiran Kelas ${selectedClass}`;
+                containerTable.style.display = 'none';
+                labels = ['Hadir', 'Sakit', 'Izin', 'Alpa'];
+                dataPct = [APP_STATE.summary.h, APP_STATE.summary.s, APP_STATE.summary.i, APP_STATE.summary.a];
+            }
+
+            const ctxBar = document.getElementById('chartKelas').getContext('2d');
+            if (APP_STATE.charts.kelas) APP_STATE.charts.kelas.destroy();
+            APP_STATE.charts.kelas = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: selectedClass === 'all' ? 'Persentase Kehadiran (%)' : 'Jumlah Hari',
+                        data: dataPct,
+                        backgroundColor: selectedClass === 'all' ? '#124F47' : ['#34D399', '#FB923C', '#38BDF8', '#F87171'],
+                        borderRadius: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: selectedClass === 'all' ? 100 : undefined } } }
+            });
+
+            generateAnalysisConclusion();
+            generateAnalysisRecommendations();
+        }
+
+        function generateAnalysisConclusion() {
+            const startD = document.getElementById('filterStartDate').value;
+            const endD = document.getElementById('filterEndDate').value;
+            const selectedClass = document.getElementById('filterKelas').value;
+            const targetEl = document.getElementById('analisaKesimpulan');
+
+            if (APP_STATE.summary.totalRecords === 0) {
+                targetEl.innerHTML = "Tidak ada data presensi yang sesuai dengan filter yang dipilih.";
+                return;
+            }
+
+            let periodText = startD === endD ? `tanggal <strong>${formatDateIndo(startD)}</strong>` : `periode <strong>${formatDateIndo(startD)} s/d ${formatDateIndo(endD)}</strong>`;
+            let classText = selectedClass === 'all' ? "seluruh kelas" : `kelas <strong>${selectedClass}</strong>`;
+
+            targetEl.innerHTML = `Berdasarkan data presensi ${classText} pada ${periodText}, tercatat sebanyak <strong>${APP_STATE.summary.totalStudents} siswa</strong>. Dalam rentang waktu tersebut terdapat <strong>${APP_STATE.summary.hariEfektif} Hari Efektif</strong>. Persentase kehadiran mencapai <strong>${formatPercentage(APP_STATE.summary.pct)}</strong>.`;
+        }
+
+        function generateAnalysisRecommendations() {
+            const targetEl = document.getElementById('analisaRekomendasi');
+            targetEl.innerHTML = '';
+            if (APP_STATE.summary.totalRecords === 0) { targetEl.innerHTML = "<li>-</li>"; return; }
+            let recs = [];
+            let total = APP_STATE.summary.totalRecords;
+            let alpaRate = (APP_STATE.summary.a / total) * 100;
+            let sakitRate = (APP_STATE.summary.s / total) * 100;
+            let izinRate = (APP_STATE.summary.i / total) * 100;
+
+            if (alpaRate > 2) recs.push('<i class="fa-solid fa-circle-exclamation text-rose-500 mr-2 mt-0.5"></i> Perlu dilakukan pemantauan terhadap tingkat ketidakhadiran tanpa keterangan (Alpa).');
+            if (sakitRate > 5) recs.push('<i class="fa-solid fa-notes-medical text-orange-500 mr-2 mt-0.5"></i> Koordinasikan kondisi siswa yang sakit dengan wali kelas dan orang tua terkait.');
+            if (izinRate > 5) recs.push('<i class="fa-solid fa-envelope text-cyan-500 mr-2 mt-0.5"></i> Lakukan monitoring terhadap pola ketidakhadiran dengan status Izin yang cukup tinggi.');
+            
+            if (APP_STATE.summary.pct >= 95) recs.push('<i class="fa-solid fa-thumbs-up text-emerald-500 mr-2 mt-0.5"></i> Tingkat kehadiran sangat baik. Pertahankan monitoring presensi secara konsisten.');
+            else if (APP_STATE.summary.pct >= 90) recs.push('<i class="fa-solid fa-check text-emerald-500 mr-2 mt-0.5"></i> Tingkat kehadiran tergolong baik, lakukan evaluasi berkala untuk mencegah penurunan.');
+            
+            if (recs.length === 0) recs.push('<i class="fa-solid fa-clipboard-check text-mi-primary mr-2 mt-0.5"></i> Pertahankan monitoring presensi secara konsisten.');
+
+            recs.forEach(r => {
+                const li = document.createElement('li');
+                li.className = "flex items-start";
+                li.innerHTML = r;
+                targetEl.appendChild(li);
+            });
+        }
+
         function renderKalenderTable() {
             const tbody = document.getElementById('tbody-kalender');
             const emptyState = document.getElementById('empty-kalender');
             tbody.innerHTML = '';
 
-            let sortedHolidays = [...holidaysMaster].sort((a,b) => new Date(a.date) - new Date(b.date));
+            let sortedHolidays = [...APP_STATE.holidays].sort((a,b) => new Date(a.date) - new Date(b.date));
             if (sortedHolidays.length === 0) {
                 emptyState.classList.remove('hidden');
                 return;
@@ -1541,341 +1527,25 @@
             });
         }
 
-        function addHolidayPrompt() {
-            Swal.fire({
-                title: 'Tambah Hari Libur',
-                html: `
-                    <input type="date" id="swal-hol-date" class="w-full border border-gray-300 rounded-xl p-2 mb-3 text-sm focus:ring-2 focus:ring-mi-primary/20 outline-none">
-                    <select id="swal-hol-type" class="w-full border border-gray-300 rounded-xl p-2 mb-3 text-sm focus:ring-2 focus:ring-mi-primary/20 outline-none">
-                        <option value="Libur Nasional">Libur Nasional</option>
-                        <option value="Libur Sekolah">Libur Sekolah</option>
-                        <option value="Cuti Bersama">Cuti Bersama</option>
-                    </select>
-                    <input type="text" id="swal-hol-desc" class="w-full border border-gray-300 rounded-xl p-2 text-sm focus:ring-2 focus:ring-mi-primary/20 outline-none" placeholder="Keterangan Libur (cth: Idul Fitri)">
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Simpan',
-                cancelButtonText: 'Batal',
-                confirmButtonColor: '#124F47',
-                preConfirm: () => {
-                    const date = document.getElementById('swal-hol-date').value;
-                    const type = document.getElementById('swal-hol-type').value;
-                    const desc = document.getElementById('swal-hol-desc').value;
-                    if(!date || !desc) {
-                        Swal.showValidationMessage('Tanggal dan Keterangan wajib diisi!');
-                        return false;
-                    }
-                    if(holidaysMaster.find(h => h.date === date)) {
-                        Swal.showValidationMessage('Tanggal tersebut sudah diatur sebagai hari libur!');
-                        return false;
-                    }
-                    return {date, type, desc};
-                }
-            }).then((res) => {
-                if(res.isConfirmed) {
-                    holidaysMaster.push({ date: res.value.date, type: res.value.type, desc: res.value.desc });
-                    Swal.fire({title:'Tersimpan', icon:'success', toast:true, position:'top-end', showConfirmButton:false, timer:1500});
-                    applyFilters(); 
-                }
-            });
-        }
-
-        function editHolidayPrompt(oldDate) {
-            const hol = holidaysMaster.find(h => h.date === oldDate);
-            if (!hol) return;
-
-            Swal.fire({
-                title: 'Edit Hari Libur',
-                html: `
-                    <input type="date" id="swal-hol-date" class="w-full border border-gray-300 rounded-xl p-2 mb-3 text-sm focus:ring-2 focus:ring-mi-primary/20 outline-none" value="${hol.date}">
-                    <select id="swal-hol-type" class="w-full border border-gray-300 rounded-xl p-2 mb-3 text-sm focus:ring-2 focus:ring-mi-primary/20 outline-none">
-                        <option value="Libur Nasional" ${hol.type === 'Libur Nasional' ? 'selected' : ''}>Libur Nasional</option>
-                        <option value="Libur Sekolah" ${hol.type === 'Libur Sekolah' ? 'selected' : ''}>Libur Sekolah</option>
-                        <option value="Cuti Bersama" ${hol.type === 'Cuti Bersama' ? 'selected' : ''}>Cuti Bersama</option>
-                    </select>
-                    <input type="text" id="swal-hol-desc" class="w-full border border-gray-300 rounded-xl p-2 text-sm focus:ring-2 focus:ring-mi-primary/20 outline-none" value="${hol.desc}" placeholder="Keterangan Libur">
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Simpan Perubahan',
-                cancelButtonText: 'Batal',
-                confirmButtonColor: '#124F47',
-                preConfirm: () => {
-                    const date = document.getElementById('swal-hol-date').value;
-                    const type = document.getElementById('swal-hol-type').value;
-                    const desc = document.getElementById('swal-hol-desc').value;
-                    if(!date || !desc) {
-                        Swal.showValidationMessage('Tanggal dan Keterangan wajib diisi!');
-                        return false;
-                    }
-                    if(date !== oldDate && holidaysMaster.find(h => h.date === date)) {
-                        Swal.showValidationMessage('Tanggal tersebut sudah digunakan libur lain!');
-                        return false;
-                    }
-                    return {date, type, desc};
-                }
-            }).then((res) => {
-                if(res.isConfirmed) {
-                    const index = holidaysMaster.findIndex(h => h.date === oldDate);
-                    holidaysMaster[index] = { date: res.value.date, type: res.value.type, desc: res.value.desc };
-                    Swal.fire({title:'Diperbarui', icon:'success', toast:true, position:'top-end', showConfirmButton:false, timer:1500});
-                    applyFilters(); 
-                }
-            });
-        }
-
-        function deleteHoliday(date) {
-            Swal.fire({
-                title: 'Hapus Hari Libur?',
-                text: "Data akan dihapus dan Hari Efektif akan dikalkulasi ulang.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    holidaysMaster = holidaysMaster.filter(h => h.date !== date);
-                    Swal.fire({title:'Dihapus!', icon:'success', toast:true, position:'top-end', showConfirmButton:false, timer:1500});
-                    applyFilters();
-                }
-            });
-        }
-
-        function renderAnalysis() {
-            const ctxPie = document.getElementById('chartDistribusi').getContext('2d');
-            if (charts.distribusi) charts.distribusi.destroy();
-            charts.distribusi = new Chart(ctxPie, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Hadir', 'Sakit', 'Izin', 'Alpa'],
-                    datasets: [{
-                        data: [currentSummary.h, currentSummary.s, currentSummary.i, currentSummary.a],
-                        backgroundColor: ['#34D399', '#FB923C', '#38BDF8', '#F87171'],
-                        borderWidth: 2, borderColor: '#ffffff'
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Inter', size: window.innerWidth < 768 ? 10 : 12 } } } }, cutout: '70%' }
-            });
-
-            const selectedClass = document.getElementById('filterKelas').value;
-            const containerTable = document.getElementById('containerTableKelas');
-            const titleKelas = document.getElementById('titleAnalisaKelas');
-            let labels = []; let dataPct = [];
-
-            if (selectedClass === 'all') {
-                titleKelas.innerText = 'Perbandingan Kehadiran Antar Kelas';
-                containerTable.style.display = 'block';
-                const tbody = document.getElementById('tbody-analisa-kelas');
-                tbody.innerHTML = '';
-                
-                CLASS_LIST.forEach(c => {
-                    if(currentSummary.classRecap[c]) {
-                        const dat = currentSummary.classRecap[c];
-                        labels.push(c);
-                        dataPct.push(dat.pct);
-                        
-                        const tr = document.createElement('tr');
-                        tr.className = 'hover:bg-mi-soft/30 transition-colors';
-                        tr.innerHTML = `
-                            <td class="px-3 py-2 whitespace-nowrap text-xs font-bold text-mi-text1">${c}</td>
-                            <td class="px-2 py-2 whitespace-nowrap text-xs text-center text-mi-text2">${dat.studentCount}</td>
-                            <td class="px-2 py-2 whitespace-nowrap text-xs text-center font-semibold text-emerald-600">${dat.h}</td>
-                            <td class="px-2 py-2 whitespace-nowrap text-xs text-center font-semibold text-orange-500">${dat.s}</td>
-                            <td class="px-2 py-2 whitespace-nowrap text-xs text-center font-semibold text-cyan-600">${dat.i}</td>
-                            <td class="px-2 py-2 whitespace-nowrap text-xs text-center font-semibold text-rose-600">${dat.a}</td>
-                            <td class="px-3 py-2 whitespace-nowrap text-xs text-center font-bold text-mi-primary">${formatPercentage(dat.pct)}</td>
-                        `;
-                        tbody.appendChild(tr);
-                    }
-                });
-            } else {
-                titleKelas.innerText = `Tren Kehadiran Kelas ${selectedClass}`;
-                containerTable.style.display = 'none';
-                labels = ['Hadir', 'Sakit', 'Izin', 'Alpa'];
-                dataPct = [currentSummary.h, currentSummary.s, currentSummary.i, currentSummary.a];
-            }
-
-            const ctxBar = document.getElementById('chartKelas').getContext('2d');
-            if (charts.kelas) charts.kelas.destroy();
-            charts.kelas = new Chart(ctxBar, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: selectedClass === 'all' ? 'Persentase Kehadiran (%)' : 'Jumlah Hari',
-                        data: dataPct,
-                        backgroundColor: selectedClass === 'all' ? '#124F47' : ['#34D399', '#FB923C', '#38BDF8', '#F87171'],
-                        borderRadius: 4
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: selectedClass === 'all' ? 100 : undefined } } }
-            });
-
-            generateAnalysisConclusion();
-            generateAnalysisRecommendations();
-        }
-
-        function generateAnalysisConclusion() {
-            const startD = document.getElementById('filterStartDate').value;
-            const endD = document.getElementById('filterEndDate').value;
-            const selectedClass = document.getElementById('filterKelas').value;
-            const targetEl = document.getElementById('analisaKesimpulan');
-
-            if (currentSummary.totalRecords === 0) {
-                targetEl.innerHTML = "Tidak ada data presensi yang sesuai dengan filter yang dipilih.";
-                return;
-            }
-
-            let periodText = startD === endD ? `tanggal <strong>${formatDateIndo(startD)}</strong>` : `periode <strong>${formatDateIndo(startD)} s/d ${formatDateIndo(endD)}</strong>`;
-            let classText = selectedClass === 'all' ? "seluruh kelas" : `kelas <strong>${selectedClass}</strong>`;
-
-            targetEl.innerHTML = `Berdasarkan data presensi ${classText} pada ${periodText}, tercatat sebanyak <strong>${currentSummary.totalStudents} siswa</strong>. Dalam rentang waktu tersebut terdapat <strong>${currentSummary.hariEfektif} Hari Efektif</strong>. Persentase kehadiran mencapai <strong>${formatPercentage(currentSummary.pct)}</strong>.`;
-        }
-
-        function generateAnalysisRecommendations() {
-            const targetEl = document.getElementById('analisaRekomendasi');
-            targetEl.innerHTML = '';
-            if (currentSummary.totalRecords === 0) {
-                targetEl.innerHTML = "<li>-</li>"; return;
-            }
-            let recs = [];
-            let total = currentSummary.totalRecords;
-            let alpaRate = (currentSummary.a / total) * 100;
-            let sakitRate = (currentSummary.s / total) * 100;
-            let izinRate = (currentSummary.i / total) * 100;
-
-            if (alpaRate > 2) recs.push('<i class="fa-solid fa-circle-exclamation text-rose-500 mr-2 mt-0.5"></i> Perlu dilakukan pemantauan terhadap tingkat ketidakhadiran tanpa keterangan (Alpa).');
-            if (sakitRate > 5) recs.push('<i class="fa-solid fa-notes-medical text-orange-500 mr-2 mt-0.5"></i> Koordinasikan kondisi siswa yang sakit dengan wali kelas dan orang tua terkait.');
-            if (izinRate > 5) recs.push('<i class="fa-solid fa-envelope text-cyan-500 mr-2 mt-0.5"></i> Lakukan monitoring terhadap pola ketidakhadiran dengan status Izin yang cukup tinggi.');
-            
-            if (currentSummary.pct >= 95) recs.push('<i class="fa-solid fa-thumbs-up text-emerald-500 mr-2 mt-0.5"></i> Tingkat kehadiran sangat baik. Pertahankan monitoring presensi secara konsisten.');
-            else if (currentSummary.pct >= 90) recs.push('<i class="fa-solid fa-check text-emerald-500 mr-2 mt-0.5"></i> Tingkat kehadiran tergolong baik, lakukan evaluasi berkala untuk mencegah penurunan.');
-            
-            if (recs.length === 0) recs.push('<i class="fa-solid fa-clipboard-check text-mi-primary mr-2 mt-0.5"></i> Pertahankan monitoring presensi secara konsisten.');
-
-            recs.forEach(r => {
-                const li = document.createElement('li');
-                li.className = "flex items-start";
-                li.innerHTML = r;
-                targetEl.appendChild(li);
-            });
-        }
-
-        function switchTab(tabId) {
-            currentTab = tabId;
-            closeAllMobileMenus();
-            
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            const activeDesktopBtn = document.getElementById(`tab-${tabId}`);
-            if (activeDesktopBtn) activeDesktopBtn.classList.add('active');
-            
-            const navIds = ['nav-riwayat', 'nav-rekap', 'nav-lainnya', 'nav-export'];
-            navIds.forEach(nav => {
-                const el = document.getElementById(nav);
-                if (el) {
-                    el.classList.remove('text-mi-primary', 'bg-mi-soft', 'font-semibold');
-                    el.classList.add('text-gray-400', 'font-medium');
-                }
-            });
-            
-            if(tabId === 'riwayat' || tabId === 'rekap') {
-                const activeMobileNav = document.getElementById(`nav-${tabId}`);
-                if (activeMobileNav) {
-                    activeMobileNav.classList.remove('text-gray-400', 'font-medium');
-                    activeMobileNav.classList.add('text-mi-primary', 'bg-mi-soft', 'font-semibold');
-                }
-            } else if (tabId === 'analisa' || tabId === 'kalender') {
-                const navLainnya = document.getElementById('nav-lainnya');
-                navLainnya.classList.remove('text-gray-400', 'font-medium');
-                navLainnya.classList.add('text-mi-primary', 'bg-mi-soft', 'font-semibold');
-            }
-
-            ['rekap', 'riwayat', 'analisa', 'kalender'].forEach(id => {
-                document.getElementById(`content-${id}`).classList.add('hidden');
-                document.getElementById(`content-${id}`).classList.remove('flex');
-            });
-            
-            const selectedContent = document.getElementById(`content-${tabId}`);
-            selectedContent.classList.remove('hidden');
-            if(tabId === 'riwayat' || tabId === 'rekap' || tabId === 'kalender') selectedContent.classList.add('flex');
-            else selectedContent.classList.add('block');
-
-            document.getElementById('filterStatusContainer').style.display = tabId === 'riwayat' ? 'block' : 'none';
-            document.getElementById('filterSearchContainer').style.display = (tabId === 'rekap' || tabId === 'riwayat') ? 'block' : 'none';
-
-            updateUI();
-        }
-
-        function toggleMobileMenu(menuId, buttonId) {
-            const menu = document.getElementById(menuId);
-            const overlay = document.getElementById('mobile-menu-overlay');
-            const isActive = menu.classList.contains('active');
-            
-            closeAllMobileMenus(); 
-
-            if(!isActive) {
-                menu.classList.add('active');
-                overlay.classList.remove('hidden');
-                
-                const btn = document.getElementById(buttonId);
-                btn.classList.remove('text-gray-400');
-                btn.classList.add('text-mi-primary', 'font-bold');
-            }
-        }
-
-        function closeAllMobileMenus() {
-            document.querySelectorAll('.mobile-submenu').forEach(m => m.classList.remove('active'));
-            document.getElementById('mobile-menu-overlay').classList.add('hidden');
-            const navIds = ['nav-lainnya', 'nav-export'];
-            navIds.forEach(id => {
-                if (id === 'nav-lainnya' && (currentTab === 'analisa' || currentTab === 'kalender')) return;
-                
-                const btn = document.getElementById(id);
-                btn.classList.remove('text-mi-primary', 'font-bold');
-                btn.classList.add('text-gray-400');
-            });
-        }
-
-        function handleRefresh() {
-            Swal.fire({
-                title: '<span class="text-mi-text1 font-bold text-sm md:text-base">Memuat Data</span>',
-                html: '<div class="loader mt-2"></div>',
-                showConfirmButton: false, allowOutsideClick: false, background: '#FFFFFF', timer: 500
-            }).then(() => { applyFilters(); });
-        }
-
-        function closeModal(id) {
-            const modal = document.getElementById(id);
-            if (!modal) return;
-            
-            modal.classList.add('hidden');
-            modal.setAttribute('aria-hidden', 'true');
-            
-            if(id === 'modalStudent') {
-                currentStudentId = null;
-            }
-        }
-
         function showStudentDetail(studentId) {
-            currentStudentId = studentId;
-            const student = studentsMaster.find(s => s.id === studentId);
-            const recap = currentSummary.recapData.find(r => r.id === studentId);
-            const history = currentFilteredAttendance.filter(r => r.studentId === studentId).sort((a,b) => new Date(b.date) - new Date(a.date));
+            APP_STATE.currentStudentId = studentId;
+            const student = APP_STATE.students.find(s => s.id === studentId);
+            const recap = APP_STATE.summary.recapData.find(r => r.id === studentId);
+            const history = APP_STATE.filteredData.filter(r => r.studentId === studentId).sort((a,b) => new Date(b.date) - new Date(a.date));
 
             document.getElementById('detailName').innerText = student.name;
             document.getElementById('detailClass').innerText = student.className;
-            document.getElementById('detHariEfektif').innerText = currentSummary.hariEfektif;
+            document.getElementById('detHariEfektif').innerText = APP_STATE.summary.hariEfektif;
             
             if(recap) {
-                document.getElementById('detH').innerText = recap.h;
-                document.getElementById('detS').innerText = recap.s;
-                document.getElementById('detI').innerText = recap.i;
-                document.getElementById('detA').innerText = recap.a;
+                document.getElementById('detH').innerText = recap.h; document.getElementById('detS').innerText = recap.s;
+                document.getElementById('detI').innerText = recap.i; document.getElementById('detA').innerText = recap.a;
                 document.getElementById('detPct').innerText = formatPercentage(recap.pct);
                 document.getElementById('detStatusBadge').innerHTML = getStatusBadgeHtml(recap.pct);
 
                 const ctx = document.getElementById('chartStudentDetail').getContext('2d');
-                if (charts.studentDetail) charts.studentDetail.destroy();
-                charts.studentDetail = new Chart(ctx, {
+                if (APP_STATE.charts.studentDetail) APP_STATE.charts.studentDetail.destroy();
+                APP_STATE.charts.studentDetail = new Chart(ctx, {
                     type: 'pie',
                     data: { labels: ['H', 'S', 'I', 'A'], datasets: [{ data: [recap.h, recap.s, recap.i, recap.a], backgroundColor: ['#34D399', '#FB923C', '#38BDF8', '#F87171'], borderWidth: 2, borderColor: '#ffffff' }] },
                     options: { responsive: true, maintainAspectRatio: false, plugins:{ legend:{position:'right', labels:{boxWidth:10, font:{family:'Inter', size:10}}} } }
@@ -1896,112 +1566,147 @@
             document.getElementById('modalStudent').classList.remove('hidden');
         }
 
-        // --- WHATSAPP ---
-        let currentWAText = "";
-        
-        const getWaChecked = (id) => {
-            const el = document.getElementById(id);
-            return el ? el.checked : false;
-        };
-
-        function getWhatsAppReportTitle() {
-            const filterKelasEl = document.getElementById('filterKelas');
-            const selectedClass = filterKelasEl ? filterKelasEl.value : 'all';
-            
-            if (selectedClass === 'all') {
-                return `📢 *REKAP PRESENSI KESELURUHAN*`;
-            } else {
-                return `📢 *LAPORAN PRESENSI KELAS ${selectedClass.toUpperCase()}*`;
-            }
+        // ==========================================
+        // KALENDER CRUD
+        // ==========================================
+        function openHolidayModal() {
+            document.getElementById('holOldDateInput').value = '';
+            document.getElementById('holDateInput').value = '';
+            document.getElementById('holTypeInput').value = 'Libur Nasional';
+            document.getElementById('holDescInput').value = '';
+            document.getElementById('modalAddHoliday').classList.remove('hidden');
         }
-        
-        function setWaFormat(format) {
+
+        function editHolidayPrompt(oldDate) {
+            const hol = APP_STATE.holidays.find(h => h.date === oldDate);
+            if (!hol) return;
+            document.getElementById('holOldDateInput').value = hol.date;
+            document.getElementById('holDateInput').value = hol.date;
+            document.getElementById('holTypeInput').value = hol.type;
+            document.getElementById('holDescInput').value = hol.desc;
+            document.getElementById('modalAddHoliday').classList.remove('hidden');
+        }
+
+        async function saveHoliday() {
+            const oldDate = document.getElementById('holOldDateInput').value;
+            const date = document.getElementById('holDateInput').value;
+            const type = document.getElementById('holTypeInput').value;
+            const desc = document.getElementById('holDescInput').value;
+
+            if(!date || !desc) { Swal.fire('Oops...', 'Tanggal dan Keterangan wajib diisi!', 'error'); return; }
+
+            const btn = document.getElementById('btnSaveHoliday');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<div class="loader inline-block border-white"></div>';
+            btn.disabled = true;
+
             try {
-                waFormat = format;
-                
-                // Reset styling pada semua tombol
-                document.querySelectorAll('.wa-format-btn').forEach(btn => {
-                    btn.classList.remove('border-mi-primary', 'bg-mi-soft', 'text-mi-primary');
-                    btn.classList.add('border-gray-200', 'bg-white', 'text-gray-500');
+                const res = await apiRequest('saveKalender', {
+                    data: { oldDate: oldDate, date: date, type: type, desc: desc }
                 });
+                APP_STATE.holidays = res.data; 
+                closeModal('modalAddHoliday');
+                Swal.fire({title: 'Tersimpan', icon: 'success', toast: true, position: 'top-end', showConfirmButton: false, timer: 1500});
                 
-                // Terapkan styling pada tombol aktif
-                let activeBtnId = format === 'ringkas' ? 'btnWaRingkas' : (format === 'format_1' ? 'btnWaFormat1' : 'btnWaFormat2');
-                let activeBtn = document.getElementById(activeBtnId);
-                if (activeBtn) {
-                    activeBtn.classList.remove('border-gray-200', 'bg-white', 'text-gray-500');
-                    activeBtn.classList.add('border-mi-primary', 'bg-mi-soft', 'text-mi-primary');
-                }
-
-                generateWhatsAppReport();
-            } catch (error) {
-                console.error("Error in setWaFormat:", error);
+                // Recalculate everything since effective days changed
+                buildMasterRecords();
+                applyLocalFilters();
+            } catch (err) {
+                Swal.fire('Gagal Menyimpan', err.message, 'error');
+            } finally {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
             }
         }
 
-        function toggleWaSettings() {
-            try {
-                const content = document.getElementById('waSettingsContent');
-                const icon = document.getElementById('waAccordionIcon');
-                
-                if(!content || !icon) return;
-                
-                if(!content.classList.contains('hidden')) {
-                    content.classList.add('hidden');
-                    content.classList.remove('flex');
-                    icon.classList.remove('rotate-180');
-                } else {
-                    content.classList.remove('hidden');
-                    content.classList.add('flex');
-                    icon.classList.add('rotate-180');
-                }
-            } catch (error) {
-                console.error("Error toggling WA settings:", error);
-            }
-        }
-
-        function openWhatsAppModal() {
-            const modal = document.getElementById('modalWhatsApp');
-            
-            if (!modal) {
-                console.error('modalWhatsApp tidak ditemukan');
-                return;
-            }
-
-            if (modal.parentElement !== document.body) {
-                document.body.appendChild(modal);
-            }
-
-            modal.classList.remove('hidden');
-            modal.setAttribute('aria-hidden', 'false');
-
-            requestAnimationFrame(() => {
-                try {
-                    if (typeof waFormat === 'undefined' || !waFormat) {
-                        waFormat = 'ringkas';
-                    }
-                    setWaFormat(waFormat);
-                } catch (error) {
-                    console.error('Gagal membuka modal WhatsApp:', error);
-                    const preview = document.getElementById('waPreviewText');
-                    if (preview) {
-                        preview.textContent = 'Preview laporan belum dapat dibuat. Silakan periksa filter dan data presensi.';
+        function deleteHoliday(date) {
+            Swal.fire({
+                title: 'Hapus Hari Libur?', text: "Data akan dihapus dan Hari Efektif akan dikalkulasi ulang.", icon: 'warning',
+                showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'Ya, Hapus'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    showOverlayLoading(true);
+                    try {
+                        const res = await apiRequest('deleteKalender', { date: date });
+                        APP_STATE.holidays = res.data;
+                        Swal.fire({title:'Dihapus!', icon:'success', toast:true, position:'top-end', showConfirmButton:false, timer:1500});
+                        
+                        buildMasterRecords();
+                        applyLocalFilters();
+                    } catch (err) {
+                        Swal.fire('Gagal', err.message, 'error');
+                    } finally {
+                        showOverlayLoading(false);
                     }
                 }
             });
         }
 
-        // Helper untuk generate isi laporan
+        // ==========================================
+        // WHATSAPP REPORT GENERATION
+        // ==========================================
+        let currentWAText = "";
+        const getWaChecked = (id) => document.getElementById(id)?.checked || false;
+
+        function setWaFormat(format) {
+            APP_STATE.waFormat = format;
+            document.querySelectorAll('.wa-format-btn').forEach(btn => {
+                btn.classList.remove('border-mi-primary', 'bg-mi-soft', 'text-mi-primary', 'shadow-sm');
+                btn.classList.add('border-gray-200', 'bg-white', 'text-gray-500');
+            });
+            let activeBtnId = format === 'format_1' ? 'btnWaFormat1' : 'btnWaFormat2';
+            let activeBtn = document.getElementById(activeBtnId);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-gray-200', 'bg-white', 'text-gray-500');
+                activeBtn.classList.add('border-mi-primary', 'bg-mi-soft', 'text-mi-primary', 'shadow-sm');
+            }
+            generateWhatsAppReport();
+        }
+
+        function toggleWaModeRingkas() {
+            const isRingkas = document.getElementById('cbWaModeRingkas').checked;
+            const rekapGroup = document.getElementById('waRekapGroup');
+            const nameGroup = document.getElementById('waNameGroup');
+            const checkboxesToDisable = ['cbWaRekapKelas', 'cbWaNameSakit', 'cbWaNameIzin', 'cbWaNameAlpa'];
+            
+            if (isRingkas) {
+                if (rekapGroup) rekapGroup.classList.add('opacity-50');
+                if (nameGroup) nameGroup.classList.add('opacity-50');
+                checkboxesToDisable.forEach(id => { const el = document.getElementById(id); if (el) el.disabled = true; });
+            } else {
+                if (rekapGroup) rekapGroup.classList.remove('opacity-50');
+                if (nameGroup) nameGroup.classList.remove('opacity-50');
+                checkboxesToDisable.forEach(id => { const el = document.getElementById(id); if (el) el.disabled = false; });
+            }
+            generateWhatsAppReport();
+        }
+
+        function toggleWaSettings() {
+            const content = document.getElementById('waSettingsContent');
+            const icon = document.getElementById('waAccordionIcon');
+            if(!content || !icon) return;
+            if(!content.classList.contains('hidden')) {
+                content.classList.add('hidden'); content.classList.remove('flex'); icon.classList.remove('rotate-180');
+            } else {
+                content.classList.remove('hidden'); content.classList.add('flex'); icon.classList.add('rotate-180');
+            }
+        }
+
+        function openWhatsAppModal() {
+            document.getElementById('modalWhatsApp').classList.remove('hidden');
+            setWaFormat(APP_STATE.waFormat);
+        }
+
         function generateClassBreakdownWA(selClass, formatType, showTot, showH, showS, showI, showA, showPct) {
             let res = "";
-            let classesToProcess = selClass === 'all' ? CLASS_LIST : [selClass];
+            let classesToProcess = selClass === 'all' ? APP_STATE.classes : [selClass];
             let hasData = false;
             
             classesToProcess.forEach(c => {
-                if (currentSummary.classRecap && currentSummary.classRecap[c]) {
+                if (APP_STATE.summary.classRecap && APP_STATE.summary.classRecap[c]) {
                     hasData = true;
-                    const cr = currentSummary.classRecap[c];
-                    let totalClassRecs = cr.h + cr.s + cr.i + cr.a;
+                    const cr = APP_STATE.summary.classRecap[c];
+                    let totalClassRecs = cr.studentCount * APP_STATE.summary.hariEfektif;
 
                     res += `🔹 *${c.toUpperCase()}*\n`;
                     if (formatType === 'format_1') {
@@ -2018,431 +1723,373 @@
                         if(showI) classStats.push(`I: ${cr.i}`);
                         if(showA) classStats.push(`A: ${cr.a}`);
                         let statLine = classStats.join(' | ');
-                        if(showPct) statLine += ` (${formatPercentage(cr.pct)})`;
-                        res += statLine + `\n\n`;
+                        if(showPct && statLine !== "") statLine += ` (${formatPercentage(cr.pct)})`;
+                        if(statLine !== "") res += statLine + `\n\n`; else res += `\n`;
                     }
                 }
             });
-            if(!hasData) res += `(Tidak ada data kelas)\n\n`;
-            return res;
-        }
-
-        function generateStudentListsWA(selClass, showS, showI, showA) {
-            let res = "";
-            if (showS) {
-                res += `━━━━━━━━━━━━━━━━━━\n🤒 *DAFTAR SISWA SAKIT*\n━━━━━━━━━━━━━━━━━━\n`;
-                let list = getNamesWA(selClass, 'Sakit');
-                if(list.length > 0) list.forEach(n => res += `- ${n}\n`);
-                else res += `- Tidak ada\n`;
-                res += `\n`;
-            }
-            if (showI) {
-                res += `━━━━━━━━━━━━━━━━━━\n📝 *DAFTAR SISWA IZIN*\n━━━━━━━━━━━━━━━━━━\n`;
-                let list = getNamesWA(selClass, 'Izin');
-                if(list.length > 0) list.forEach(n => res += `- ${n}\n`);
-                else res += `- Tidak ada\n`;
-                res += `\n`;
-            }
-            if (showA) {
-                res += `━━━━━━━━━━━━━━━━━━\n❌ *DAFTAR SISWA ALPA*\n━━━━━━━━━━━━━━━━━━\n`;
-                let list = getNamesWA(selClass, 'Alpa');
-                if(list.length > 0) list.forEach(n => res += `- ${n}\n`);
-                else res += `- Tidak ada\n`;
-                res += `\n`;
-            }
+            if(!hasData) res += `(Tidak ada data presensi kelas)\n\n`;
             return res;
         }
 
         function getNamesWA(selClass, status) {
             let list = [];
-            if (selClass !== 'all') {
-                extractNamesByStatus(selClass, status).forEach(n => list.push(`${n} (${selClass})`));
-            } else {
-                CLASS_LIST.forEach(c => {
-                    extractNamesByStatus(c, status).forEach(n => list.push(`${n} (${c})`));
-                });
-            }
+            const extract = (className, st) => [...new Set(APP_STATE.filteredData.filter(r => r.className === className && r.status === st).map(r => r.studentName))].sort();
+            
+            if (selClass !== 'all') { extract(selClass, status).forEach(n => list.push(`${n} (${selClass})`)); } 
+            else { APP_STATE.classes.forEach(c => { extract(c, status).forEach(n => list.push(`${n} (${c})`)); }); }
             return list;
+        }
+
+        function generateStudentListsWA(selClass, showS, showI, showA) {
+            let res = "";
+            const buildList = (title, icon, status) => {
+                res += `━━━━━━━━━━━━━━━━━━\n${icon} *${title}*\n━━━━━━━━━━━━━━━━━━\n`;
+                let list = getNamesWA(selClass, status);
+                if(list.length > 0) list.forEach(n => res += `- ${n}\n`); else res += `- Tidak ada\n`;
+                res += `\n`;
+            };
+            if (showS) buildList("DAFTAR SISWA SAKIT", "🤒", "Sakit");
+            if (showI) buildList("DAFTAR SISWA IZIN", "📝", "Izin");
+            if (showA) buildList("DAFTAR SISWA ALPA", "❌", "Alpa");
+            return res;
         }
 
         function generateWhatsAppReport() {
             try {
-                const startD = document.getElementById('filterStartDate') ? document.getElementById('filterStartDate').value : '';
-                const endD = document.getElementById('filterEndDate') ? document.getElementById('filterEndDate').value : '';
-                const filterKelasEl = document.getElementById('filterKelas');
-                const selectedClass = filterKelasEl ? filterKelasEl.value : 'all';
+                const startD = document.getElementById('filterStartDate').value;
+                const endD = document.getElementById('filterEndDate').value;
+                const selectedClass = document.getElementById('filterKelas').value;
                 
-                let dateStr = "";
-                if(startD && endD) {
-                    dateStr = startD === endD ? `📅 Tanggal: ${formatDateIndo(startD)}` : `📅 Periode: ${formatDateIndo(startD)} – ${formatDateIndo(endD)}`;
-                } else {
-                    dateStr = "📅 Periode: Belum ditentukan";
-                }
-                
+                let dateStr = startD === endD ? `📅 Periode: ${formatDateIndo(startD)}` : `📅 Periode: ${formatDateIndo(startD)} – ${formatDateIndo(endD)}`;
                 let text = "";
 
-                // Header
-                text += getWhatsAppReportTitle() + "\n";
-                text += `🏫 *SMP IT MENTARI ILMU*\n`;
-                text += `${dateStr}\n\n`;
+                text += (selectedClass === 'all' ? `📢 *REKAP PRESENSI KESELURUHAN*` : `📢 *LAPORAN PRESENSI KELAS ${selectedClass.toUpperCase()}*`) + "\n";
+                text += `🏫 *SMP IT MENTARI ILMU*\n${dateStr}\n\n`;
 
-                // Gather stats
-                const cr = currentSummary;
-                const eff = cr.hariEfektif || 0;
-                const lib = cr.hariLibur || 0;
-                const tot = cr.totalStudents || 0;
-                const h = cr.h || 0;
-                const s = cr.s || 0;
-                const i = cr.i || 0;
-                const a = cr.a || 0;
+                const cr = APP_STATE.summary;
+                const eff = cr.hariEfektif || 0; const lib = cr.hariLibur || 0; const tot = cr.totalStudents || 0;
+                const h = cr.h || 0; const s = cr.s || 0; const i = cr.i || 0; const a = cr.a || 0;
                 const pct = formatPercentage(cr.pct);
 
-                // Settings values
-                const showTotal = getWaChecked('cbWaTotal');
-                const showEff = getWaChecked('cbWaEfektif');
-                const showLib = getWaChecked('cbWaLibur');
-                const showH = getWaChecked('cbWaHadir');
-                const showS = getWaChecked('cbWaSakit');
-                const showI = getWaChecked('cbWaIzin');
-                const showA = getWaChecked('cbWaAlpa');
-                const showPct = getWaChecked('cbWaPersentase');
-                const showRekap = getWaChecked('cbWaRekapKelas');
-                const showNameS = getWaChecked('cbWaNameSakit');
-                const showNameI = getWaChecked('cbWaNameIzin');
-                const showNameA = getWaChecked('cbWaNameAlpa');
+                const isRingkas = getWaChecked('cbWaModeRingkas');
+                const showTotal = getWaChecked('cbWaTotal'); const showEff = getWaChecked('cbWaEfektif'); const showLib = getWaChecked('cbWaLibur');
+                const showH = getWaChecked('cbWaHadir'); const showS = getWaChecked('cbWaSakit'); const showI = getWaChecked('cbWaIzin');
+                const showA = getWaChecked('cbWaAlpa'); const showPct = getWaChecked('cbWaPersentase');
+                
+                const showRekap = !isRingkas && getWaChecked('cbWaRekapKelas');
+                const showNameS = !isRingkas && getWaChecked('cbWaNameSakit');
+                const showNameI = !isRingkas && getWaChecked('cbWaNameIzin');
+                const showNameA = !isRingkas && getWaChecked('cbWaNameAlpa');
                 const showMsg = getWaChecked('cbWaPesanPenutup');
 
-                // Generate Content based on Format
-                if (waFormat === 'ringkas') {
-                    text += `━━━━━━━━━━━━━━━━━━\n`;
-                    text += `📊 *REKAP KESELURUHAN*\n`;
-                    text += `━━━━━━━━━━━━━━━━━━\n\n`;
+                if (APP_STATE.waFormat === 'format_1') {
+                    text += `━━━━━━━━━━━━━━━━━━\n📊 *REKAP KESELURUHAN*\n━━━━━━━━━━━━━━━━━━\n\n`;
+                    let totalRecords = tot * eff;
                     if(showTotal) text += `👥 Total Siswa: ${tot}\n`;
                     if(showEff) text += `🗓️ Hari Efektif: ${eff}\n`;
                     if(showLib) text += `🏖️ Hari Libur: ${lib}\n`;
-                    if(showH) text += `✅ Hadir: ${h}\n`;
-                    if(showS) text += `🤒 Sakit: ${s}\n`;
-                    if(showI) text += `📝 Izin: ${i}\n`;
-                    if(showA) text += `❌ Alpa: ${a}\n`;
-                    if(showPct) text += `📈 *Persentase Kehadiran: ${pct}*\n`;
-                    text += `\n`;
-
-                    if (showRekap && selectedClass === 'all') {
-                         text += `━━━━━━━━━━━━━━━━━━\n`;
-                         text += `📚 *REKAP PER KELAS*\n`;
-                         text += `━━━━━━━━━━━━━━━━━━\n\n`;
-                         text += generateClassBreakdownWA(selectedClass, 'format_1', showTotal, showH, showS, showI, showA, showPct);
-                    }
-
-                    text += generateStudentListsWA(selectedClass, showNameS, showNameI, showNameA);
-
-                } else if (waFormat === 'format_1') {
-                    text += `━━━━━━━━━━━━━━━━━━\n`;
-                    text += `📊 *REKAP KESELURUHAN*\n`;
-                    text += `━━━━━━━━━━━━━━━━━━\n\n`;
-                    let totalRecords = h + s + i + a;
-                    if(showTotal) text += `👥 Total Siswa: ${tot}\n`;
                     if(showH) text += `✅ Hadir: ${h} (${calculatePercentage(h, totalRecords).toFixed(2).replace('.',',')}%)\n`;
                     if(showS) text += `🤒 Sakit: ${s} (${calculatePercentage(s, totalRecords).toFixed(2).replace('.',',')}%)\n`;
                     if(showI) text += `📝 Izin: ${i} (${calculatePercentage(i, totalRecords).toFixed(2).replace('.',',')}%)\n`;
                     if(showA) text += `❌ Alpa: ${a} (${calculatePercentage(a, totalRecords).toFixed(2).replace('.',',')}%)\n`;
-                    if(showPct) text += `📈 *Persentase Kehadiran: ${pct}*\n`;
-                    text += `\n`;
-
-                    if (showRekap) {
-                        text += `━━━━━━━━━━━━━━━━━━\n`;
-                        text += `📚 *REKAP PER KELAS*\n`;
-                        text += `━━━━━━━━━━━━━━━━━━\n\n`;
-                        text += generateClassBreakdownWA(selectedClass, 'format_1', showTotal, showH, showS, showI, showA, showPct);
-                    }
-                    text += generateStudentListsWA(selectedClass, showNameS, showNameI, showNameA);
-
-                } else if (waFormat === 'format_2') {
+                    if(showPct) text += `📈 *Persentase Kehadiran: ${pct}*\n\n`;
+                } else if (APP_STATE.waFormat === 'format_2') {
                     text += `━━━━━━━━━━━━━━━━━━\n\n`;
                     if(showTotal) text += `👥 Total Siswa: ${tot}\n`;
                     if(showEff) text += `🗓️ Hari Efektif: ${eff}\n`;
-                    
-                    let stats = [];
-                    if(showH) stats.push(`✅ H: ${h}`);
-                    if(showS) stats.push(`🤒 S: ${s}`);
-                    if(showI) stats.push(`📝 I: ${i}`);
-                    if(showA) stats.push(`❌ A: ${a}`);
-                    if(stats.length > 0) text += stats.join(' | ') + `\n`;
-                    
+                    if(showLib) text += `🏖️ Hari Libur: ${lib}\n`;
+                    let statsLine = [];
+                    if(showH) statsLine.push(`✅ H: ${h}`); if(showS) statsLine.push(`🤒 S: ${s}`);
+                    if(showI) statsLine.push(`📝 I: ${i}`); if(showA) statsLine.push(`❌ A: ${a}`);
+                    if(statsLine.length > 0) text += statsLine.join(' | ') + `\n`;
                     if(showPct) text += `📈 *Persentase: ${pct}*\n`;
                     text += `\n━━━━━━━━━━━━━━━━━━\n\n`;
+                }
 
+                if (!isRingkas) {
                     if (showRekap) {
-                        text += generateClassBreakdownWA(selectedClass, 'format_2', showTotal, showH, showS, showI, showA, showPct);
+                        if (APP_STATE.waFormat === 'format_1') text += `━━━━━━━━━━━━━━━━━━\n📚 *REKAP PER KELAS*\n━━━━━━━━━━━━━━━━━━\n\n`;
+                        text += generateClassBreakdownWA(selectedClass, APP_STATE.waFormat, showTotal, showH, showS, showI, showA, showPct);
                     }
                     text += generateStudentListsWA(selectedClass, showNameS, showNameI, showNameA);
                 }
 
-                // Automatic Timestamp
                 const now = new Date();
-                const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(':', '.');
-                const dateFormatted = formatDateIndo(now);
-                text += `🕐 Laporan dibuat: ${dateFormatted}, ${timeStr} WIB\n\n`;
-
-                if (showMsg) {
-                    text += `Semoga siswa yang berhalangan hadir segera kembali dalam kondisi sehat.\n\n`;
-                }
+                text += `🕐 Laporan dibuat: ${formatDateIndo(now)}, ${now.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'}).replace('.',':')} WIB\n\n`;
+                if (showMsg) text += `Semoga siswa yang berhalangan hadir segera kembali dalam kondisi sehat.\n\n`;
                 text += `_Pesan otomatis dikirim oleh Sistem Presensi SMP IT Mentari Ilmu_`;
 
                 currentWAText = text;
-
-                const previewEl = document.getElementById('waPreviewText');
-                if (previewEl) {
-                    previewEl.innerText = currentWAText;
-                }
+                document.getElementById('waPreviewText').innerText = currentWAText;
             } catch (error) {
-                console.error("Error generating WA report:", error);
-                const previewEl = document.getElementById('waPreviewText');
-                if (previewEl) {
-                    previewEl.innerText = "Preview laporan belum dapat dibuat. Silakan periksa filter dan data presensi.";
-                }
+                document.getElementById('waPreviewText').innerText = "Preview laporan belum dapat dibuat.";
                 currentWAText = "";
             }
         }
 
-        function extractNamesByStatus(className, status) {
-            const records = currentFilteredAttendance.filter(r => r.className === className && r.status === status);
-            return [...new Set(records.map(r => r.studentName))].sort();
-        }
-
         function copyWhatsAppReport() {
-            try {
-                if(!currentWAText) {
-                    Swal.fire('Gagal', 'Tidak ada pesan yang bisa disalin.', 'warning');
-                    return;
-                }
-                navigator.clipboard.writeText(currentWAText).then(() => {
-                    Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Pesan berhasil disalin', showConfirmButton: false, timer: 3000, background: '#124F47', color: '#fff', iconColor: '#34D399' });
-                }).catch(err => {
-                    console.error('Gagal menyalin:', err);
-                    Swal.fire('Error', 'Gagal menyalin pesan ke clipboard.', 'error');
-                });
-            } catch (error) {
-                console.error("Error di copyWhatsAppReport:", error);
-            }
+            if(!currentWAText) return Swal.fire('Gagal', 'Tidak ada pesan yang bisa disalin.', 'warning');
+            navigator.clipboard.writeText(currentWAText).then(() => {
+                Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Pesan berhasil disalin', showConfirmButton: false, timer: 3000 });
+            }).catch(() => Swal.fire('Error', 'Gagal menyalin pesan ke clipboard.', 'error'));
         }
         
         function shareToWhatsApp() {
-            try {
-                if(!currentWAText) {
-                    Swal.fire('Gagal', 'Tidak ada pesan untuk dibagikan.', 'warning');
-                    return;
-                }
-                window.open(`https://wa.me/?text=${encodeURIComponent(currentWAText)}`, '_blank');
-            } catch(error) {
-                console.error("Error di shareToWhatsApp:", error);
-            }
+            if(!currentWAText) return Swal.fire('Gagal', 'Tidak ada pesan untuk dibagikan.', 'warning');
+            window.open(`https://wa.me/?text=${encodeURIComponent(currentWAText)}`, '_blank');
         }
 
-        // --- EXPORT MASTER ---
+        // ==========================================
+        // EXPORT EXCEL & PDF
+        // ==========================================
         function exportExcel() {
-            if (currentTab === 'rekap') exportRecapExcel();
-            else if (currentTab === 'riwayat') exportHistoryExcel();
-            else if (currentTab === 'analisa') {
-                if (typeof exportAnalysisExcel === 'function') exportAnalysisExcel();
-            } else if (currentTab === 'kalender') {
-                if (typeof exportKalenderExcel === 'function') exportKalenderExcel();
-            }
+            if (APP_STATE.currentTab === 'rekap') exportRecapExcel();
+            else if (APP_STATE.currentTab === 'riwayat') exportHistoryExcel();
         }
         function exportPDF() {
-            if (currentTab === 'rekap') exportRecapPDF();
-            else if (currentTab === 'riwayat') exportHistoryPDF();
-            else if (currentTab === 'analisa') {
-                if (typeof exportAnalysisPDF === 'function') exportAnalysisPDF();
-            } else if (currentTab === 'kalender') {
-                if (typeof exportKalenderPDF === 'function') exportKalenderPDF();
-            }
+            if (APP_STATE.currentTab === 'rekap') exportRecapPDF();
+            else if (APP_STATE.currentTab === 'riwayat') exportHistoryPDF();
+        }
+
+        function generateExportFileName(reportName, extension) {
+            const sd = document.getElementById('filterStartDate').value;
+            const ed = document.getElementById('filterEndDate').value;
+            const cl = document.getElementById('filterKelas').value;
+            const fDate = (d) => d ? d.split('-').reverse().join('-') : '';
+            const periodStr = sd === ed ? fDate(sd) : `${fDate(sd)}_sd_${fDate(ed)}`;
+            const classStr = cl !== 'all' ? cl.replace(/[\/\\:*?"<>|\s]+/g, '_') + '_' : '';
+            return `${reportName}_${classStr}${periodStr}.${extension}`;
+        }
+
+        function exportHistoryExcel() {
+            if(APP_STATE.filteredData.length === 0) return Swal.fire('Data Kosong', '', 'info');
+            const data = [...APP_STATE.filteredData].sort((a,b) => new Date(b.date) - new Date(a.date)).map((r, i) => ({
+                "No": i + 1, "Tanggal": r.date, "Nama Siswa": r.studentName,
+                "Kelas": r.className, "Status": r.status, "Keterangan": r.notes
+            }));
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Riwayat");
+            XLSX.writeFile(wb, generateExportFileName('Riwayat_Presensi', 'xlsx'));
+        }
+        
+        function exportHistoryPDF() {
+            if(APP_STATE.filteredData.length === 0) return Swal.fire('Data Kosong', '', 'info');
+            const doc = new jspdf.jsPDF();
+            doc.setFontSize(14); doc.text("LAPORAN RIWAYAT DETAIL PRESENSI", 14, 20);
+            const data = [...APP_STATE.filteredData].sort((a,b) => new Date(b.date) - new Date(a.date));
+            const rows = data.map((r, i) => [i + 1, formatDateIndo(r.date), r.studentName, r.className, r.status, r.notes]);
+            doc.autoTable({ head: [["No", "Tanggal", "Nama Siswa", "Kelas", "Status", "Keterangan"]], body: rows, startY: 30, theme: 'grid', styles: { fontSize: 8 }, headStyles: { fillColor: [18, 79, 71] } });
+            doc.save(generateExportFileName('Riwayat_Presensi', 'pdf'));
         }
 
         function exportRecapExcel() {
-            if(currentSummary.recapData.length === 0) return Swal.fire('Data Kosong', '', 'info');
-            
+            if(APP_STATE.summary.recapData.length === 0) return Swal.fire('Data Kosong', '', 'info');
             let exportData = [];
-            let sortedData = [...currentSummary.recapData].sort((a,b) => a.className.localeCompare(b.className) || a.name.localeCompare(b.name));
+            let sortedData = [...APP_STATE.summary.recapData].sort((a,b) => a.className.localeCompare(b.className) || a.name.localeCompare(b.name));
             
-            if (rekapMode === 'ringkas') {
+            if (APP_STATE.rekapMode === 'ringkas') {
                 exportData = sortedData.map((row, index) => ({
-                    "No": index + 1, "Nama Siswa": row.name, "Kelas": row.className,
-                    "Hari Efektif": currentSummary.hariEfektif,
-                    "Hadir": row.h, "Sakit": row.s, "Izin": row.i, "Alpa": row.a, 
-                    "% Kehadiran": formatPercentage(row.pct)
+                    "No": index + 1, "Nama Siswa": row.name, "Kelas": row.className, "Hari Efektif": APP_STATE.summary.hariEfektif,
+                    "Hadir": row.h, "Sakit": row.s, "Izin": row.i, "Alpa": row.a, "% Kehadiran": formatPercentage(row.pct)
                 }));
             } else {
                 exportData = sortedData.map((row, index) => {
-                    let obj = { "No": index + 1, "Nama Siswa": row.name, "Kelas": row.className, "Hr Efektif": currentSummary.hariEfektif };
-                    currentSummary.datesObj.forEach(dObj => {
+                    let obj = { "No": index + 1, "Nama Siswa": row.name, "Kelas": row.className, "Hr Efektif": APP_STATE.summary.hariEfektif };
+                    APP_STATE.summary.datesObj.forEach(dObj => {
                         let shortDate = formatShortDate(dObj.date);
                         if(dObj.isHoliday) obj[shortDate] = 'LIBUR';
                         else {
-                            let rec = currentFilteredAttendance.find(a => a.studentId === row.id && a.date === dObj.date);
-                            obj[shortDate] = rec ? rec.status.charAt(0) : 'A';
+                            let rec = APP_STATE.filteredData.find(a => a.studentId === row.id && a.date === dObj.date);
+                            obj[shortDate] = (rec && rec.status === 'Belum Diisi') ? 'BDI' : (rec ? rec.status.charAt(0) : 'A');
                         }
                     });
-                    obj["H"] = row.h; obj["S"] = row.s; obj["I"] = row.i; obj["A"] = row.a;
-                    obj["% Kehadiran"] = formatPercentage(row.pct);
+                    obj["H"] = row.h; obj["S"] = row.s; obj["I"] = row.i; obj["A"] = row.a; obj["% Kehadiran"] = formatPercentage(row.pct);
                     return obj;
                 });
             }
-
             const ws = XLSX.utils.json_to_sheet(exportData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Rekap Presensi");
-            
-            const fileName = generateExportFileName('Rekap_Presensi', 'xlsx');
-            XLSX.writeFile(wb, fileName);
+            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Rekap");
+            XLSX.writeFile(wb, generateExportFileName('Rekap_Presensi', 'xlsx'));
         }
 
         function exportRecapPDF() {
-            if(currentSummary.recapData.length === 0) return Swal.fire('Data Kosong', '', 'info');
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF(rekapMode === 'harian' ? 'landscape' : 'portrait');
-            
-            doc.setFontSize(14); doc.text(`LAPORAN REKAP PRESENSI - ${rekapMode.toUpperCase()}`, 14, 20);
+            if(APP_STATE.summary.recapData.length === 0) return Swal.fire('Data Kosong', '', 'info');
+            const doc = new jspdf.jsPDF(APP_STATE.rekapMode === 'harian' ? 'landscape' : 'portrait');
+            doc.setFontSize(14); doc.text(`LAPORAN REKAP PRESENSI - ${APP_STATE.rekapMode.toUpperCase()}`, 14, 20);
             doc.setFontSize(10);
             doc.text(`Periode: ${document.getElementById('filterStartDate').value} s/d ${document.getElementById('filterEndDate').value}`, 14, 26);
-            doc.text(`Hari Efektif: ${currentSummary.hariEfektif} | Total Siswa: ${currentSummary.totalStudents}`, 14, 32);
-
-            let sortedData = [...currentSummary.recapData].sort((a,b) => a.className.localeCompare(b.className) || a.name.localeCompare(b.name));
             
-            let tableCols = []; let tableRows = [];
+            let sortedData = [...APP_STATE.summary.recapData].sort((a,b) => a.className.localeCompare(b.className) || a.name.localeCompare(b.name));
             let holidayColIndices = [];
 
-            if (rekapMode === 'ringkas') {
-                tableCols = ["No", "Nama Siswa", "Kelas", "Hr Efektif", "H", "S", "I", "A", "%"];
-                tableRows = sortedData.map((r, i) => [i + 1, r.name, r.className, currentSummary.hariEfektif, r.h, r.s, r.i, r.a, formatPercentage(r.pct)]);
+            if (APP_STATE.rekapMode === 'ringkas') {
+                let rows = sortedData.map((r, i) => [i + 1, r.name, r.className, APP_STATE.summary.hariEfektif, r.h, r.s, r.i, r.a, formatPercentage(r.pct)]);
+                doc.autoTable({ head: [["No", "Nama Siswa", "Kelas", "Hr Efektif", "H", "S", "I", "A", "%"]], body: rows, startY: 32, theme: 'grid', styles: { fontSize: 7 }, headStyles: { fillColor: [18, 79, 71] } });
             } else {
-                tableCols = ["No", "Nama", "Kelas"];
-                currentSummary.datesObj.forEach((dObj, idx) => {
-                    if (dObj.isHoliday) {
-                        tableCols.push('Lbr');
-                        holidayColIndices.push(idx + 3); 
-                    } else {
-                        tableCols.push(dObj.date.split('-')[2]);
-                    }
-                });
-                tableCols.push("H","S","I","A","%");
+                let headRow1 = [{ content: 'No', rowSpan: 2 }, { content: 'Nama', rowSpan: 2 }, { content: 'Kelas', rowSpan: 2 }];
+                let headRow2 = []; const daysMap = ['M', 'S', 'S', 'R', 'K', 'J', 'S'];
                 
-                tableRows = sortedData.map((r, i) => {
+                APP_STATE.summary.datesObj.forEach((dObj, idx) => {
+                    let dateObj = new Date(dObj.date);
+                    headRow1.push({ content: daysMap[dateObj.getDay()], styles: { halign: 'center' } });
+                    headRow2.push({ content: dateObj.getDate().toString(), styles: { halign: 'center' } });
+                    if (dObj.isHoliday) holidayColIndices.push(idx + 3); 
+                });
+                headRow1.push({ content: 'H', rowSpan: 2 }, { content: 'S', rowSpan: 2 }, { content: 'I', rowSpan: 2 }, { content: 'A', rowSpan: 2 }, { content: '%', rowSpan: 2 });
+                
+                let rows = sortedData.map((r, i) => {
                     let rowArr = [i + 1, r.name, r.className];
-                    currentSummary.datesObj.forEach(dObj => {
+                    APP_STATE.summary.datesObj.forEach(dObj => {
                         if(dObj.isHoliday) rowArr.push('LIBUR');
                         else {
-                            let rec = currentFilteredAttendance.find(a => a.studentId === r.id && a.date === dObj.date);
-                            rowArr.push(rec ? rec.status.charAt(0) : 'A');
+                            let rec = APP_STATE.filteredData.find(a => a.studentId === r.id && a.date === dObj.date);
+                            if (!rec || rec.status === 'Belum Diisi') rowArr.push('BDI');
+                            else rowArr.push(rec.status.charAt(0));
                         }
                     });
                     rowArr.push(r.h, r.s, r.i, r.a, formatPercentage(r.pct));
                     return rowArr;
                 });
-            }
 
-            doc.autoTable({ 
-                head: [tableCols], 
-                body: tableRows, 
-                startY: 38, 
-                theme: 'grid', 
-                styles: { fontSize: 7, cellPadding: 1 }, 
-                headStyles: { fillColor: [18, 79, 71] },
-                didParseCell: function(data) {
-                    if (rekapMode === 'harian') {
-                        if (data.section === 'head' && holidayColIndices.includes(data.column.index)) {
-                            data.cell.styles.fillColor = [254, 205, 211]; 
-                            data.cell.styles.textColor = [190, 18, 60]; 
-                        }
-                        if (data.section === 'body' && (data.cell.raw === 'LIBUR' || data.cell.raw === 'Lbr')) {
-                            data.cell.styles.fillColor = [255, 241, 242]; 
-                            data.cell.styles.textColor = [190, 18, 60]; 
-                            data.cell.styles.fontStyle = 'bold';
-                        }
+                doc.autoTable({ 
+                    head: [headRow1, headRow2], body: rows, startY: 32, theme: 'grid', styles: { fontSize: 7, cellPadding: 1 }, headStyles: { fillColor: [18, 79, 71], halign: 'center', valign: 'middle' },
+                    didParseCell: function(data) {
+                        if (data.section === 'head' && holidayColIndices.includes(data.column.index)) { data.cell.styles.fillColor = [254, 205, 211]; data.cell.styles.textColor = [190, 18, 60]; }
+                        if (data.section === 'body' && data.cell.raw === 'LIBUR') { data.cell.styles.fillColor = [255, 241, 242]; data.cell.styles.textColor = [190, 18, 60]; data.cell.styles.fontStyle = 'bold'; }
                     }
-                }
-            });
-            const fileName = generateExportFileName('Rekap_Presensi', 'pdf');
-            doc.save(fileName);
-        }
-
-        function exportHistoryExcel() {
-            if(currentFilteredAttendance.length === 0) return Swal.fire('Data Kosong', '', 'info');
-            const data = [...currentFilteredAttendance].sort((a,b) => new Date(b.date) - new Date(a.date)).map((r, i) => ({
-                "No": i + 1, "Tanggal": r.date, "Nama Siswa": r.studentName,
-                "Kelas": r.className, "Status": r.status, "Keterangan": r.notes
-            }));
-            const ws = XLSX.utils.json_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Riwayat");
-            
-            const fileName = generateExportFileName('Riwayat_Presensi', 'xlsx');
-            XLSX.writeFile(wb, fileName);
-        }
-        
-        function exportHistoryPDF() {
-            if(currentFilteredAttendance.length === 0) return Swal.fire('Data Kosong', '', 'info');
-            const { jsPDF } = window.jspdf; const doc = new jsPDF();
-            doc.setFontSize(14); doc.text("LAPORAN RIWAYAT DETAIL PRESENSI", 14, 20);
-            const data = [...currentFilteredAttendance].sort((a,b) => new Date(b.date) - new Date(a.date));
-            const cols = ["No", "Tanggal", "Nama Siswa", "Kelas", "Status", "Keterangan"];
-            const rows = data.map((r, i) => [i + 1, formatDateIndo(r.date), r.studentName, r.className, r.status, r.notes]);
-            doc.autoTable({ head: [cols], body: rows, startY: 30, theme: 'grid', styles: { fontSize: 8 }, headStyles: { fillColor: [18, 79, 71] } });
-            
-            const fileName = generateExportFileName('Riwayat_Presensi', 'pdf');
-            doc.save(fileName);
-        }
-
-        function exportAnalysisExcel() { Swal.fire('Fitur Terbatas', 'Export Excel untuk chart Analisa belum didukung penuh secara visual.', 'info'); }
-        function exportAnalysisPDF() { Swal.fire('Fitur Terbatas', 'Export PDF untuk chart Analisa belum didukung penuh secara visual.', 'info'); }
-        function exportKalenderExcel() {
-            const ws = XLSX.utils.json_to_sheet(holidaysMaster);
-            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Kalender");
-            XLSX.writeFile(wb, generateExportFileName('Kalender_Presensi', 'xlsx', 'kalender'));
-        }
-        function exportKalenderPDF() {
-            const { jsPDF } = window.jspdf; const doc = new jsPDF();
-            doc.text("Daftar Hari Libur", 14, 20);
-            doc.autoTable({ head: [["Tanggal", "Jenis", "Keterangan"]], body: holidaysMaster.map(h => [h.date, h.type, h.desc]), startY: 30 });
-            doc.save(generateExportFileName('Kalender_Presensi', 'pdf', 'kalender'));
+                });
+            }
+            doc.save(generateExportFileName('Rekap_Presensi', 'pdf'));
         }
 
         function exportStudentDetailExcel() {
-            if(!currentStudentId) return;
-            const history = currentFilteredAttendance.filter(r => r.studentId === currentStudentId).sort((a,b) => new Date(b.date) - new Date(a.date));
+            if(!APP_STATE.currentStudentId) return;
+            const history = APP_STATE.filteredData.filter(r => r.studentId === APP_STATE.currentStudentId).sort((a,b) => new Date(b.date) - new Date(a.date));
             const ws = XLSX.utils.json_to_sheet(history.map((r,i) => ({"No": i+1, "Tanggal": r.date, "Status": r.status, "Keterangan": r.notes})));
             const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Detail");
-            
-            const student = studentsMaster.find(s=>s.id===currentStudentId);
-            const baseName = `Detail_Siswa_${student.name.replace(/[\\/:*?"<>|]/g, '_').replace(/\s+/g, '_')}`;
-            const fileName = generateExportFileName(baseName, 'xlsx');
-            XLSX.writeFile(wb, fileName);
+            const studentName = APP_STATE.students.find(s=>s.id===APP_STATE.currentStudentId).name.replace(/[\/\\:*?"<>|]/g, '').replace(/\s+/g, '_');
+            XLSX.writeFile(wb, `Detail_Siswa_${studentName}.xlsx`);
         }
+        
         function exportStudentDetailPDF() {
-            if(!currentStudentId) return;
-            const history = currentFilteredAttendance.filter(r => r.studentId === currentStudentId).sort((a,b) => new Date(b.date) - new Date(a.date));
-            const { jsPDF } = window.jspdf; const doc = new jsPDF();
-            
-            const student = studentsMaster.find(s=>s.id===currentStudentId);
-            doc.text(`Detail Presensi - ${student.name}`, 14, 20);
+            if(!APP_STATE.currentStudentId) return;
+            const history = APP_STATE.filteredData.filter(r => r.studentId === APP_STATE.currentStudentId).sort((a,b) => new Date(b.date) - new Date(a.date));
+            const doc = new jspdf.jsPDF();
+            const studentName = APP_STATE.students.find(s=>s.id===APP_STATE.currentStudentId).name;
+            doc.text(`Detail Presensi - ${studentName}`, 14, 20);
             doc.autoTable({ head: [["No","Tanggal","Status","Keterangan"]], body: history.map((r,i)=>[i+1, r.date, r.status, r.notes]), startY: 30, theme:'grid' });
-            
-            const baseName = `Detail_Siswa_${student.name.replace(/[\\/:*?"<>|]/g, '_').replace(/\s+/g, '_')}`;
-            const fileName = generateExportFileName(baseName, 'pdf');
-            doc.save(fileName);
+            doc.save(`Detail_Siswa_${studentName.replace(/[\/\\:*?"<>|]/g, '').replace(/\s+/g, '_')}.pdf`);
         }
 
-        window.onload = function() {
-            initializeDummyData();
-            initFilterUI();
-            applyFilters();
-            switchTab('riwayat');
+        // ==========================================
+        // HELPERS
+        // ==========================================
+        function handleRefresh() {
+            fetchPresensiData();
+        }
 
-            document.getElementById('filterSearch').addEventListener('keyup', (e) => { if(e.key === 'Enter') applyFilters(); });
-            document.getElementById('filterKelas').addEventListener('change', applyFilters);
-            document.getElementById('filterStatus').addEventListener('change', applyFilters);
-            document.getElementById('filterEndDate').addEventListener('change', applyFilters);
-        };
+        function showGlobalLoading(show) {
+            const btn = document.getElementById('btnGlobalRefresh');
+            const icon = document.getElementById('iconRefresh');
+            if (show) {
+                btn.disabled = true;
+                icon.classList.add('fa-spin');
+            } else {
+                btn.disabled = false;
+                icon.classList.remove('fa-spin');
+            }
+        }
+
+        function showOverlayLoading(show) {
+            const loader = document.getElementById('filterOverlayLoader');
+            const btnTerapkan = document.getElementById('btnTerapkanFilter');
+            if(show) {
+                loader.classList.remove('hidden');
+                btnTerapkan.disabled = true;
+                btnTerapkan.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memuat...';
+            } else {
+                loader.classList.add('hidden');
+                btnTerapkan.disabled = false;
+                btnTerapkan.innerHTML = 'Terapkan Filter';
+            }
+        }
+        
+        function showEmptyStates() {
+            ['riwayat', 'rekap', 'kalender'].forEach(id => {
+                const tbody = document.getElementById(`tbody-${id}`);
+                const empty = document.getElementById(`empty-${id}`);
+                if (tbody) tbody.innerHTML = '';
+                if (empty) empty.classList.remove('hidden');
+            });
+        }
+
+        function changePageLimit(tab, val) { APP_STATE.pagination[tab].limit = parseInt(val); APP_STATE.pagination[tab].page = 1; applyLocalFilters(); }
+        function changePage(tab, direction) {
+            let limit = APP_STATE.pagination[tab].limit;
+            let total = tab === 'riwayat' ? APP_STATE.filteredData.length : APP_STATE.summary.recapData.length;
+            let maxPage = Math.ceil(total / limit);
+            APP_STATE.pagination[tab].page += direction;
+            if(APP_STATE.pagination[tab].page < 1) APP_STATE.pagination[tab].page = 1;
+            if(APP_STATE.pagination[tab].page > maxPage) APP_STATE.pagination[tab].page = maxPage || 1;
+            applyLocalFilters();
+        }
+
+        function toggleMobileMenu(menuId, buttonId) {
+            const menu = document.getElementById(menuId);
+            const overlay = document.getElementById('mobile-menu-overlay');
+            const isActive = menu.classList.contains('active');
+            closeAllMobileMenus(); 
+            if(!isActive) {
+                menu.classList.add('active'); overlay.classList.remove('hidden');
+                const btn = document.getElementById(buttonId);
+                btn.classList.remove('text-gray-400'); btn.classList.add('text-mi-primary', 'font-bold');
+            }
+        }
+
+        function closeAllMobileMenus() {
+            document.querySelectorAll('.mobile-submenu').forEach(m => m.classList.remove('active'));
+            document.getElementById('mobile-menu-overlay').classList.add('hidden');
+            ['nav-lainnya', 'nav-export'].forEach(id => {
+                if (id === 'nav-lainnya' && (APP_STATE.currentTab === 'analisa' || APP_STATE.currentTab === 'kalender')) return;
+                const btn = document.getElementById(id);
+                btn.classList.remove('text-mi-primary', 'font-bold'); btn.classList.add('text-gray-400');
+            });
+        }
+
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        function formatDateYYYYMMDD(date) {
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        }
+        function formatShortDate(dateStr) {
+            const d = new Date(dateStr); const days = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+            return `${d.getDate()} ${days[d.getDay()]}`;
+        }
+        function formatDateIndo(dateString) { return new Date(dateString).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }); }
+        function formatNumber(num) { return (num || 0).toLocaleString('id-ID'); }
+        function calculatePercentage(part, total) { return total === 0 ? 0 : ((part / total) * 100); }
+        function formatPercentage(value) { return Number(value || 0).toFixed(2).replace('.', ',') + '%'; }
+
+        function getStatusBadgeHtml(percentage) {
+            if (percentage >= 95) return `<span class="px-2 py-1 inline-flex text-[10px] md:text-[11px] leading-4 font-bold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Sangat Baik</span>`;
+            if (percentage >= 90) return `<span class="px-2 py-1 inline-flex text-[10px] md:text-[11px] leading-4 font-bold rounded-full bg-blue-50 text-blue-700 border border-blue-200">Baik</span>`;
+            if (percentage >= 80) return `<span class="px-2 py-1 inline-flex text-[10px] md:text-[11px] leading-4 font-bold rounded-full bg-orange-50 text-orange-700 border border-orange-200">Perlu Perhatian</span>`;
+            return `<span class="px-2 py-1 inline-flex text-[10px] md:text-[11px] leading-4 font-bold rounded-full bg-rose-50 text-rose-700 border border-rose-200">Perlu Pembinaan</span>`;
+        }
+
+        function getStatusColor(status) {
+            switch(status) {
+                case 'Hadir': return `<span class="px-2 md:px-2.5 py-1 inline-flex text-[10px] md:text-[11px] font-bold rounded-md bg-[#d1fae5] text-[#065f46]"><i class="fa-solid fa-check mr-1 md:mr-1.5 mt-0.5"></i> Hadir</span>`;
+                case 'Sakit': return `<span class="px-2 md:px-2.5 py-1 inline-flex text-[10px] md:text-[11px] font-bold rounded-md bg-[#ffedd5] text-[#9a3412]"><i class="fa-solid fa-thermometer-half mr-1 md:mr-1.5 mt-0.5"></i> Sakit</span>`;
+                case 'Izin':  return `<span class="px-2 md:px-2.5 py-1 inline-flex text-[10px] md:text-[11px] font-bold rounded-md bg-[#cffafe] text-[#155e75]"><i class="fa-solid fa-envelope-open-text mr-1 md:mr-1.5 mt-0.5"></i> Izin</span>`;
+                case 'Alpa':  return `<span class="px-2 md:px-2.5 py-1 inline-flex text-[10px] md:text-[11px] font-bold rounded-md bg-[#ffe4e6] text-[#9f1239]"><i class="fa-solid fa-xmark mr-1 md:mr-1.5 mt-0.5"></i> Alpa</span>`;
+                case 'Belum Diisi': 
+                case 'BDI': return `<span class="px-2 md:px-2.5 py-1 inline-flex text-[10px] md:text-[11px] font-bold rounded-md bg-gray-100 text-gray-600"><i class="fa-solid fa-clock-rotate-left mr-1 md:mr-1.5 mt-0.5"></i> Belum Diisi</span>`;
+                case 'Libur': return `<span class="px-2 md:px-2.5 py-1 inline-flex text-[10px] md:text-[11px] font-bold rounded-md bg-purple-100 text-purple-700"><i class="fa-solid fa-umbrella-beach mr-1 md:mr-1.5 mt-0.5"></i> Libur</span>`;
+                default: return status;
+            }
+        }
     </script>
 </body>
 </html>
