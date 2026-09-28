@@ -474,6 +474,63 @@
                     </div>
                 </div>
 
+                <!-- SECTION: Monitoring Kelengkapan Presensi Kelas -->
+                <div class="bg-mi-surface border border-mi-border rounded-2xl p-4 md:p-6 shadow-sm mb-6 md:mb-8">
+                    <div class="mb-4 md:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="text-sm md:text-base font-bold text-mi-text1 uppercase tracking-wide">Monitoring Kelengkapan Presensi Kelas</h3>
+                            <p class="text-[10px] md:text-xs text-mi-text2 mt-1">Memantau kelas yang sudah dan belum mengisi presensi pada setiap Hari Efektif dalam periode terpilih.</p>
+                        </div>
+                        <div class="flex gap-2 shrink-0 w-full sm:w-auto">
+                            <button onclick="exportAnalysisExcel()" class="flex-1 sm:flex-none justify-center px-4 py-2 bg-[#E8F3F0] hover:bg-[#D9EEE8] text-[#18794E] rounded-xl text-xs font-bold transition-colors border border-[#C8E3DD] shadow-sm flex items-center gap-2" title="Export Excel Monitoring">
+                                <i class="fa-solid fa-file-excel"></i> Excel
+                            </button>
+                            <button onclick="exportAnalysisPDF()" class="flex-1 sm:flex-none justify-center px-4 py-2 bg-[#FFF1F2] hover:bg-[#FFE4E6] text-[#BE123C] rounded-xl text-xs font-bold transition-colors border border-[#FFE4E6] shadow-sm flex items-center gap-2" title="Export PDF Monitoring">
+                                <i class="fa-solid fa-file-pdf"></i> PDF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6">
+                        <div class="group bg-card-slate rounded-xl p-3 md:p-4 border border-slate-200 shadow-sm flex flex-col justify-between h-[80px] md:h-[100px]">
+                            <div class="text-[9px] md:text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-0.5">Total Kelas</div>
+                            <div class="text-xl md:text-2xl font-extrabold text-mi-text1" id="cardCompTotal">-</div>
+                        </div>
+                        <div class="group bg-card-green rounded-xl p-3 md:p-4 border border-green-200 shadow-sm flex flex-col justify-between h-[80px] md:h-[100px]">
+                            <div class="text-[9px] md:text-[10px] font-bold text-emerald-700 uppercase tracking-wider mb-0.5">Kelas Lengkap</div>
+                            <div class="text-xl md:text-2xl font-extrabold text-emerald-700" id="cardCompComplete">-</div>
+                        </div>
+                        <div class="group bg-card-rose rounded-xl p-3 md:p-4 border border-rose-200 shadow-sm flex flex-col justify-between h-[80px] md:h-[100px]">
+                            <div class="text-[9px] md:text-[10px] font-bold text-rose-700 uppercase tracking-wider mb-0.5">Kelas Belum Lengkap</div>
+                            <div class="text-xl md:text-2xl font-extrabold text-rose-700" id="cardCompIncomplete">-</div>
+                        </div>
+                        <div class="group bg-[#FFF7ED] rounded-xl p-3 md:p-4 border border-orange-200 shadow-sm flex flex-col justify-between h-[80px] md:h-[100px]">
+                            <div class="text-[9px] md:text-[10px] font-bold text-orange-700 uppercase tracking-wider mb-0.5">Total Hari Belum Diisi</div>
+                            <div class="text-xl md:text-2xl font-extrabold text-orange-700" id="cardCompMissing">-</div>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto border border-mi-border rounded-lg">
+                        <table class="min-w-full divide-y divide-mi-border text-xs md:text-sm">
+                            <thead class="bg-mi-bg">
+                                <tr>
+                                    <th class="px-3 md:px-4 py-2 md:py-3 text-left font-semibold text-mi-text2">Kelas</th>
+                                    <th class="px-2 md:px-4 py-2 md:py-3 text-center font-semibold text-mi-text2">Hari Efektif</th>
+                                    <th class="px-2 md:px-4 py-2 md:py-3 text-center font-semibold text-emerald-600">Terisi</th>
+                                    <th class="px-2 md:px-4 py-2 md:py-3 text-center font-semibold text-rose-600">Belum Diisi</th>
+                                    <th class="px-2 md:px-4 py-2 md:py-3 text-center font-semibold text-mi-text2">Siswa BDI</th>
+                                    <th class="px-3 md:px-4 py-2 md:py-3 text-center font-bold text-mi-primary">Kelengkapan</th>
+                                    <th class="px-2 md:px-4 py-2 md:py-3 text-center font-semibold text-mi-text2">Status</th>
+                                    <th class="px-3 md:px-4 py-2 md:py-3 text-center font-semibold text-mi-text2">Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-analisa-kelengkapan" class="divide-y divide-mi-border bg-white">
+                                <!-- Data Injected via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div class="bg-mi-surface border border-mi-border rounded-2xl p-4 md:p-6 shadow-sm relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
@@ -616,6 +673,71 @@
                     <button type="button" onclick="closeModal('modalStudent')" class="w-full inline-flex justify-center items-center rounded-xl border border-mi-border shadow-sm px-4 md:px-5 py-2 md:py-2.5 bg-white text-sm font-medium text-mi-text1 hover:bg-gray-50 transition-colors sm:w-auto">Tutup</button>
                     <button type="button" onclick="exportStudentDetailExcel()" class="w-full inline-flex justify-center items-center rounded-xl px-4 md:px-5 py-2 md:py-2.5 bg-[#E8F3F0] hover:bg-[#D9EEE8] border border-[#C8E3DD] shadow-sm text-sm font-medium text-[#18794E] transition-colors sm:w-auto"><i class="fa-solid fa-file-excel mr-2"></i> Excel</button>
                     <button type="button" onclick="exportStudentDetailPDF()" class="w-full inline-flex justify-center items-center rounded-xl px-4 md:px-5 py-2 md:py-2.5 bg-[#FFF1F2] hover:bg-[#FFE4E6] border border-[#FFE4E6] shadow-sm text-sm font-medium text-[#BE123C] transition-colors sm:w-auto"><i class="fa-solid fa-file-pdf mr-2"></i> PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detail Kelengkapan Kelas -->
+    <div id="modalClassCompleteness" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity modal-overlay" aria-hidden="true" onclick="closeModal('modalClassCompleteness')"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-mi-surface rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl w-full border border-mi-border relative z-10">
+                <div class="px-4 md:px-6 pt-5 md:pt-6 pb-5 md:pb-6">
+                    <div class="flex justify-between items-start mb-5 md:mb-6">
+                        <div class="flex items-center gap-3 md:gap-4">
+                            <div class="w-10 h-10 md:w-14 md:h-14 bg-mi-soft text-mi-primary rounded-xl md:rounded-2xl flex items-center justify-center text-xl md:text-2xl font-bold">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg md:text-xl font-bold text-mi-text1" id="detCompClassName">Nama Kelas</h3>
+                                <p class="text-xs md:text-sm text-mi-text2 mt-0.5 md:mt-1 font-medium"><i class="fa-solid fa-magnifying-glass-chart mr-1 text-mi-primary"></i> Detail Kelengkapan Presensi</p>
+                            </div>
+                        </div>
+                        <button onclick="closeModal('modalClassCompleteness')" class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-mi-bg hover:bg-gray-200 text-mi-text2 flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-xmark text-base md:text-lg"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-2 md:gap-4 mb-6 bg-mi-bg p-3 md:p-5 rounded-xl md:rounded-2xl border border-mi-border">
+                        <div class="text-center">
+                            <div class="text-[9px] md:text-xs font-semibold uppercase tracking-wider text-mi-text2 mb-1">Hr Efektif</div>
+                            <div class="text-lg md:text-2xl font-bold text-slate-600" id="detCompEff">-</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[9px] md:text-xs font-semibold uppercase tracking-wider text-mi-text2 mb-1">Terisi</div>
+                            <div class="text-lg md:text-2xl font-bold text-emerald-600" id="detCompFilled">-</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[9px] md:text-xs font-semibold uppercase tracking-wider text-mi-text2 mb-1">Belum Diisi</div>
+                            <div class="text-lg md:text-2xl font-bold text-rose-600" id="detCompMissing">-</div>
+                        </div>
+                        <div class="text-center border-l border-mi-border flex flex-col justify-center">
+                            <div class="text-[9px] md:text-xs font-semibold uppercase tracking-wider text-mi-text2 mb-1">Kelengkapan</div>
+                            <div class="text-sm md:text-2xl font-bold text-mi-primary" id="detCompPct">-</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
+                        <h4 class="text-sm md:text-base font-bold text-mi-text1">Tanggal Belum Melakukan Presensi</h4>
+                        <div id="detCompStatusBadge"></div>
+                    </div>
+                    
+                    <div id="detCompMissingList" class="max-h-48 overflow-y-auto p-2 mb-4">
+                        <!-- Injected via JS -->
+                    </div>
+
+                    <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3 mt-4">
+                        <h4 class="text-sm md:text-base font-bold text-mi-text1"><i class="fa-solid fa-user-clock mr-2 text-mi-primary"></i>Siswa Masih Belum Diisi</h4>
+                    </div>
+                    <div id="detCompBdiList" class="max-h-48 overflow-y-auto p-2">
+                        <!-- Injected via JS -->
+                    </div>
+
+                </div>
+                <div class="bg-mi-bg/50 px-4 md:px-6 py-3 md:py-4 flex flex-col sm:flex-row-reverse gap-2 md:gap-3 border-t border-mi-border">
+                    <button type="button" onclick="closeModal('modalClassCompleteness')" class="w-full inline-flex justify-center items-center rounded-xl px-4 md:px-5 py-2 md:py-2.5 bg-mi-primary hover:bg-mi-dark text-white text-sm font-medium transition-colors sm:w-auto">Tutup Detail</button>
                 </div>
             </div>
         </div>
@@ -798,7 +920,7 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         // PASTI GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVhlTRXzujPhhI-FtzYMbKFzeauHknhPO-yiN_LNqaqxI60zOX0t1llrfKHwyftOxZ2g/exec'; 
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykQuoEAfOl7h0zVPzXe8Ko5wblSeM3dKW-zyfiRqgKXXtN7zagsbxU4P0zyJcUCmWFQA/exec'; 
 
         // STATE MANAGER
         const APP_STATE = {
@@ -808,7 +930,7 @@
             records: [], // Data presensi raw dari DB
             masterRecords: [], // Data tergabung (Hadir/Sakit/Izin/Alpa + Belum Diisi + Libur)
             filteredData: [], // Hasil filter (search, status) untuk ditampilkan
-            summary: {},
+            summary: { completeness: null },
             currentTab: 'riwayat',
             rekapMode: 'ringkas',
             waFormat: 'format_1',
@@ -1029,6 +1151,64 @@
             }
         }
 
+        function calculateCompleteness(effDates) {
+            let data = [];
+            let activeClasses = [...new Set(APP_STATE.students.map(s => s.className))].sort();
+            
+            let eff = effDates.length;
+            let totalClasses = activeClasses.length;
+            let completeClasses = 0;
+            let incompleteClasses = 0;
+            let totalMissingDays = 0;
+
+            activeClasses.forEach(c => {
+                let classStudents = APP_STATE.students.filter(s => s.className === c);
+                let studentCount = classStudents.length;
+                if(studentCount === 0) return;
+
+                let expected = eff * studentCount;
+                let cRecords = APP_STATE.masterRecords.filter(r => r.className === c && r.status !== 'Libur');
+                
+                let filled = cRecords.filter(r => ['Hadir','Sakit','Izin','Alpa'].includes(r.status)).length;
+                let missing = cRecords.filter(r => r.status === 'Belum Diisi' || r.status === 'BDI').length;
+                
+                let pct = expected === 0 ? 100 : (filled / expected) * 100;
+                let status = pct >= 100 ? 'Lengkap' : 'Belum Lengkap';
+
+                if(status === 'Lengkap') completeClasses++;
+                else incompleteClasses++;
+
+                let missingDates = [];
+                let bdiStudents = [];
+                
+                effDates.forEach(dObj => {
+                    let recsOnDate = cRecords.filter(r => r.date === dObj.date);
+                    let filledOnDate = recsOnDate.filter(r => ['Hadir','Sakit','Izin','Alpa'].includes(r.status)).length;
+                    
+                    if (filledOnDate < studentCount) {
+                        missingDates.push(dObj.date);
+                        totalMissingDays++;
+                    }
+                    
+                    let bdiOnDate = recsOnDate.filter(r => r.status === 'Belum Diisi' || r.status === 'BDI');
+                    bdiOnDate.forEach(b => {
+                        bdiStudents.push({ date: b.date, name: b.studentName, status: 'Belum Diisi' });
+                    });
+                });
+
+                let uniqueBdiCount = new Set(bdiStudents.map(s => s.name)).size;
+
+                data.push({
+                    className: c, eff: eff, filled: filled, missing: missing, pct: pct, status: status,
+                    missingDates: missingDates, bdiStudents: bdiStudents, uniqueBdiCount: uniqueBdiCount
+                });
+            });
+
+            APP_STATE.summary.completeness = {
+                data: data, totalClasses: totalClasses, complete: completeClasses, incomplete: incompleteClasses, totalMissingDays: totalMissingDays
+            };
+        }
+
         function calculateSummary() {
             const startDate = document.getElementById('filterStartDate').value;
             const endDate = document.getElementById('filterEndDate').value;
@@ -1108,6 +1288,9 @@
                     };
                 }
             });
+
+            let effDates = APP_STATE.summary.datesObj.filter(d => !d.isHoliday);
+            calculateCompleteness(effDates);
         }
 
         // ==========================================
@@ -1441,8 +1624,49 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: selectedClass === 'all' ? 100 : undefined } } }
             });
 
+            renderCompletenessSection();
             generateAnalysisConclusion();
             generateAnalysisRecommendations();
+        }
+
+        function renderCompletenessSection() {
+            const comp = APP_STATE.summary.completeness;
+            if(!comp) return;
+
+            document.getElementById('cardCompTotal').innerText = formatNumber(comp.totalClasses);
+            document.getElementById('cardCompComplete').innerText = formatNumber(comp.complete);
+            document.getElementById('cardCompIncomplete').innerText = formatNumber(comp.incomplete);
+            document.getElementById('cardCompMissing').innerText = formatNumber(comp.totalMissingDays);
+
+            const tbody = document.getElementById('tbody-analisa-kelengkapan');
+            tbody.innerHTML = '';
+            
+            comp.data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-mi-soft/30 transition-colors';
+                
+                let badge = row.status === 'Lengkap' 
+                    ? `<span class="px-2 py-1 rounded-md text-[10px] font-bold bg-emerald-100 text-emerald-700">Lengkap</span>` 
+                    : `<span class="px-2 py-1 rounded-md text-[10px] font-bold bg-rose-100 text-rose-700">Belum Lengkap</span>`;
+                
+                let bdiContent = row.uniqueBdiCount > 0
+                    ? `<button onclick="showClassCompletenessDetail('${row.className}')" class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#F3F4F6] text-[#4B5563] border border-[#D1D5DB] hover:bg-gray-200 transition-colors" title="Lihat Siswa BDI">${row.uniqueBdiCount}</button>`
+                    : `<span class="text-xs text-slate-400">0</span>`;
+
+                tr.innerHTML = `
+                    <td class="px-3 md:px-4 py-2 md:py-3 whitespace-nowrap text-xs font-bold text-mi-text1">${row.className}</td>
+                    <td class="px-2 md:px-4 py-2 md:py-3 whitespace-nowrap text-xs text-center text-slate-600">${row.eff}</td>
+                    <td class="px-2 md:px-4 py-2 md:py-3 whitespace-nowrap text-xs text-center font-semibold text-emerald-600">${row.filled}</td>
+                    <td class="px-2 md:px-4 py-2 md:py-3 whitespace-nowrap text-xs text-center font-semibold ${row.missing > 0 ? 'text-rose-600' : 'text-slate-400'}">${row.missing}</td>
+                    <td class="px-2 md:px-4 py-2 md:py-3 whitespace-nowrap text-center">${bdiContent}</td>
+                    <td class="px-3 md:px-4 py-2 md:py-3 whitespace-nowrap text-xs text-center font-bold text-mi-primary">${formatPercentage(row.pct)}</td>
+                    <td class="px-2 md:px-4 py-2 md:py-3 whitespace-nowrap text-center">${badge}</td>
+                    <td class="px-3 md:px-4 py-2 md:py-3 whitespace-nowrap text-center">
+                        <button onclick="showClassCompletenessDetail('${row.className}')" class="text-[10px] font-bold text-mi-primary hover:text-mi-dark hover:underline flex items-center justify-center gap-1 w-full"><i class="fa-solid fa-eye"></i> Lihat Detail</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
         function generateAnalysisConclusion() {
@@ -1459,7 +1683,14 @@
             let periodText = startD === endD ? `tanggal <strong>${formatDateIndo(startD)}</strong>` : `periode <strong>${formatDateIndo(startD)} s/d ${formatDateIndo(endD)}</strong>`;
             let classText = selectedClass === 'all' ? "seluruh kelas" : `kelas <strong>${selectedClass}</strong>`;
 
-            targetEl.innerHTML = `Berdasarkan data presensi ${classText} pada ${periodText}, tercatat sebanyak <strong>${APP_STATE.summary.totalStudents} siswa</strong>. Dalam rentang waktu tersebut terdapat <strong>${APP_STATE.summary.hariEfektif} Hari Efektif</strong>. Persentase kehadiran mencapai <strong>${formatPercentage(APP_STATE.summary.pct)}</strong>.`;
+            let conclusionHtml = `Berdasarkan data presensi ${classText} pada ${periodText}, tercatat sebanyak <strong>${APP_STATE.summary.totalStudents} siswa</strong>. Dalam rentang waktu tersebut terdapat <strong>${APP_STATE.summary.hariEfektif} Hari Efektif</strong>. Persentase kehadiran mencapai <strong>${formatPercentage(APP_STATE.summary.pct)}</strong>.`;
+
+            let comp = APP_STATE.summary.completeness;
+            if(comp && comp.totalClasses > 0 && selectedClass === 'all') {
+                conclusionHtml += `<br><br>Terkait kelengkapan pengisian presensi, dari total <strong>${comp.totalClasses} kelas</strong>, terdapat <strong>${comp.complete} kelas</strong> yang telah lengkap, dan <strong>${comp.incomplete} kelas</strong> yang belum lengkap dengan total akumulasi <strong>${comp.totalMissingDays} hari presensi belum diisi</strong>.`;
+            }
+
+            targetEl.innerHTML = conclusionHtml;
         }
 
         function generateAnalysisRecommendations() {
@@ -1471,6 +1702,13 @@
             let alpaRate = (APP_STATE.summary.a / total) * 100;
             let sakitRate = (APP_STATE.summary.s / total) * 100;
             let izinRate = (APP_STATE.summary.i / total) * 100;
+            let comp = APP_STATE.summary.completeness;
+
+            const selectedClass = document.getElementById('filterKelas').value;
+            if(selectedClass === 'all') {
+                if (comp && comp.incomplete > 0) recs.push(`<i class="fa-solid fa-triangle-exclamation text-amber-500 mr-2 mt-0.5"></i> Segera ingatkan wali kelas dari <strong>${comp.incomplete} kelas yang belum lengkap</strong> untuk mengisi data presensi yang masih kosong (total ${comp.totalMissingDays} hari).`);
+                else if (comp && comp.incomplete === 0) recs.push(`<i class="fa-solid fa-check-double text-emerald-500 mr-2 mt-0.5"></i> Kelengkapan pengisian presensi oleh wali kelas sudah mencapai 100%. Pertahankan kedisiplinan ini.`);
+            }
 
             if (alpaRate > 2) recs.push('<i class="fa-solid fa-circle-exclamation text-rose-500 mr-2 mt-0.5"></i> Perlu dilakukan pemantauan terhadap tingkat ketidakhadiran tanpa keterangan (Alpa).');
             if (sakitRate > 5) recs.push('<i class="fa-solid fa-notes-medical text-orange-500 mr-2 mt-0.5"></i> Koordinasikan kondisi siswa yang sakit dengan wali kelas dan orang tua terkait.');
@@ -1564,6 +1802,72 @@
                 tbody.appendChild(tr);
             });
             document.getElementById('modalStudent').classList.remove('hidden');
+        }
+
+        function showClassCompletenessDetail(className) {
+            const data = APP_STATE.summary.completeness.data.find(d => d.className === className);
+            if(!data) return;
+
+            document.getElementById('detCompClassName').innerText = data.className;
+            document.getElementById('detCompEff').innerText = data.eff;
+            document.getElementById('detCompFilled').innerText = data.filled;
+            document.getElementById('detCompMissing').innerText = data.missing;
+            document.getElementById('detCompPct').innerText = formatPercentage(data.pct);
+            
+            document.getElementById('detCompStatusBadge').innerHTML = data.status === 'Lengkap' 
+                ? `<span class="px-3 py-1 rounded-md text-xs font-bold bg-emerald-100 text-emerald-700">Lengkap</span>` 
+                : `<span class="px-3 py-1 rounded-md text-xs font-bold bg-rose-100 text-rose-700">Belum Lengkap</span>`;
+
+            // Tanggal Belum Diisi List
+            const listContainer = document.getElementById('detCompMissingList');
+            listContainer.innerHTML = '';
+            
+            if (data.missingDates.length === 0) {
+                listContainer.innerHTML = `<div class="text-sm text-mi-text2 italic px-3 py-4 bg-gray-50 rounded-lg border border-gray-100 text-center">Tidak ada tanggal yang belum diisi. Kelas sudah lengkap! 🎉</div>`;
+            } else {
+                const ul = document.createElement('ul');
+                ul.className = "list-disc list-inside space-y-1.5 text-sm text-mi-text1 pl-1";
+                data.missingDates.sort((a,b) => new Date(a) - new Date(b)).forEach(d => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${formatDateIndo(d)}</strong>`;
+                    ul.appendChild(li);
+                });
+                listContainer.appendChild(ul);
+            }
+
+            // Siswa BDI List
+            const bdiContainer = document.getElementById('detCompBdiList');
+            bdiContainer.innerHTML = '';
+
+            if (data.bdiStudents && data.bdiStudents.length > 0) {
+                let grouped = {};
+                data.bdiStudents.forEach(b => {
+                    if(!grouped[b.date]) grouped[b.date] = [];
+                    grouped[b.date].push(b);
+                });
+
+                let sortedDates = Object.keys(grouped).sort((a,b) => new Date(a) - new Date(b));
+                let bdiHtml = '<div class="space-y-4">';
+                sortedDates.forEach(date => {
+                    bdiHtml += `<div>
+                        <div class="text-xs font-bold text-mi-text1 mb-2">${formatDateIndo(date)}</div>
+                        <div class="flex flex-col gap-2">`;
+                    grouped[date].sort((a,b) => a.name.localeCompare(b.name)).forEach(s => {
+                        bdiHtml += `
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 rounded-lg border border-gray-100 bg-gray-50/50">
+                                <span class="text-xs md:text-sm font-semibold text-mi-text1 mb-1 sm:mb-0"><i class="fa-solid fa-circle-user text-gray-400 mr-1.5"></i>${s.name}</span>
+                                <span class="px-2.5 py-1 rounded-md text-[10px] font-bold bg-[#F3F4F6] text-[#4B5563] border border-[#D1D5DB] w-fit">Belum Diisi</span>
+                            </div>`;
+                    });
+                    bdiHtml += `</div></div>`;
+                });
+                bdiHtml += '</div>';
+                bdiContainer.innerHTML = bdiHtml;
+            } else {
+                bdiContainer.innerHTML = `<div class="text-sm text-mi-text2 italic px-3 py-4 bg-gray-50 rounded-lg border border-gray-100 text-center">Tidak ada siswa dengan status Belum Diisi pada periode ini.</div>`;
+            }
+
+            document.getElementById('modalClassCompleteness').classList.remove('hidden');
         }
 
         // ==========================================
@@ -1846,10 +2150,12 @@
         function exportExcel() {
             if (APP_STATE.currentTab === 'rekap') exportRecapExcel();
             else if (APP_STATE.currentTab === 'riwayat') exportHistoryExcel();
+            else if (APP_STATE.currentTab === 'analisa') exportAnalysisExcel();
         }
         function exportPDF() {
             if (APP_STATE.currentTab === 'rekap') exportRecapPDF();
             else if (APP_STATE.currentTab === 'riwayat') exportHistoryPDF();
+            else if (APP_STATE.currentTab === 'analisa') exportAnalysisPDF();
         }
 
         function generateExportFileName(reportName, extension) {
@@ -1980,6 +2286,136 @@
             doc.text(`Detail Presensi - ${studentName}`, 14, 20);
             doc.autoTable({ head: [["No","Tanggal","Status","Keterangan"]], body: history.map((r,i)=>[i+1, r.date, r.status, r.notes]), startY: 30, theme:'grid' });
             doc.save(`Detail_Siswa_${studentName.replace(/[\/\\:*?"<>|]/g, '').replace(/\s+/g, '_')}.pdf`);
+        }
+
+        function exportAnalysisExcel() {
+            if(!APP_STATE.summary.completeness || APP_STATE.summary.completeness.data.length === 0) {
+                return Swal.fire('Data Kosong', 'Belum ada data Monitoring Kelengkapan Presensi untuk diekspor.', 'info');
+            }
+            
+            const compData = APP_STATE.summary.completeness.data;
+            const wb = XLSX.utils.book_new();
+
+            // Sheet 1: Analisa Status
+            const sheet0Data = [{
+                "Total Siswa": APP_STATE.summary.totalStudents, "Hari Efektif": APP_STATE.summary.hariEfektif,
+                "Hadir": APP_STATE.summary.h, "Sakit": APP_STATE.summary.s, "Izin": APP_STATE.summary.i, "Alpa": APP_STATE.summary.a,
+                "% Kehadiran": formatPercentage(APP_STATE.summary.pct)
+            }];
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(sheet0Data), "Analisa Status");
+
+            // Sheet 2: Perbandingan Kelas
+            let sheet1Data = [];
+            APP_STATE.classes.forEach((c, index) => {
+                if(APP_STATE.summary.classRecap && APP_STATE.summary.classRecap[c]) {
+                    const dat = APP_STATE.summary.classRecap[c];
+                    sheet1Data.push({
+                        "No": index + 1, "Kelas": c, "Siswa": dat.studentCount,
+                        "Hadir": dat.h, "Sakit": dat.s, "Izin": dat.i, "Alpa": dat.a, "% Kehadiran": formatPercentage(dat.pct)
+                    });
+                }
+            });
+            if(sheet1Data.length === 0) sheet1Data.push({"Pesan": "Tidak ada data"});
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(sheet1Data), "Perbandingan Kelas");
+
+            // Sheet 3: Monitoring Kelengkapan
+            const sheet2Data = compData.map((row, index) => ({
+                "No": index + 1, "Kelas": row.className, "Hari Efektif": row.eff,
+                "Terisi": row.filled, "Belum Diisi": row.missing, "Siswa BDI": row.uniqueBdiCount,
+                "Kelengkapan": formatPercentage(row.pct), "Status": row.status
+            }));
+            if(sheet2Data.length === 0) sheet2Data.push({"Pesan": "Tidak ada data"});
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(sheet2Data), "Monitoring Kelengkapan");
+
+            // Sheet 4: Tanggal Belum Absen
+            let sheet3Data = [];
+            let tglNo = 1;
+            compData.forEach(row => {
+                if(row.missingDates) {
+                    row.missingDates.forEach(d => {
+                        sheet3Data.push({ "No": tglNo++, "Tanggal": formatDateIndo(d), "Kelas": row.className, "Status": "Kelas Belum Mengisi" });
+                    });
+                }
+            });
+            if(sheet3Data.length === 0) sheet3Data.push({"Pesan": "Tidak ada data"});
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(sheet3Data), "Tanggal Belum Absen");
+
+            // Sheet 5: Siswa BDI
+            let sheet4Data = [];
+            let bdiNo = 1;
+            compData.forEach(row => {
+                if(row.bdiStudents) {
+                    row.bdiStudents.forEach(b => {
+                        sheet4Data.push({ "No": bdiNo++, "Tanggal": formatDateIndo(b.date), "Kelas": row.className, "Nama Siswa": b.name, "Status": b.status });
+                    });
+                }
+            });
+            if(sheet4Data.length === 0) sheet4Data.push({"Pesan": "Tidak ada data"});
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(sheet4Data), "Detail BDI");
+            
+            const fileName = generateExportFileName('Analisa_dan_Monitoring_Presensi', 'xlsx');
+            XLSX.writeFile(wb, fileName);
+        }
+
+        function exportAnalysisPDF() {
+            if(!APP_STATE.summary.completeness || APP_STATE.summary.completeness.data.length === 0) {
+                return Swal.fire('Data Kosong', 'Belum ada data Monitoring Kelengkapan Presensi untuk diekspor.', 'info');
+            }
+            
+            const doc = new jspdf.jsPDF('portrait');
+            doc.setFontSize(14); 
+            doc.text("LAPORAN ANALISA & MONITORING PRESENSI KELAS", 14, 20);
+            doc.setFontSize(10);
+            doc.text(`Periode: ${document.getElementById('filterStartDate').value} s/d ${document.getElementById('filterEndDate').value}`, 14, 26);
+            
+            const cr = APP_STATE.summary;
+            doc.text(`Ringkasan: ${cr.totalStudents} Siswa | ${cr.hariEfektif} Hari Efektif | Hadir: ${cr.h}, Sakit: ${cr.s}, Izin: ${cr.i}, Alpa: ${cr.a} | Kehadiran: ${formatPercentage(cr.pct)}`, 14, 32);
+
+            let finalY = 38;
+
+            // 1. Perbandingan Kelas
+            let classRows = [];
+            APP_STATE.classes.forEach((c, i) => {
+                if(cr.classRecap && cr.classRecap[c]) {
+                    const dat = cr.classRecap[c];
+                    classRows.push([i+1, c, dat.studentCount, dat.h, dat.s, dat.i, dat.a, formatPercentage(dat.pct)]);
+                }
+            });
+            doc.setFont("helvetica", "bold"); doc.text("PERBANDINGAN KEHADIRAN ANTAR KELAS", 14, finalY); doc.setFont("helvetica", "normal");
+            doc.autoTable({ head: [["No", "Kelas", "Siswa", "H", "S", "I", "A", "%"]], body: classRows, startY: finalY+4, theme: 'grid', styles: { fontSize: 8 }, headStyles: { fillColor: [18, 79, 71] } });
+            finalY = doc.lastAutoTable.finalY + 10;
+
+            // 2. Monitoring Kelengkapan
+            const comp = cr.completeness;
+            doc.setFont("helvetica", "bold"); doc.text("MONITORING KELENGKAPAN PRESENSI", 14, finalY); doc.setFont("helvetica", "normal");
+            doc.text(`Total Kelas: ${comp.totalClasses} | Lengkap: ${comp.complete} | Belum Lengkap: ${comp.incomplete} | Hari Kosong: ${comp.totalMissingDays}`, 14, finalY+6);
+            
+            const cols1 = ["No", "Kelas", "Hari Efektif", "Terisi", "Blm Diisi", "Siswa BDI", "Kelengkapan", "Status"];
+            const rows1 = comp.data.map((r, i) => [i + 1, r.className, r.eff, r.filled, r.missing, r.uniqueBdiCount, formatPercentage(r.pct), r.status]);
+            doc.autoTable({ head: [cols1], body: rows1, startY: finalY+10, theme: 'grid', styles: { fontSize: 8 }, headStyles: { fillColor: [18, 79, 71] } });
+            finalY = doc.lastAutoTable.finalY + 10;
+
+            // 3. Tanggal Belum Presensi
+            if(finalY > 250) { doc.addPage(); finalY = 20; }
+            doc.setFont("helvetica", "bold"); doc.text("TANGGAL KELAS BELUM MELAKUKAN PRESENSI", 14, finalY); doc.setFont("helvetica", "normal");
+            let rows2 = [];
+            comp.data.forEach(r => { if (r.missingDates) r.missingDates.forEach(d => rows2.push([r.className, formatDateIndo(d)])); });
+            if (rows2.length > 0) {
+                doc.autoTable({ head: [["Kelas", "Tanggal"]], body: rows2, startY: finalY+4, theme: 'grid', styles: { fontSize: 8 }, headStyles: { fillColor: [18, 79, 71] } });
+                finalY = doc.lastAutoTable.finalY + 10;
+            } else { doc.text("Tidak ada data tanggal kosong.", 14, finalY + 6); finalY += 12; }
+
+            // 4. Siswa Belum Diisi
+            if(finalY > 250) { doc.addPage(); finalY = 20; }
+            doc.setFont("helvetica", "bold"); doc.text("DETAIL SISWA MASIH BELUM DIISI (BDI)", 14, finalY); doc.setFont("helvetica", "normal");
+            let rows3 = [];
+            comp.data.forEach(r => { if(r.bdiStudents) r.bdiStudents.forEach(b => rows3.push([formatDateIndo(b.date), r.className, b.name, b.status])); });
+            if (rows3.length > 0) {
+                doc.autoTable({ head: [["Tanggal", "Kelas", "Nama Siswa", "Status"]], body: rows3, startY: finalY+4, theme: 'grid', styles: { fontSize: 8 }, headStyles: { fillColor: [18, 79, 71] } });
+            } else { doc.text("Tidak ada data siswa belum diisi.", 14, finalY + 6); }
+            
+            const fileName = generateExportFileName('Analisa_dan_Monitoring_Presensi', 'pdf');
+            doc.save(fileName);
         }
 
         // ==========================================
