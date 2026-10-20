@@ -1673,6 +1673,7 @@
             });
         }
 
+        
         function generateAnalysisConclusion() {
             const startD = document.getElementById('filterStartDate').value;
             const endD = document.getElementById('filterEndDate').value;
@@ -1680,22 +1681,55 @@
             const targetEl = document.getElementById('analisaKesimpulan');
 
             if (APP_STATE.summary.totalRecords === 0) {
-                targetEl.innerHTML = "Tidak ada data presensi yang sesuai dengan filter yang dipilih.";
+                targetEl.innerHTML =
+                    "Tidak ada data presensi yang sesuai dengan filter yang dipilih.";
                 return;
             }
 
-            let periodText = startD === endD ? `tanggal <strong>${formatDateIndo(startD)}</strong>` : `periode <strong>${formatDateIndo(startD)} s/d ${formatDateIndo(endD)}</strong>`;
-            let classText = selectedClass === 'all' ? "seluruh kelas" : `kelas <strong>${selectedClass}</strong>`;
+            let periodText = startD === endD
+                ? `tanggal <strong>${formatDateIndo(startD)}</strong>`
+                : `periode <strong>${formatDateIndo(startD)} s/d ${formatDateIndo(endD)}</strong>`;
+
+            let classText = selectedClass === 'all'
+                ? "seluruh kelas"
+                : `kelas <strong>${selectedClass}</strong>`;
 
             let conclusionHtml = `Berdasarkan data presensi ${classText} pada ${periodText}, tercatat sebanyak <strong>${APP_STATE.summary.totalStudents} siswa</strong>. Dalam rentang waktu tersebut terdapat <strong>${APP_STATE.summary.hariEfektif} Hari Efektif</strong>. Persentase kehadiran mencapai <strong>${formatPercentage(APP_STATE.summary.pct)}</strong>.`;
 
-            let comp = APP_STATE.summary.completeness;
-            if(comp && comp.totalClasses > 0 && selectedClass === 'all') {
+            const comp = APP_STATE.summary.completeness;
+
+            if (comp && comp.totalClasses > 0 && selectedClass === 'all') {
                 conclusionHtml += `<br><br>Terkait kelengkapan pengisian presensi, dari total <strong>${comp.totalClasses} kelas</strong>, terdapat <strong>${comp.complete} kelas</strong> yang telah lengkap, dan <strong>${comp.incomplete} kelas</strong> yang belum lengkap dengan total akumulasi <strong>${comp.totalMissingDays} hari presensi belum diisi</strong>.`;
+
+                // Daftar nama kelas yang belum mengisi presensi
+                const incompleteClasses = (comp.data || [])
+                    .filter(row => Number(row.missing) > 0)
+                    .sort((a, b) => {
+                        return APP_STATE.classes.indexOf(a.className)
+                            - APP_STATE.classes.indexOf(b.className);
+                    });
+
+                if (incompleteClasses.length > 0) {
+                    conclusionHtml += `
+                        <br><br>
+                        <strong>Daftar kelas yang belum mengisi presensi:</strong>
+                        <ol class="list-decimal pl-6 mt-2 space-y-1">
+                            ${incompleteClasses.map(row =>
+                                `<li><strong>${row.className}</strong> — belum mengisi presensi sebanyak <strong>${row.missing} hari</strong>.</li>`
+                            ).join('')}
+                        </ol>
+                    `;
+                } else {
+                    conclusionHtml += `
+                        <br><br>
+                        <strong>Seluruh kelas telah mengisi presensi secara lengkap.</strong>
+                    `;
+                }
             }
 
             targetEl.innerHTML = conclusionHtml;
         }
+
 
         function generateAnalysisRecommendations() {
             const targetEl = document.getElementById('analisaRekomendasi');
