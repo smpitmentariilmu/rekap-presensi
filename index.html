@@ -132,36 +132,62 @@
 
     <!-- HEADER -->
     <div class="bg-mi-surface border-b border-mi-border sticky top-0 z-30 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-5 lg:px-8 py-2 sm:py-2.5 md:py-3 lg:py-4">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 sm:gap-2.5 lg:gap-4">
                 
-                <!-- Logo & Title -->
-                <div class="flex items-center gap-3 md:gap-4">
-                    <img src="https://mentariilmu.org/logo.png" alt="Logo Mentari Ilmu" class="h-10 md:h-12 w-auto object-contain">
-                    <div>
-                        <h1 class="text-lg md:text-xl lg:text-2xl font-bold text-mi-text1 leading-tight">
-                            Rekap & Riwayat Presensi Siswa
-                        </h1>
-                        <p class="text-[11px] md:text-xs lg:text-sm text-mi-text2 mt-0.5 md:mt-1 max-w-sm md:max-w-none">
-                            Pantau kehadiran siswa, analisa presensi, dan bagikan laporan otomatis.
-                        </p>
+                <div class="flex justify-between items-center w-full lg:w-auto">
+                    <!-- Title/Logo (Kiri) -->                 
+                   
+                    <div class="flex items-center gap-2 md:gap-3 shrink-0">
+                        <img src="https://mentariilmu.org/logo.png" alt="Logo Mentari Ilmu" class="h-7 sm:h-8 md:h-9 lg:h-10 w-auto object-contain">
+                        <div class="flex flex-col items-start gap-0">
+                            <span class="text-[10px] md:text-xs font-medium text-mi-text2 leading-[0.85]">Rekap</span>
+                            <div class="flex items-center gap-1.5 -mt-0.5">
+                                <h2 class="text-base md:text-lg lg:text-xl font-extrabold text-mi-primary leading-[0.85] tracking-tight">Presensi</h2>
+                                <span class="inline-flex items-center rounded bg-[#E0F2EC] border border-[#B8D9CC] px-1.5 py-0.5 text-[9px] md:text-[10px] font-bold text-[#124F47] leading-none">SISWA</span>
+                            </div>
+                            <p class="text-[8px] md:text-[10px] font-medium text-mi-text2 leading-[0.85] -mt-0.5">SMP IT Mentari Ilmu</p>
+                        </div>
+                    </div>
+
+                    <!-- Live Clock (Kanan khusus Mobile/Tablet) -->
+                    <div class="flex lg:hidden items-center gap-2 px-2.5 py-1 bg-gradient-to-r from-[#F0F7F5] to-white border border-[#D7EAE5] rounded-xl shadow-sm shrink-0 ml-2">
+                        <div class="flex flex-col text-right">
+                            <span class="live-time text-xs sm:text-sm font-black text-mi-primary leading-none tracking-tight font-mono">00:00:00</span>
+                            <span class="live-date text-[9px] sm:text-[10px] font-semibold text-mi-text2 mt-0.5">Memuat...</span>
+                        </div>
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white border border-[#E8F3F0] text-mi-primary flex items-center justify-center text-xs shadow-sm">
+                            <i class="fa-regular fa-clock animate-pulse"></i>
+                        </div>
                     </div>
                 </div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between lg:justify-end gap-3 md:gap-4">
+                    
+                    <!-- Live Clock (Desktop) -->
+                    <div class="hidden lg:flex items-center gap-3 px-3 py-2 bg-gradient-to-r from-[#F0F7F5] to-white border border-[#D7EAE5] rounded-xl shadow-sm shrink-0 hover:shadow-md transition-shadow">
+                        <div class="w-9 h-9 rounded-xl bg-white border border-[#E8F3F0] text-mi-primary flex items-center justify-center text-sm shadow-sm">
+                            <i class="fa-regular fa-clock animate-pulse"></i>
+                        </div>
+                        <div class="flex flex-col min-w-[100px]">
+                            <span class="live-time text-base font-black text-mi-primary leading-none tracking-tight font-mono">00:00:00</span>
+                            <span class="live-date text-[11px] font-semibold text-mi-text2 mt-0.5">Memuat...</span>
+                        </div>
+                    </div>
 
-                <!-- Action Buttons -->
-                <div class="flex flex-wrap items-center gap-2 mt-1 md:mt-0">
-                    <button onclick="handleRefresh()" id="btnGlobalRefresh" class="flex-1 sm:flex-none justify-center px-3 md:px-4 py-1.5 md:py-2 bg-mi-soft hover:bg-[#DDEFEA] text-mi-primary rounded-xl text-xs md:text-sm font-medium transition-colors border border-[#C8E3DD] shadow-sm flex items-center gap-1.5 md:gap-2">
-                        <i class="fa-solid fa-rotate-right" id="iconRefresh"></i> <span class="hidden sm:inline">Refresh</span><span class="sm:hidden">Muat Ulang</span>
-                    </button>
-                    <button onclick="exportExcel()" class="hidden lg:flex justify-center px-3 md:px-4 py-1.5 md:py-2 bg-[#E8F3F0] hover:bg-[#D9EEE8] text-[#18794E] rounded-xl text-xs md:text-sm font-medium transition-colors border border-[#C8E3DD] shadow-sm items-center gap-1.5 md:gap-2" title="Export Excel sesuai Tab yang aktif">
-                        <i class="fa-solid fa-file-excel"></i> <span>Excel</span>
-                    </button>
-                    <button onclick="exportPDF()" class="hidden lg:flex justify-center px-3 md:px-4 py-1.5 md:py-2 bg-[#FFF1F2] hover:bg-[#FFE4E6] text-[#BE123C] rounded-xl text-xs md:text-sm font-medium transition-colors border border-[#FFE4E6] shadow-sm items-center gap-1.5 md:gap-2" title="Export PDF sesuai Tab yang aktif">
-                        <i class="fa-solid fa-file-pdf"></i> <span>PDF</span>
-                    </button>
-                    <button onclick="openWhatsAppModal()" class="hidden lg:flex w-full sm:w-auto justify-center px-4 md:px-5 py-1.5 md:py-2 bg-mi-primary hover:bg-mi-dark text-white rounded-xl text-xs md:text-sm font-medium transition-colors shadow-md items-center gap-1.5 md:gap-2">
-                        <i class="fa-brands fa-whatsapp text-sm md:text-lg"></i> <span>Bagikan Laporan</span>
-                    </button>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="handleRefresh()" id="btnGlobalRefresh" class="justify-center px-3 md:px-4 py-1.5 md:py-2 bg-mi-soft hover:bg-[#DDEFEA] text-mi-primary rounded-xl text-xs md:text-sm font-medium transition-colors border border-[#C8E3DD] shadow-sm flex items-center gap-1.5 md:gap-2">
+                            <i class="fa-solid fa-rotate-right" id="iconRefresh"></i> <span>Refresh</span>
+                        </button>
+                        <button onclick="exportExcel()" class="hidden lg:flex justify-center px-3 md:px-4 py-1.5 md:py-2 bg-[#E8F3F0] hover:bg-[#D9EEE8] text-[#18794E] rounded-xl text-xs md:text-sm font-medium transition-colors border border-[#C8E3DD] shadow-sm items-center gap-1.5 md:gap-2" title="Export Excel sesuai Tab yang aktif">
+                            <i class="fa-solid fa-file-excel"></i> <span>Excel</span>
+                        </button>
+                        <button onclick="exportPDF()" class="hidden lg:flex justify-center px-3 md:px-4 py-1.5 md:py-2 bg-[#FFF1F2] hover:bg-[#FFE4E6] text-[#BE123C] rounded-xl text-xs md:text-sm font-medium transition-colors border border-[#FFE4E6] shadow-sm items-center gap-1.5 md:gap-2" title="Export PDF sesuai Tab yang aktif">
+                            <i class="fa-solid fa-file-pdf"></i> <span>PDF</span>
+                        </button>
+                        <button onclick="openWhatsAppModal()" class="hidden lg:flex w-full sm:w-auto justify-center px-4 md:px-5 py-1.5 md:py-2 bg-mi-primary hover:bg-mi-dark text-white rounded-xl text-xs md:text-sm font-medium transition-colors shadow-md items-center gap-1.5 md:gap-2">
+                            <i class="fa-brands fa-whatsapp text-sm md:text-lg"></i> <span>Bagikan</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -211,7 +237,7 @@
 
                 <div class="sm:col-span-1 lg:col-span-1">
                     <label class="block text-[10px] md:text-xs font-semibold text-mi-text2 mb-1 md:mb-1.5 uppercase tracking-wider">Kelas</label>
-                    <select id="filterKelas" class="w-full border border-mi-border rounded-xl bg-mi-bg focus:bg-white py-2 md:py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-xs md:text-sm transition-all text-mi-text1">
+                    <select id="filterKelas" onchange="handleLocalFilterChange()" class="w-full border border-mi-border rounded-xl bg-mi-bg focus:bg-white py-2 md:py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-xs md:text-sm transition-all text-mi-text1">
                         <option value="all">Semua Kelas</option>
                         <!-- Options generated in JS -->
                     </select>
@@ -219,7 +245,7 @@
 
                 <div class="sm:col-span-1 lg:col-span-1" id="filterStatusContainer" style="display: none;">
                     <label class="block text-[10px] md:text-xs font-semibold text-mi-text2 mb-1 md:mb-1.5 uppercase tracking-wider">Status</label>
-                    <select id="filterStatus" onchange="applyLocalFilters()" class="w-full border border-mi-border rounded-xl bg-mi-bg focus:bg-white py-2 md:py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-xs md:text-sm transition-all text-mi-text1">
+                    <select id="filterStatus" onchange="handleLocalFilterChange()" class="w-full border border-mi-border rounded-xl bg-mi-bg focus:bg-white py-2 md:py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-mi-primary/20 focus:border-mi-primary text-xs md:text-sm transition-all text-mi-text1">
                         <option value="all">Semua Status</option>
                         <option value="Hadir">Hadir</option>
                         <option value="Sakit">Sakit</option>
@@ -980,12 +1006,26 @@
         // INIT & LOAD FLOW
         // ==========================================
         window.onload = function() {
+            startLiveClock();
             setDefaultTodayPeriod();
             initApp();
-            
+
             // Listeners
             document.getElementById('filterSearch').addEventListener('keyup', (e) => { if(e.key === 'Enter') applyLocalFilters(); });
         };
+
+        function startLiveClock() {
+            const update = () => {
+                const now = new Date();
+                const time = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
+                const date = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' }).format(now);
+                document.querySelectorAll('.live-time').forEach(el => el.textContent = time);
+                document.querySelectorAll('.live-date').forEach(el => el.textContent = date);
+            };
+            update();
+            if (window._presensiClockTimer) clearInterval(window._presensiClockTimer);
+            window._presensiClockTimer = setInterval(update, 1000);
+        }
 
         function setDefaultTodayPeriod() {
             const todayStr = formatDateYYYYMMDD(new Date());
@@ -1023,7 +1063,7 @@
         async function fetchPresensiData() {
             const startD = document.getElementById('filterStartDate').value;
             const endD = document.getElementById('filterEndDate').value;
-            const classFilter = document.getElementById('filterKelas').value;
+            const classFilter = 'all'; // Seluruh kelas dimuat sekali; filter kelas dilakukan lokal.
 
             showOverlayLoading(true);
             try {
@@ -1108,6 +1148,12 @@
             }
         }
 
+        function handleLocalFilterChange() {
+            APP_STATE.pagination.riwayat.page = 1;
+            APP_STATE.pagination.rekap.page = 1;
+            applyLocalFilters();
+        }
+
         function resetFilter() {
             document.getElementById('filterPeriode').value = 'today';
             handlePeriodChange();
@@ -1131,33 +1177,29 @@
 
         function applyLocalFilters() {
             const selectedStatus = document.getElementById('filterStatus').value;
+            const selectedClass = document.getElementById('filterKelas').value;
             const searchQuery = document.getElementById('filterSearch').value.toLowerCase();
 
             let filtered = APP_STATE.masterRecords;
+            if (selectedClass !== 'all') filtered = filtered.filter(r => r.className === selectedClass);
 
-            // Apply status filter (Hanya relevan untuk tab Riwayat)
+            // Filter status berlaku pada Riwayat Detail; pilihan tetap tersimpan saat berpindah tab.
             if (APP_STATE.currentTab === 'riwayat' && selectedStatus !== 'all') {
                 filtered = filtered.filter(r => r.status === selectedStatus);
             }
-
-            // Apply search
-            if (searchQuery) {
-                filtered = filtered.filter(r => r.studentName.toLowerCase().includes(searchQuery));
-            }
+            if (searchQuery) filtered = filtered.filter(r => (r.studentName || '').toLowerCase().includes(searchQuery));
 
             APP_STATE.filteredData = filtered;
-            
             calculateSummary();
             updateUI();
-            
-            if (!document.getElementById('modalWhatsApp').classList.contains('hidden')) {
-                generateWhatsAppReport();
-            }
+
+            if (!document.getElementById('modalWhatsApp').classList.contains('hidden')) generateWhatsAppReport();
         }
 
         function calculateCompleteness(effDates) {
             let data = [];
-            let activeClasses = [...new Set(APP_STATE.students.map(s => s.className))].sort();
+            const selectedClass = document.getElementById('filterKelas').value;
+            let activeClasses = [...new Set(APP_STATE.students.filter(s => selectedClass === 'all' || s.className === selectedClass).map(s => s.className))].sort();
             
             let eff = effDates.length;
             let totalClasses = activeClasses.length;
@@ -1216,50 +1258,39 @@
         function calculateSummary() {
             const startDate = document.getElementById('filterStartDate').value;
             const endDate = document.getElementById('filterEndDate').value;
-            
+            const selectedClass = document.getElementById('filterKelas').value;
             let eff = 0, hols = 0, datesObj = [];
-            let start = new Date(startDate);
-            let end = new Date(endDate);
-
+            let start = new Date(startDate), end = new Date(endDate);
             for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-                if (d.getDay() !== 0 && d.getDay() !== 6) { 
+                if (d.getDay() !== 0 && d.getDay() !== 6) {
                     const dStr = formatDateYYYYMMDD(d);
                     const holiday = APP_STATE.holidays.find(h => h.date === dStr);
-                    if (holiday) { hols++; datesObj.push({ date: dStr, isHoliday: true, desc: holiday.desc, type: holiday.type }); } 
+                    if (holiday) { hols++; datesObj.push({ date: dStr, isHoliday: true, desc: holiday.desc, type: holiday.type }); }
                     else { eff++; datesObj.push({ date: dStr, isHoliday: false }); }
                 }
             }
-
             APP_STATE.summary.hariEfektif = eff;
             APP_STATE.summary.hariLibur = hols;
             APP_STATE.summary.datesObj = datesObj;
-
+            const scopedStudents = APP_STATE.students.filter(st => selectedClass === 'all' || st.className === selectedClass);
+            const scopedRecords = APP_STATE.masterRecords.filter(rec => selectedClass === 'all' || rec.className === selectedClass);
             let h = 0, s = 0, i = 0, a = 0;
-            // Gunakan masterRecords utk perhitungan summary agar tidak bias filter pencarian lokal
-            APP_STATE.masterRecords.forEach(rec => {
+            scopedRecords.forEach(rec => {
                 if (rec.status === 'Hadir') h++;
                 else if (rec.status === 'Sakit') s++;
                 else if (rec.status === 'Izin') i++;
                 else if (rec.status === 'Alpa') a++;
             });
-
-            // Filter pencarian untuk Rekap
             const searchQuery = document.getElementById('filterSearch').value.toLowerCase();
-            let relevantStudents = APP_STATE.students;
-            if(searchQuery) {
-                relevantStudents = relevantStudents.filter(st => st.name.toLowerCase().includes(searchQuery));
-            }
-
-            APP_STATE.summary.totalStudents = APP_STATE.students.length;
-            APP_STATE.summary.totalRecords = APP_STATE.masterRecords.length;
+            let relevantStudents = scopedStudents;
+            if (searchQuery) relevantStudents = relevantStudents.filter(st => st.name.toLowerCase().includes(searchQuery));
+            APP_STATE.summary.totalStudents = scopedStudents.length;
+            APP_STATE.summary.totalRecords = scopedRecords.length;
             APP_STATE.summary.h = h; APP_STATE.summary.s = s; APP_STATE.summary.i = i; APP_STATE.summary.a = a;
-            
-            let maxExpectedRecords = APP_STATE.summary.totalStudents * eff;
-            APP_STATE.summary.pct = calculatePercentage(h, maxExpectedRecords);
-            
+            APP_STATE.summary.pct = calculatePercentage(h, APP_STATE.summary.totalStudents * eff);
             APP_STATE.summary.recapData = [];
             relevantStudents.forEach(student => {
-                const records = APP_STATE.masterRecords.filter(r => r.studentId === student.id);
+                const records = scopedRecords.filter(r => r.studentId === student.id);
                 let sh=0, ss=0, si=0, sa=0;
                 records.forEach(r => {
                     if (r.status === 'Hadir') sh++;
@@ -1267,17 +1298,14 @@
                     else if (r.status === 'Izin') si++;
                     else if (r.status === 'Alpa') sa++;
                 });
-                APP_STATE.summary.recapData.push({
-                    id: student.id, name: student.name, className: student.className,
-                    h: sh, s: ss, i: si, a: sa, pct: calculatePercentage(sh, eff) 
-                });
+                APP_STATE.summary.recapData.push({ id: student.id, name: student.name, className: student.className, h: sh, s: ss, i: si, a: sa, pct: calculatePercentage(sh, eff) });
             });
-            
             APP_STATE.summary.classRecap = {};
             APP_STATE.classes.forEach(c => {
-                const classStudents = APP_STATE.students.filter(st => st.className === c);
-                if(classStudents.length > 0) {
-                    const classRecs = APP_STATE.masterRecords.filter(r => r.className === c);
+                if (selectedClass !== 'all' && c !== selectedClass) return;
+                const classStudents = scopedStudents.filter(st => st.className === c);
+                if (classStudents.length > 0) {
+                    const classRecs = scopedRecords.filter(r => r.className === c);
                     let ch=0, cs=0, ci=0, ca=0;
                     classRecs.forEach(r => {
                         if (r.status === 'Hadir') ch++;
@@ -1285,19 +1313,12 @@
                         else if (r.status === 'Izin') ci++;
                         else if (r.status === 'Alpa') ca++;
                     });
-                    APP_STATE.summary.classRecap[c] = {
-                        studentCount: classStudents.length,
-                        h: ch, s: cs, i: ci, a: ca,
-                        pct: calculatePercentage(ch, classStudents.length * eff)
-                    };
+                    APP_STATE.summary.classRecap[c] = { studentCount: classStudents.length, h: ch, s: cs, i: ci, a: ca, pct: calculatePercentage(ch, classStudents.length * eff) };
                 }
             });
-
-            let effDates = APP_STATE.summary.datesObj.filter(d => !d.isHoliday);
-            calculateCompleteness(effDates);
+            calculateCompleteness(APP_STATE.summary.datesObj.filter(d => !d.isHoliday));
         }
 
-        // ==========================================
         // UI RENDERING
         // ==========================================
         
